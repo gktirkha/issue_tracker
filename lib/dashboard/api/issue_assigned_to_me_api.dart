@@ -1,0 +1,28 @@
+import 'package:dio/dio.dart';
+import 'dart:developer' as dev;
+
+import '../../shared/models/issues_model.dart';
+import '../../static_data.dart';
+
+Future<List<Issue>?> issuesAssignedToMeService(String authToken) async {
+  List<Issue> _issuesAssignedToMeList = [];
+  try {
+    dev.log("myIssueApiCall called", name: "My Issues API");
+    final res = await Dio().get(
+      "$host/api/userAssignedIssues",
+      data: {"token": authToken},
+    );
+    dev.log(res.statusCode.toString(), name: "Issues Assigned To Me Res");
+    if (res.statusCode != 201) throw Exception("Invalid Status Code");
+    if (res.data["success"] != true) throw Exception("Invalid Status Code");
+    _issuesAssignedToMeList.clear();
+    List<dynamic> myIssuesDataList = res.data["data"];
+    for (var element in myIssuesDataList) {
+      _issuesAssignedToMeList.add(Issue.fromJson(element));
+    }
+  } catch (e) {
+    dev.log(e.toString(), name: "Issue Assigned to me Exception");
+    return null;
+  }
+  return [..._issuesAssignedToMeList];
+}
