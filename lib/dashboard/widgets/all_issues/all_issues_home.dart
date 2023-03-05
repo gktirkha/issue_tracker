@@ -44,7 +44,7 @@ class _AllIssuesHomeState extends State<AllIssuesHome> {
         Provider.of<SortedListProvider>(context);
     String myId =
         Provider.of<AuthProvider>(context, listen: false).loggedInUser!.id;
-    List<Issue> sortedList = sortedListProvider.sortedList;
+
     return Container(
       height: widget.safesize.height * .90,
       width: widget.safesize.width * .90,
@@ -70,7 +70,9 @@ class _AllIssuesHomeState extends State<AllIssuesHome> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(sortedList[index].title,
+                                  Text(
+                                      sortedListProvider
+                                          .sortedList[index].title,
                                       style: Theme.of(context)
                                           .textTheme
                                           .titleLarge),
@@ -79,13 +81,15 @@ class _AllIssuesHomeState extends State<AllIssuesHome> {
                                     children: [
                                       Container(
                                         color: priorityColor(
-                                          sortedList[index].priority,
+                                          sortedListProvider
+                                              .sortedList[index].priority,
                                         ),
                                         height: widget.safesize.height * .05,
                                         width: widget.safesize.width * .05,
                                         child: Center(
                                           child: Text(
-                                            sortedList[index].priority,
+                                            sortedListProvider
+                                                .sortedList[index].priority,
                                             style:
                                                 TextStyle(color: Colors.white),
                                           ),
@@ -108,7 +112,8 @@ class _AllIssuesHomeState extends State<AllIssuesHome> {
                                                             FontWeight.bold),
                                                   ),
                                                   TextSpan(
-                                                    text: sortedList[index]
+                                                    text: sortedListProvider
+                                                        .sortedList[index]
                                                         .createdBy,
                                                   ),
                                                 ],
@@ -125,7 +130,8 @@ class _AllIssuesHomeState extends State<AllIssuesHome> {
                                                   ),
                                                   TextSpan(
                                                     text: getIssueDayString(
-                                                        sortedList[index]
+                                                        sortedListProvider
+                                                            .sortedList[index]
                                                             .createdAt),
                                                   ),
                                                 ],
@@ -148,7 +154,8 @@ class _AllIssuesHomeState extends State<AllIssuesHome> {
                                                           FontWeight.bold),
                                                 ),
                                                 TextSpan(
-                                                    text: sortedList[index]
+                                                    text: sortedListProvider
+                                                        .sortedList[index]
                                                         .status),
                                               ],
                                             ),
@@ -164,7 +171,8 @@ class _AllIssuesHomeState extends State<AllIssuesHome> {
                                                 ),
                                                 TextSpan(
                                                   text: getIssueDayString(
-                                                      sortedList[index]
+                                                      sortedListProvider
+                                                          .sortedList[index]
                                                           .updatedAt),
                                                 ),
                                               ],
@@ -173,12 +181,15 @@ class _AllIssuesHomeState extends State<AllIssuesHome> {
                                         ],
                                       ),
                                       const Spacer(),
-                                      if (sortedList[index].createdById == myId)
+                                      if (sortedListProvider
+                                              .sortedList[index].createdById ==
+                                          myId)
                                         TextButton(
                                           onPressed: () {
                                             showEditDialog(
                                               context,
-                                              sortedList[index],
+                                              sortedListProvider
+                                                  .sortedList[index],
                                             );
                                           },
                                           child: Text("Edit"),
@@ -198,7 +209,7 @@ class _AllIssuesHomeState extends State<AllIssuesHome> {
                             ),
                         separatorBuilder: (context, index) =>
                             const SizedBox(height: 10),
-                        itemCount: sortedList.length),
+                        itemCount: sortedListProvider.sortedList.length),
           ),
           ValueListenableBuilder(
             valueListenable: isExpanded,
