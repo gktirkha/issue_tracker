@@ -135,22 +135,45 @@ class _AllIssuesHomeState extends State<AllIssuesHome> {
                                           ],
                                         ),
                                       ),
-                                      Text.rich(
-                                        TextSpan(
-                                          children: [
-                                            const TextSpan(
-                                              text: "Last Updated : ",
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold),
-                                            ),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text.rich(
                                             TextSpan(
-                                              text: getIssueDayString(
-                                                  sortedListProvider
-                                                      .sortedList[index]
-                                                      .updatedAt),
+                                              children: [
+                                                const TextSpan(
+                                                  text: "Status : ",
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                                TextSpan(
+                                                    text: sortedListProvider
+                                                        .sortedList[index]
+                                                        .status),
+                                              ],
                                             ),
-                                          ],
-                                        ),
+                                          ),
+                                          Text.rich(
+                                            TextSpan(
+                                              children: [
+                                                const TextSpan(
+                                                  text: "Last Updated : ",
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                                TextSpan(
+                                                  text: getIssueDayString(
+                                                      sortedListProvider
+                                                          .sortedList[index]
+                                                          .updatedAt),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                       const Spacer(),
                                       TextButton(
@@ -176,10 +199,18 @@ class _AllIssuesHomeState extends State<AllIssuesHome> {
               SortedListProvider provider =
                   Provider.of<SortedListProvider>(context, listen: false);
               return Align(
-                alignment: Alignment.bottomRight,
+                alignment: Alignment.topRight,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
+                    FloatingActionButton(
+                      tooltip: "sort",
+                      onPressed: () {
+                        isExpanded.value = !value;
+                      },
+                      child: Icon(Icons.sort),
+                    ),
+                    if (value) const SizedBox(height: 10),
                     if (value)
                       FloatingActionButton(
                         tooltip: "Sort By Date",
@@ -207,12 +238,14 @@ class _AllIssuesHomeState extends State<AllIssuesHome> {
                         child: Icon(Icons.calendar_view_day_rounded),
                       ),
                     if (value) const SizedBox(height: 10),
-                    FloatingActionButton(
-                      onPressed: () {
-                        isExpanded.value = !value;
-                      },
-                      child: Icon(Icons.sort),
-                    ),
+                    if (value)
+                      FloatingActionButton(
+                        tooltip: "Sort By Status",
+                        onPressed: () {
+                          provider.sortIssuesByStatus();
+                        },
+                        child: Icon(Icons.query_stats_outlined),
+                      ),
                   ],
                 ),
               );

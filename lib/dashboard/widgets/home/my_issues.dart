@@ -83,9 +83,12 @@ class _MyIssuesState extends State<MyIssues> {
                                                     .myIssuesList[index]
                                                     .priority),
                                                 child: Center(
-                                                  child: Text(value
-                                                      .myIssuesList[index]
-                                                      .priority),
+                                                  child: Text(
+                                                    value.myIssuesList[index]
+                                                        .priority,
+                                                    style: const TextStyle(
+                                                        color: Colors.white),
+                                                  ),
                                                 ),
                                               ),
                                               const Spacer(),
@@ -150,8 +153,15 @@ class _MyIssuesState extends State<MyIssues> {
                                               mainAxisAlignment:
                                                   MainAxisAlignment.start,
                                               children: [
-                                                Text(value.myIssuesList[index]
-                                                    .status),
+                                                Text(
+                                                  value.myIssuesList[index]
+                                                      .status,
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontStyle:
+                                                          FontStyle.italic),
+                                                ),
                                                 const Spacer(),
                                                 TextButton(
                                                   onPressed: () {},

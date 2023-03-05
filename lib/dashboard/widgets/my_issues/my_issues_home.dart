@@ -225,10 +225,18 @@ class _MyIssueHomeState extends State<MyIssueHome> {
               SortedListProvider provider =
                   Provider.of<SortedListProvider>(context, listen: false);
               return Align(
-                alignment: Alignment.bottomRight,
+                alignment: Alignment.topRight,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
+                    FloatingActionButton(
+                      tooltip: "sort",
+                      onPressed: () {
+                        isExpanded.value = !value;
+                      },
+                      child: Icon(Icons.sort),
+                    ),
+                    if (value) const SizedBox(height: 10),
                     if (value)
                       FloatingActionButton(
                         tooltip: "Sort By Date",
@@ -264,13 +272,6 @@ class _MyIssueHomeState extends State<MyIssueHome> {
                         },
                         child: Icon(Icons.query_stats_outlined),
                       ),
-                    if (value) const SizedBox(height: 10),
-                    FloatingActionButton(
-                      onPressed: () {
-                        isExpanded.value = !value;
-                      },
-                      child: Icon(Icons.sort),
-                    ),
                   ],
                 ),
               );

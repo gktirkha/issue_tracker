@@ -81,9 +81,11 @@ class _IssuesAssignedToMeState extends State<IssuesAssignedToMe> {
                                                   .myIssuesList[index]
                                                   .priority),
                                               child: Center(
-                                                child: Text(value
-                                                    .myIssuesList[index]
-                                                    .priority),
+                                                child: Text(
+                                                    value.myIssuesList[index]
+                                                        .priority,
+                                                    style: const TextStyle(
+                                                        color: Colors.white)),
                                               ),
                                             ),
                                             const Spacer(),
