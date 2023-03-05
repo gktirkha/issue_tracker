@@ -1,4 +1,5 @@
 import 'package:brd_issue_tracker/dashboard/provider/all_issue_provider.dart';
+import 'package:brd_issue_tracker/dashboard/provider/all_user_provider.dart';
 import 'package:brd_issue_tracker/dashboard/provider/area_chart_provider.dart';
 import 'package:brd_issue_tracker/dashboard/provider/donut_chart_provider.dart';
 import 'package:brd_issue_tracker/dashboard/provider/issues_assigned_to_me_provider.dart';
@@ -42,6 +43,9 @@ class MainApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<AllIssuesProvider>(
           create: (context) => AllIssuesProvider(),
+        ),
+        ChangeNotifierProvider<AllUserProvider>(
+          create: (context) => AllUserProvider(),
         )
       ],
       child: MaterialApp(

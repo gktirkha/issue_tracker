@@ -1,5 +1,6 @@
 import 'package:brd_issue_tracker/dashboard/api/all_users_api.dart';
 import 'package:brd_issue_tracker/dashboard/provider/all_issue_provider.dart';
+import 'package:brd_issue_tracker/dashboard/provider/all_user_provider.dart';
 import 'package:brd_issue_tracker/dashboard/provider/area_chart_provider.dart';
 import 'package:brd_issue_tracker/dashboard/provider/my_issue_provider.dart';
 import 'package:brd_issue_tracker/dashboard/widgets/all_issues/all_issues_home.dart';
@@ -11,6 +12,7 @@ import 'package:provider/provider.dart';
 import '../../navbar/my_navbar.dart';
 import '../../navbar/navbar_data.dart';
 import '../provider/donut_chart_provider.dart';
+import '../widgets/dialogs/assign_to_dialog.dart';
 import '../widgets/home/dash_board_home.dart';
 import '../widgets/issues_assigned_to_me/issues_assigned_to_me_screen.dart';
 import '../widgets/statbox_row.dart';
@@ -36,6 +38,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
         .getMyIssues(widget.authToken);
     Provider.of<AllIssuesProvider>(context, listen: false)
         .getAllIssues(widget.authToken);
+    Provider.of<AllUserProvider>(context, listen: false).getAllUsers();
   }
 
   @override
@@ -83,6 +86,12 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      ElevatedButton(
+                          onPressed: () async {
+                            await showAssignDialog(context)
+                                .then((value) => print(value));
+                          },
+                          child: Text("data")),
                       StatBoxRow(searchBool: searchbool),
                       Padding(
                         padding: const EdgeInsets.all(8),

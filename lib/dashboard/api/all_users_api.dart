@@ -20,15 +20,6 @@ Future<Map<String, List<UserModel>>?> allUsersApi() async {
       _userMap[element["department"]]!.add(UserModel.formJson(element));
     }
 
-    _userMap.forEach(
-      (key, value) {
-        value.forEach(
-          (element) {
-            log("$key: ${element.id}");
-          },
-        );
-      },
-    );
     return {..._userMap};
   } catch (e) {
     log(e.toString(), name: "All User Api Exception");
