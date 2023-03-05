@@ -1,5 +1,6 @@
 import 'package:brd_issue_tracker/dashboard/provider/issues_assigned_to_me_provider.dart';
 import 'package:brd_issue_tracker/dashboard/provider/sorted_list_provider.dart';
+import 'package:brd_issue_tracker/dashboard/widgets/dialogs/edit_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
@@ -155,7 +156,12 @@ class _AssignedIssueHomeState extends State<AssignedIssueHome> {
                                       ),
                                       const Spacer(),
                                       TextButton(
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            showEditDialog(
+                                                context,
+                                                sortedListProvider
+                                                    .sortedList[index]);
+                                          },
                                           child: Text("Edit")),
                                       TextButton(
                                           onPressed: () {},

@@ -12,6 +12,7 @@ class Issue {
   String updatedAt;
   String? assignedTo;
   String? asignedToId;
+  String createdById;
 
   Issue({
     this.comments,
@@ -25,6 +26,7 @@ class Issue {
     required this.updatedAt,
     this.assignedTo,
     this.asignedToId,
+    required this.createdById,
   });
 
   factory Issue.fromJson(dynamic json) {
@@ -42,6 +44,7 @@ class Issue {
           json["status"] == ASSIGNED ? json["assignedTo"]["name"] : null,
       asignedToId:
           json["status"] == ASSIGNED ? json["assignedTo"]["_id"] : null,
+      createdById: json["createdBy"]["_id"],
     );
   }
 }

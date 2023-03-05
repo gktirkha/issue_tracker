@@ -1,3 +1,4 @@
+import 'package:brd_issue_tracker/dashboard/widgets/dialogs/edit_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -152,7 +153,12 @@ class _IssuesAssignedToMeState extends State<IssuesAssignedToMe> {
                                                   .myIssuesList[index].status),
                                               Spacer(),
                                               TextButton(
-                                                onPressed: () {},
+                                                onPressed: () {
+                                                  showEditDialog(
+                                                      context,
+                                                      value
+                                                          .myIssuesList[index]);
+                                                },
                                                 style: TextButton.styleFrom(
                                                     foregroundColor:
                                                         Colors.deepOrange),

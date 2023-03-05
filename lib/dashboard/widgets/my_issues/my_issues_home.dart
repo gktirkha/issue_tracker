@@ -1,5 +1,6 @@
 import 'package:brd_issue_tracker/dashboard/provider/my_issue_provider.dart';
 import 'package:brd_issue_tracker/dashboard/provider/sorted_list_provider.dart';
+import 'package:brd_issue_tracker/dashboard/widgets/dialogs/edit_dialog.dart';
 import 'package:brd_issue_tracker/login/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -7,6 +8,7 @@ import 'package:provider/provider.dart';
 import '../../../shared/util.dart';
 import '../../../shared/util_widgets.dart';
 import '../../../static_data.dart';
+import '../dialogs/delete_dialog.dart';
 
 class MyIssueHome extends StatefulWidget {
   const MyIssueHome(
@@ -39,6 +41,13 @@ class _MyIssueHomeState extends State<MyIssueHome> {
         Provider.of<SortedListProvider>(context);
     String myId =
         Provider.of<AuthProvider>(context, listen: false).loggedInUser!.id;
+
+    void refresh() {
+      if (!Provider.of<MyIssuesProvider>(context, listen: false).isLoading) {
+        Provider.of<SortedListProvider>(context, listen: false).setSortedList(
+            Provider.of<MyIssuesProvider>(context, listen: false).myIssuesList);
+      }
+    }
 
     return Container(
       height: widget.safesize.height * .90,
@@ -199,6 +208,15 @@ class _MyIssueHomeState extends State<MyIssueHome> {
                                         ],
                                       ),
                                       const Spacer(),
+                                      TextButton(
+                                        onPressed: () {
+                                          showEditDialog(
+                                              context,
+                                              sortedListProvider
+                                                  .sortedList[index]);
+                                        },
+                                        child: Text("Edit"),
+                                      ),
                                       if (sortedListProvider
                                               .sortedList[index].asignedToId !=
                                           myId)
@@ -208,6 +226,38 @@ class _MyIssueHomeState extends State<MyIssueHome> {
                                       TextButton(
                                           onPressed: () {},
                                           child: Text("Assign To other")),
+                                      Consumer<MyIssuesProvider>(
+                                        builder: (context, value, child) =>
+                                            TextButton(
+                                          onPressed: () async {
+                                            await showDeleteDialog(context)
+                                                .then(
+                                              (dialogBool) async {
+                                                if (dialogBool != null &&
+                                                    dialogBool == true) {
+                                                  await value
+                                                      .deleteIssue(
+                                                          issueId: value
+                                                              .myIssuesList[
+                                                                  index]
+                                                              .id,
+                                                          authToken:
+                                                              widget.authToken)
+                                                      .then(
+                                                        (_) => value
+                                                            .getMyIssues(widget
+                                                                .authToken)
+                                                            .then((value) {
+                                                          refresh();
+                                                        }),
+                                                      );
+                                                }
+                                              },
+                                            );
+                                          },
+                                          child: const Text("Delete"),
+                                        ),
+                                      ),
                                       SizedBox(
                                           width: widget.safesize.width * .03)
                                     ],

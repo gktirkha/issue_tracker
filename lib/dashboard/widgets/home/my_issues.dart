@@ -178,6 +178,19 @@ class _MyIssuesState extends State<MyIssues> {
                                                 ),
                                                 TextButton(
                                                   onPressed: () async {
+                                                    await showEditDialog(
+                                                      context,
+                                                      value.myIssuesList[index],
+                                                    );
+                                                  },
+                                                  style: TextButton.styleFrom(
+                                                      foregroundColor:
+                                                          Colors.deepOrange),
+                                                  child: const Text(
+                                                      "Assign To Me"),
+                                                ),
+                                                TextButton(
+                                                  onPressed: () async {
                                                     await showDeleteDialog(
                                                             context)
                                                         .then(

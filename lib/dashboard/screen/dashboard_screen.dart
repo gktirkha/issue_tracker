@@ -1,3 +1,4 @@
+import 'package:brd_issue_tracker/dashboard/api/all_users_api.dart';
 import 'package:brd_issue_tracker/dashboard/provider/all_issue_provider.dart';
 import 'package:brd_issue_tracker/dashboard/provider/area_chart_provider.dart';
 import 'package:brd_issue_tracker/dashboard/provider/my_issue_provider.dart';
@@ -39,12 +40,14 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
 
   @override
   Widget build(BuildContext context) {
+    allUsersApi();
     MediaQueryData mediaQueryData = MediaQuery.of(context);
     double myPadding = 12;
     Size safeSize = Size(mediaQueryData.size.width - myPadding * 2,
         mediaQueryData.size.height - myPadding * 2);
 
-    bool searchbool = _selectIndex != 0;
+    bool searchbool = false;
+    // bool searchbool = _selectIndex != 0;
     UserModel loggedInUser =
         Provider.of<AuthProvider>(context, listen: false).loggedInUser!;
     List<Widget> route = [

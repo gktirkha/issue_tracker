@@ -74,34 +74,39 @@ class StatBoxRow extends StatelessWidget {
           Consumer2<DonutChartProvider, IssuesAssignedToMeProvider>(
             builder: (context, value, value2, child) => Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: value.isLoading || value2.isLoading
+              children: (value.isLoading || value2.isLoading)
                   ? [
                       const SpinKitFadingCube(
                           color: Colors.deepOrange, size: 50)
                     ]
-                  : [
-                      statBox(
-                        title: "Total",
-                        stat: value.count.toString(),
-                        context: context,
-                      ),
-                      statBox(
-                        title: "Assigned To Me",
-                        stat: value2.myIssuesList.length.toString(),
-                        context: context,
-                      ),
-                      statBox(
-                        title: "Un-Assigned",
-                        stat:
-                            value.donutChartMap["unAssignedCount"]!.toString(),
-                        context: context,
-                      ),
-                      statBox(
-                        title: "Completed",
-                        stat: value.donutChartMap["completedCount"]!.toString(),
-                        context: context,
-                      )
-                    ],
+                  : (value.isError || value2.isError)
+                      ? [
+                          const Text("Error Occured, Prease Refres"),
+                        ]
+                      : [
+                          statBox(
+                            title: "Total",
+                            stat: value.count.toString(),
+                            context: context,
+                          ),
+                          statBox(
+                            title: "Assigned To Me",
+                            stat: value2.myIssuesList.length.toString(),
+                            context: context,
+                          ),
+                          statBox(
+                            title: "Un-Assigned",
+                            stat: value.donutChartMap["unAssignedCount"]!
+                                .toString(),
+                            context: context,
+                          ),
+                          statBox(
+                            title: "Completed",
+                            stat: value.donutChartMap["completedCount"]!
+                                .toString(),
+                            context: context,
+                          )
+                        ],
             ),
           ),
         ],

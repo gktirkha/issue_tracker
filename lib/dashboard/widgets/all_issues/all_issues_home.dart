@@ -1,10 +1,12 @@
 import 'package:brd_issue_tracker/dashboard/provider/all_issue_provider.dart';
 import 'package:brd_issue_tracker/dashboard/provider/issues_assigned_to_me_provider.dart';
 import 'package:brd_issue_tracker/dashboard/provider/sorted_list_provider.dart';
+import 'package:brd_issue_tracker/dashboard/widgets/dialogs/edit_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 
+import '../../../login/providers/auth_provider.dart';
 import '../../../shared/util.dart';
 import '../../../shared/util_widgets.dart';
 import '../../../static_data.dart';
@@ -39,6 +41,8 @@ class _AllIssuesHomeState extends State<AllIssuesHome> {
         Provider.of<AllIssuesProvider>(context);
     SortedListProvider sortedListProvider =
         Provider.of<SortedListProvider>(context);
+    String myId =
+        Provider.of<AuthProvider>(context, listen: false).loggedInUser!.id;
 
     return Container(
       height: widget.safesize.height * .90,
@@ -176,9 +180,22 @@ class _AllIssuesHomeState extends State<AllIssuesHome> {
                                         ],
                                       ),
                                       const Spacer(),
+                                      if (sortedListProvider
+                                              .sortedList[index].createdById ==
+                                          myId)
+                                        TextButton(
+                                          onPressed: () {
+                                            showEditDialog(
+                                              context,
+                                              sortedListProvider
+                                                  .sortedList[index],
+                                            );
+                                          },
+                                          child: Text("Edit"),
+                                        ),
                                       TextButton(
                                           onPressed: () {},
-                                          child: Text("Edit")),
+                                          child: Text("Assign To Me")),
                                       TextButton(
                                           onPressed: () {},
                                           child: Text("Assign To other")),
