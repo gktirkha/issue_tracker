@@ -35,11 +35,12 @@ class DonutChartProvider with ChangeNotifier {
 
   Future<void> getDonutData(String authToken) async {
     dev.log("getDonutData called", name: "Donut Chart Provider");
-    // if (!isLoading) setLoading(true);
+    if (!isLoading) setLoading(true);
     if (isError) setError(false);
     final res = await donutChartService(authToken);
     if (res == null) {
       setError(true);
+      setLoading(false);
       return;
     }
     _donutChartItemsList.clear();

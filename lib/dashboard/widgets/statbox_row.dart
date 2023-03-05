@@ -1,4 +1,5 @@
 import 'package:brd_issue_tracker/dashboard/provider/issues_assigned_to_me_provider.dart';
+import 'package:brd_issue_tracker/login/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
@@ -8,8 +9,10 @@ import '../provider/donut_chart_provider.dart';
 import '../provider/my_issue_provider.dart';
 
 class StatBoxRow extends StatelessWidget {
-  const StatBoxRow({super.key, this.searchBool = true});
+  const StatBoxRow(
+      {super.key, this.searchBool = true, required this.voidCallback});
   final bool searchBool;
+  final VoidCallback voidCallback;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +23,16 @@ class StatBoxRow extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Text("Good Morning, James!"),
+          Consumer<AuthProvider>(
+            builder: (context, value, child) => Row(
+              children: [
+                Text("Hello ${value.loggedInUser!.name}"),
+                Spacer(),
+                IconButton(
+                    onPressed: voidCallback, icon: const Icon(Icons.refresh))
+              ],
+            ),
+          ),
           vSizedBoxMedium(),
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -81,7 +93,7 @@ class StatBoxRow extends StatelessWidget {
                     ]
                   : (value.isError || value2.isError)
                       ? [
-                          const Text("Error Occured, Prease Refres"),
+                          const Text("Error Occured, Prease Refresh"),
                         ]
                       : [
                           statBox(

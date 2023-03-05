@@ -2,6 +2,7 @@ import 'package:brd_issue_tracker/dashboard/api/all_users_api.dart';
 import 'package:brd_issue_tracker/dashboard/provider/all_issue_provider.dart';
 import 'package:brd_issue_tracker/dashboard/provider/all_user_provider.dart';
 import 'package:brd_issue_tracker/dashboard/provider/area_chart_provider.dart';
+import 'package:brd_issue_tracker/dashboard/provider/issues_assigned_to_me_provider.dart';
 import 'package:brd_issue_tracker/dashboard/provider/my_issue_provider.dart';
 import 'package:brd_issue_tracker/dashboard/widgets/all_issues/all_issues_home.dart';
 import 'package:brd_issue_tracker/dashboard/widgets/my_issues/my_issues_home.dart';
@@ -39,6 +40,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
     Provider.of<AllIssuesProvider>(context, listen: false)
         .getAllIssues(widget.authToken);
     Provider.of<AllUserProvider>(context, listen: false).getAllUsers();
+    Provider.of<IssuesAssignedToMeProvider>(context, listen: false)
+        .getIssuesAssignedToMe(widget.authToken);
   }
 
   @override
@@ -92,7 +95,25 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                 .then((value) => print(value));
                           },
                           child: Text("data")),
-                      StatBoxRow(searchBool: searchbool),
+                      StatBoxRow(
+                        searchBool: searchbool,
+                        voidCallback: () {
+                          Provider.of<AreaChartProvider>(context,
+                              listen: false);
+                          Provider.of<DonutChartProvider>(context,
+                                  listen: false)
+                              .getDonutData(widget.authToken);
+                          Provider.of<MyIssuesProvider>(context, listen: false)
+                              .getMyIssues(widget.authToken);
+                          Provider.of<AllIssuesProvider>(context, listen: false)
+                              .getAllIssues(widget.authToken);
+                          Provider.of<AllUserProvider>(context, listen: false)
+                              .getAllUsers();
+                          Provider.of<IssuesAssignedToMeProvider>(context,
+                                  listen: false)
+                              .getIssuesAssignedToMe(widget.authToken);
+                        },
+                      ),
                       Padding(
                         padding: const EdgeInsets.all(8),
                         child: route[_selectIndex],

@@ -24,6 +24,7 @@ class IssuesAssignedToMeProvider with ChangeNotifier {
   Future<void> getIssuesAssignedToMe(String authToken) async {
     dev.log("getMyIssues called", name: "My Issues");
     if (isError) setError(false);
+    if (!isLoading) setLoading(true);
     final res = await issuesAssignedToMeService(authToken);
 
     if (res == null) {

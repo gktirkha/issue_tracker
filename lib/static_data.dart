@@ -36,7 +36,7 @@ String get ASSIGNED => "Assigned";
 String get IN_PROGRESS => "inProgress";
 String get COMPLETED => "Completed";
 
-List<String> statusList = [UNASSIGNED, ASSIGNED, IN_PROGRESS, COMPLETED];
+List<String> statusList = [ASSIGNED, IN_PROGRESS, COMPLETED];
 
 String get CREATION_DATE => "CREATION_DATE";
 String get UPDATE_DATE => "UPDATE_DATE";

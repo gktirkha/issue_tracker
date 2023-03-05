@@ -24,6 +24,7 @@ class MyIssuesProvider with ChangeNotifier {
   Future<void> getMyIssues(String authToken) async {
     dev.log("getMyIssues called", name: "My Issues");
     if (isError) setError(false);
+    if (!isLoading) setLoading(true);
     final res = await myIssueApiCallService(authToken);
     if (res == null) {
       setError(true);
