@@ -6,6 +6,8 @@ String get HIGH_PRIORITY => "HIGH";
 String get LOW_PRIORITY => "LOW";
 String get MEDIUM_PRIORITY => "MEDIUM";
 
+List<String> priorityList = [HIGH_PRIORITY, MEDIUM_PRIORITY, LOW_PRIORITY];
+
 Color priorityColor(String priority) {
   Color color = Colors.green;
   switch (priority) {

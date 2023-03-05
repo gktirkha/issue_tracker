@@ -1,3 +1,4 @@
+import 'package:brd_issue_tracker/dashboard/widgets/dialogs/edit_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
@@ -6,7 +7,7 @@ import '../../../shared/util.dart';
 import '../../../shared/util_widgets.dart';
 import '../../../static_data.dart';
 import '../../provider/my_issue_provider.dart';
-import '../delete_dialog.dart';
+import '../dialogs/delete_dialog.dart';
 
 class MyIssues extends StatefulWidget {
   const MyIssues({super.key, required this.authToken});
@@ -164,7 +165,12 @@ class _MyIssuesState extends State<MyIssues> {
                                                 ),
                                                 const Spacer(),
                                                 TextButton(
-                                                  onPressed: () {},
+                                                  onPressed: () async {
+                                                    await showEditDialog(
+                                                      context,
+                                                      value.myIssuesList[index],
+                                                    );
+                                                  },
                                                   style: TextButton.styleFrom(
                                                       foregroundColor:
                                                           Colors.deepOrange),

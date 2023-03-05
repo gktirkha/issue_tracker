@@ -1,7 +1,7 @@
 class UserModel {
   bool isAdmin;
   String id;
-  String token;
+  String? token;
   String name;
   String department;
   UserModel(

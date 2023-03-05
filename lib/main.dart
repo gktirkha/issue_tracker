@@ -81,7 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 : value.error
                     ? const LoginScreen()
                     : value.isLoggedIn
-                        ? DashBoardScreen(authToken: value.loggedInUser!.token)
+                        ? DashBoardScreen(authToken: value.loggedInUser!.token!)
                         : const LoginScreen();
           },
         );

@@ -19,7 +19,7 @@ Future<UserModel?> loginService(String email, String password) async {
     if (res.data["success"] != true) throw Exception("Invalid Status Code");
     userModel = UserModel.formJson(res.data["data"]);
     await saveUser(userModel);
-    dev.log(userModel.token, name: "Auth Token");
+    dev.log(userModel.token!, name: "Auth Token");
   } catch (e) {
     dev.log(e.toString(), name: "Login Exception");
     return null;
@@ -58,10 +58,10 @@ Future<void> saveUser(UserModel user) async {
   final prefs = await SharedPreferences.getInstance();
   await prefs.setString("id", user.id);
   await prefs.setBool("isAdmin", user.isAdmin);
-  await prefs.setString("token", user.token);
+  await prefs.setString("token", user.token!);
   await prefs.setString("department", user.department);
   await prefs.setString("name", user.name);
-  dev.log(user.token, name: "Auth Token");
+  dev.log(user.token!, name: "Auth Token");
 }
 
 Future<void> logoutService() async {
