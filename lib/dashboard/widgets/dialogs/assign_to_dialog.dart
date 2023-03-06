@@ -7,8 +7,8 @@ import 'package:provider/provider.dart';
 
 import '../../../shared/models/user_model.dart';
 
-Future<String?> showAssignDialog(BuildContext context) async {
-  return showGeneralDialog<String>(
+Future<dynamic> showAssignDialog(BuildContext context) async {
+  return showGeneralDialog<dynamic>(
     context: context,
     barrierLabel: "Barrier",
     barrierDismissible: true,
@@ -113,8 +113,10 @@ Future<String?> showAssignDialog(BuildContext context) async {
                           hSizedBoxMedium(),
                           ElevatedButton(
                             onPressed: () {
-                              Navigator.pop(
-                                  context, list[selUserIndex.value].name);
+                              Navigator.pop(context, {
+                                "name": list[selUserIndex.value].name,
+                                "id": list[selUserIndex.value].id
+                              });
                             },
                             child: const Text("Save"),
                           ),

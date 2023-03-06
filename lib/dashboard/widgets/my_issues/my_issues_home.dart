@@ -1,6 +1,7 @@
 import 'package:brd_issue_tracker/dashboard/provider/my_issue_provider.dart';
 import 'package:brd_issue_tracker/dashboard/provider/sorted_list_provider.dart';
 import 'package:brd_issue_tracker/dashboard/widgets/dialogs/edit_dialog.dart';
+import 'package:brd_issue_tracker/dashboard/widgets/dialogs/show_description_dialog.dart';
 import 'package:brd_issue_tracker/login/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -86,12 +87,16 @@ class _MyIssueHomeState extends State<MyIssueHome> {
                                   Row(
                                     children: [
                                       Container(
-                                        color: priorityColor(
-                                          sortedListProvider
-                                              .sortedList[index].priority,
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 10, vertical: 8),
+                                        decoration: BoxDecoration(
+                                          color: priorityColor(
+                                            sortedListProvider
+                                                .sortedList[index].priority,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
                                         ),
-                                        height: widget.safesize.height * .05,
-                                        width: widget.safesize.width * .05,
                                         child: Center(
                                           child: Text(
                                             sortedListProvider
@@ -188,8 +193,8 @@ class _MyIssueHomeState extends State<MyIssueHome> {
                                             ),
                                           ),
                                           if (sortedListProvider
-                                                  .sortedList[index].status ==
-                                              ASSIGNED)
+                                                  .sortedList[index].status !=
+                                              UNASSIGNED)
                                             Text.rich(
                                               TextSpan(
                                                 children: [
@@ -220,14 +225,25 @@ class _MyIssueHomeState extends State<MyIssueHome> {
                                         child: Text("Edit"),
                                       ),
                                       if (sortedListProvider
-                                              .sortedList[index].asignedToId !=
+                                              .sortedList[index].assignedToId ==
                                           myId)
                                         TextButton(
-                                            onPressed: () {},
-                                            child: Text("Assign To Me")),
+                                            onPressed: () async {
+                                              showDescriptionDialog(
+                                                  context,
+                                                  sortedListProvider
+                                                      .sortedList[index]);
+                                            },
+                                            child: Text("Update Status")),
                                       TextButton(
-                                          onPressed: () {},
-                                          child: Text("Assign To other")),
+                                        onPressed: () {
+                                          showDescriptionDialog(
+                                              context,
+                                              sortedListProvider
+                                                  .sortedList[index]);
+                                        },
+                                        child: Text("View"),
+                                      ),
                                       Consumer<MyIssuesProvider>(
                                         builder: (context, value, child) =>
                                             TextButton(

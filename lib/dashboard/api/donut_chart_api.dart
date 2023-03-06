@@ -15,6 +15,7 @@ Future<Map<String, dynamic>?> donutChartService(String authToken) async {
     if (res.statusCode != 201) throw Exception("Invalid Status Code");
     if (res.data["success"] != true) throw Exception("Invalid Status Code");
     _donutChartItemsMap.clear();
+
     donutChartMap.forEach((key, value) {
       _donutChartItemsMap[key.toString()] = value;
     });

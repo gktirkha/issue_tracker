@@ -17,6 +17,7 @@ Future<bool?> showDeleteDialog(BuildContext context) async {
           decoration: BoxDecoration(
               color: Colors.white, borderRadius: BorderRadius.circular(20)),
           child: Material(
+            color: Colors.white,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [

@@ -12,7 +12,11 @@ Future<Map<String, List<UserModel>>?> allUsersApi() async {
       throw Exception("Invalid Status Code");
     }
     _userMap.clear();
-    List allUser = res.data;
+    List allUser = res.data["data"];
+    if (allUser.isEmpty) {
+      _userMap.clear();
+      return {};
+    }
     for (var element in allUser) {
       if (_userMap[element["department"]] == null) {
         _userMap[element["department"]] = [];

@@ -11,6 +11,7 @@ import '../../../login/providers/auth_provider.dart';
 import '../../../shared/util.dart';
 import '../../../shared/util_widgets.dart';
 import '../../../static_data.dart';
+import '../dialogs/show_description_dialog.dart';
 
 class AllIssuesHome extends StatefulWidget {
   const AllIssuesHome(
@@ -85,12 +86,16 @@ class _AllIssuesHomeState extends State<AllIssuesHome> {
                                   Row(
                                     children: [
                                       Container(
-                                        color: priorityColor(
-                                          sortedListProvider
-                                              .sortedList[index].priority,
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 10, vertical: 8),
+                                        decoration: BoxDecoration(
+                                          color: priorityColor(
+                                            sortedListProvider
+                                                .sortedList[index].priority,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
                                         ),
-                                        height: widget.safesize.height * .05,
-                                        width: widget.safesize.width * .05,
                                         child: Center(
                                           child: Text(
                                             sortedListProvider
@@ -183,9 +188,35 @@ class _AllIssuesHomeState extends State<AllIssuesHome> {
                                               ],
                                             ),
                                           ),
+                                          Text.rich(
+                                            TextSpan(
+                                              children: [
+                                                const TextSpan(
+                                                  text: "Assigned To : ",
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                                TextSpan(
+                                                  text: sortedListProvider
+                                                          .sortedList[index]
+                                                          .assignedTo ??
+                                                      "None",
+                                                ),
+                                              ],
+                                            ),
+                                          ),
                                         ],
                                       ),
                                       const Spacer(),
+                                      TextButton(
+                                          onPressed: () async {
+                                            showDescriptionDialog(
+                                                context,
+                                                sortedListProvider
+                                                    .sortedList[index]);
+                                          },
+                                          child: Text("View")),
                                       if (sortedListProvider
                                               .sortedList[index].createdById ==
                                           myId)
@@ -199,12 +230,31 @@ class _AllIssuesHomeState extends State<AllIssuesHome> {
                                           },
                                           child: Text("Edit"),
                                         ),
-                                      TextButton(
+                                      if (sortedListProvider
+                                              .sortedList[index].createdById ==
+                                          myId)
+                                        TextButton(
                                           onPressed: () {},
-                                          child: Text("Assign To Me")),
-                                      TextButton(
+                                          child: Text("delete"),
+                                        ),
+                                      if (sortedListProvider
+                                              .sortedList[index].assignedToId ==
+                                          myId)
+                                        TextButton(
                                           onPressed: () {},
-                                          child: Text("Assign To other")),
+                                          child: Text("Update Status"),
+                                        ),
+                                      if (sortedListProvider
+                                              .sortedList[index].assignedToId !=
+                                          myId)
+                                        TextButton(
+                                          onPressed: () {},
+                                          child: Text("Assign To Me"),
+                                        ),
+                                      TextButton(
+                                        onPressed: () {},
+                                        child: Text("Assign To Other"),
+                                      ),
                                       SizedBox(
                                           width: widget.safesize.width * .03)
                                     ],

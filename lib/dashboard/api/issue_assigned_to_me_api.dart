@@ -13,10 +13,19 @@ Future<List<Issue>?> issuesAssignedToMeService(String authToken) async {
       data: {"token": authToken},
     );
     dev.log(res.statusCode.toString(), name: "Issues Assigned To Me Res");
-    if (res.statusCode != 201) throw Exception("Invalid Status Code");
-    if (res.data["success"] != true) throw Exception("Invalid Status Code");
+    if (!(res.statusCode != 201 || res.statusCode != 200)) {
+      throw Exception("Invalid Status Code");
+    }
+    // if (res.data["success"] != true) throw Exception("Invalid Status Code");
+
     _issuesAssignedToMeList.clear();
-    List<dynamic> myIssuesDataList = res.data["data"];
+
+    List<dynamic>? myIssuesDataList = res.data["data"];
+    if (myIssuesDataList == null) return null;
+    if (myIssuesDataList.length == 0) {
+      _issuesAssignedToMeList.clear();
+      return [];
+    }
     for (var element in myIssuesDataList) {
       _issuesAssignedToMeList.add(Issue.fromJson(element));
     }

@@ -11,7 +11,7 @@ class Issue {
   String createdAt;
   String updatedAt;
   String? assignedTo;
-  String? asignedToId;
+  String? assignedToId;
   String createdById;
 
   Issue({
@@ -25,7 +25,7 @@ class Issue {
     required this.createdAt,
     required this.updatedAt,
     this.assignedTo,
-    this.asignedToId,
+    this.assignedToId,
     required this.createdById,
   });
 
@@ -41,9 +41,9 @@ class Issue {
       createdAt: json["createdAt"],
       updatedAt: json["updatedAt"],
       assignedTo:
-          json["status"] == ASSIGNED ? json["assignedTo"]["name"] : null,
-      asignedToId:
-          json["status"] == ASSIGNED ? json["assignedTo"]["_id"] : null,
+          json["status"] != UNASSIGNED ? json["assignedTo"]["name"] : null,
+      assignedToId:
+          json["status"] != UNASSIGNED ? json["assignedTo"]["_id"] : null,
       createdById: json["createdBy"]["_id"],
     );
   }

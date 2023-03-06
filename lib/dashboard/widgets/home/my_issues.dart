@@ -1,4 +1,6 @@
+import 'package:brd_issue_tracker/dashboard/widgets/dialogs/assign_to_dialog.dart';
 import 'package:brd_issue_tracker/dashboard/widgets/dialogs/edit_dialog.dart';
+import 'package:brd_issue_tracker/login/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
@@ -20,6 +22,8 @@ class MyIssues extends StatefulWidget {
 class _MyIssuesState extends State<MyIssues> {
   @override
   Widget build(BuildContext context) {
+    String myId =
+        Provider.of<AuthProvider>(context, listen: false).loggedInUser!.id;
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Consumer<MyIssuesProvider>(
@@ -48,7 +52,6 @@ class _MyIssuesState extends State<MyIssues> {
                             shrinkWrap: true,
                             itemCount: value.myIssuesList.length,
                             itemBuilder: (context, index) => LayoutBuilder(
-                              // key: ValueKey(value.myIssuesList[index].id),
                               builder: (context, constraints) {
                                 ValueNotifier<bool> isExpanded =
                                     ValueNotifier(false);
@@ -66,23 +69,41 @@ class _MyIssuesState extends State<MyIssues> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Text(
-                                            value.myIssuesList[index].title
-                                                .toUpperCase(),
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleMedium,
-                                          ),
+                                          Text.rich(
+                                              TextSpan(
+                                                children: [
+                                                  const TextSpan(
+                                                    text: "Title: ",
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                  TextSpan(
+                                                      text: value
+                                                          .myIssuesList[index]
+                                                          .title
+                                                          .toUpperCase())
+                                                ],
+                                              ),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleMedium!),
                                           vSizedBoxSmall(),
                                           Row(
                                             mainAxisSize: MainAxisSize.min,
                                             children: [
                                               Container(
                                                 padding:
-                                                    const EdgeInsets.all(4),
-                                                color: priorityColor(value
-                                                    .myIssuesList[index]
-                                                    .priority),
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 10,
+                                                        vertical: 8),
+                                                decoration: BoxDecoration(
+                                                  color: priorityColor(value
+                                                      .myIssuesList[index]
+                                                      .priority),
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                ),
                                                 child: Center(
                                                   child: Text(
                                                     value.myIssuesList[index]
@@ -108,8 +129,24 @@ class _MyIssuesState extends State<MyIssues> {
                                           ),
                                           if (isExpandedBool) vSizedBoxSmall(),
                                           if (isExpandedBool)
-                                            Text(value.myIssuesList[index]
-                                                .description),
+                                            Text.rich(
+                                                TextSpan(
+                                                  children: [
+                                                    const TextSpan(
+                                                      text: "Description: ",
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                    TextSpan(
+                                                        text: value
+                                                            .myIssuesList[index]
+                                                            .description)
+                                                  ],
+                                                ),
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .titleMedium!),
                                           if (isExpandedBool) vSizedBoxSmall(),
                                           if (isExpandedBool)
                                             Text.rich(
@@ -157,38 +194,24 @@ class _MyIssuesState extends State<MyIssues> {
                                                 Text(
                                                   value.myIssuesList[index]
                                                       .status,
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontStyle:
-                                                          FontStyle.italic),
                                                 ),
                                                 const Spacer(),
-                                                TextButton(
-                                                  onPressed: () async {
-                                                    await showEditDialog(
-                                                      context,
-                                                      value.myIssuesList[index],
-                                                    );
-                                                  },
-                                                  style: TextButton.styleFrom(
-                                                      foregroundColor:
-                                                          Colors.deepOrange),
-                                                  child: const Text("Edit"),
-                                                ),
-                                                TextButton(
-                                                  onPressed: () async {
-                                                    await showEditDialog(
-                                                      context,
-                                                      value.myIssuesList[index],
-                                                    );
-                                                  },
-                                                  style: TextButton.styleFrom(
-                                                      foregroundColor:
-                                                          Colors.deepOrange),
-                                                  child: const Text(
-                                                      "Assign To Me"),
-                                                ),
+                                                if (myId ==
+                                                    value.myIssuesList[index]
+                                                        .createdById)
+                                                  TextButton(
+                                                    onPressed: () async {
+                                                      await showEditDialog(
+                                                        context,
+                                                        value.myIssuesList[
+                                                            index],
+                                                      );
+                                                    },
+                                                    style: TextButton.styleFrom(
+                                                        foregroundColor:
+                                                            Colors.deepOrange),
+                                                    child: const Text("Edit"),
+                                                  ),
                                                 TextButton(
                                                   onPressed: () async {
                                                     await showDeleteDialog(

@@ -50,3 +50,25 @@ Map<String, int> statusMap = {
   IN_PROGRESS: 1,
   COMPLETED: 0
 };
+
+Color statusColor(String status) {
+  Color color = Colors.green;
+  switch (status) {
+    case "unAssigned":
+      color = Colors.red;
+      break;
+    case "inProgress":
+      color = Colors.yellow[800]!;
+
+      break;
+
+    case "Assigned":
+      color = Colors.blue[800]!;
+      break;
+
+    case "Completed":
+      color = Colors.green;
+      break;
+  }
+  return color;
+}

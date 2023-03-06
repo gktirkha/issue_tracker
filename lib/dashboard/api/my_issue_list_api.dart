@@ -17,6 +17,11 @@ Future<List<Issue>?> myIssueApiCallService(String authToken) async {
     if (res.data["success"] != true) throw Exception("Invalid Status Code");
     _myIssueList.clear();
     List myIssuesDataList = res.data["data"];
+
+    if (myIssuesDataList.isEmpty) {
+      _myIssueList.clear();
+      return [];
+    }
     for (var element in myIssuesDataList) {
       _myIssueList.add(Issue.fromJson(element));
     }

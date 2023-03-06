@@ -91,12 +91,6 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      ElevatedButton(
-                          onPressed: () async {
-                            await showAssignDialog(context)
-                                .then((value) => print(value));
-                          },
-                          child: Text("data")),
                       StatBoxRow(
                         searchBool: searchbool,
                         voidCallback: () {

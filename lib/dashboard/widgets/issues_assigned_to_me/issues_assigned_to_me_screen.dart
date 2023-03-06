@@ -1,6 +1,9 @@
 import 'package:brd_issue_tracker/dashboard/provider/issues_assigned_to_me_provider.dart';
 import 'package:brd_issue_tracker/dashboard/provider/sorted_list_provider.dart';
+import 'package:brd_issue_tracker/dashboard/widgets/dialogs/assign_to_dialog.dart';
 import 'package:brd_issue_tracker/dashboard/widgets/dialogs/edit_dialog.dart';
+import 'package:brd_issue_tracker/dashboard/widgets/dialogs/show_description_dialog.dart';
+import 'package:brd_issue_tracker/login/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
@@ -43,6 +46,8 @@ class _AssignedIssueHomeState extends State<AssignedIssueHome> {
         Provider.of<IssuesAssignedToMeProvider>(context);
     SortedListProvider sortedListProvider =
         Provider.of<SortedListProvider>(context);
+    String myId =
+        Provider.of<AuthProvider>(context, listen: false).loggedInUser!.id;
 
     return Container(
       height: widget.safesize.height * .90,
@@ -79,12 +84,16 @@ class _AssignedIssueHomeState extends State<AssignedIssueHome> {
                                   Row(
                                     children: [
                                       Container(
-                                        color: priorityColor(
-                                          sortedListProvider
-                                              .sortedList[index].priority,
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 10, vertical: 8),
+                                        decoration: BoxDecoration(
+                                          color: priorityColor(
+                                            sortedListProvider
+                                                .sortedList[index].priority,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
                                         ),
-                                        height: widget.safesize.height * .05,
-                                        width: widget.safesize.width * .05,
                                         child: Center(
                                           child: Text(
                                             sortedListProvider
@@ -158,15 +167,36 @@ class _AssignedIssueHomeState extends State<AssignedIssueHome> {
                                       ),
                                       const Spacer(),
                                       TextButton(
-                                          onPressed: () {
-                                            showEditDialog(
+                                          onPressed: () async {
+                                            showDescriptionDialog(
                                                 context,
                                                 sortedListProvider
                                                     .sortedList[index]);
                                           },
-                                          child: Text("Edit")),
+                                          child: Text("View")),
                                       TextButton(
-                                          onPressed: () {},
+                                          onPressed: () async {
+                                            showDescriptionDialog(
+                                                context,
+                                                sortedListProvider
+                                                    .sortedList[index]);
+                                          },
+                                          child: Text("Update Status")),
+                                      if (sortedListProvider
+                                              .sortedList[index].createdById ==
+                                          myId)
+                                        TextButton(
+                                            onPressed: () {
+                                              showEditDialog(
+                                                  context,
+                                                  sortedListProvider
+                                                      .sortedList[index]);
+                                            },
+                                            child: Text("Edit")),
+                                      TextButton(
+                                          onPressed: () async {
+                                            showAssignDialog(context);
+                                          },
                                           child: Text("Assign To other")),
                                       SizedBox(
                                           width: widget.safesize.width * .03)
