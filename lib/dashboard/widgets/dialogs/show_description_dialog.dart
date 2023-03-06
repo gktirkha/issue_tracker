@@ -92,7 +92,6 @@ Future<bool?> showDescriptionDialog(BuildContext context, Issue issue) async {
                 Align(
                   alignment: Alignment.bottomRight,
                   child: OutlinedButton(
-                    child: const Text("Dismiss"),
                     onPressed: () {
                       Navigator.pop(context);
                     },
@@ -104,6 +103,7 @@ Future<bool?> showDescriptionDialog(BuildContext context, Issue issue) async {
                         color: Theme.of(context).colorScheme.primary,
                       ),
                     ),
+                    child: const Text("Dismiss"),
                   ),
                 ),
               ],
