@@ -92,26 +92,9 @@ class _MyIssuesState extends State<MyIssues> {
                                           Row(
                                             mainAxisSize: MainAxisSize.min,
                                             children: [
-                                              Container(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 10,
-                                                        vertical: 8),
-                                                decoration: BoxDecoration(
-                                                  color: priorityColor(value
-                                                      .myIssuesList[index]
-                                                      .priority),
-                                                  borderRadius:
-                                                      BorderRadius.circular(8),
-                                                ),
-                                                child: Center(
-                                                  child: Text(
-                                                    value.myIssuesList[index]
-                                                        .priority,
-                                                    style: const TextStyle(
-                                                        color: Colors.white),
-                                                  ),
-                                                ),
+                                              PriorityBox(
+                                                value: value.myIssuesList[index]
+                                                    .priority,
                                               ),
                                               const Spacer(),
                                               IconButton(
@@ -199,49 +182,14 @@ class _MyIssuesState extends State<MyIssues> {
                                                 if (myId ==
                                                     value.myIssuesList[index]
                                                         .createdById)
-                                                  TextButton(
-                                                    onPressed: () async {
-                                                      await showEditDialog(
-                                                        context,
-                                                        value.myIssuesList[
-                                                            index],
-                                                      );
-                                                    },
-                                                    style: TextButton.styleFrom(
-                                                        foregroundColor:
-                                                            Colors.deepOrange),
-                                                    child: const Text("Edit"),
+                                                  CustomEditButton(
+                                                    issue: value
+                                                        .myIssuesList[index],
                                                   ),
-                                                TextButton(
-                                                  onPressed: () async {
-                                                    await showDeleteDialog(
-                                                            context)
-                                                        .then(
-                                                      (dialogBool) async {
-                                                        if (dialogBool !=
-                                                                null &&
-                                                            dialogBool ==
-                                                                true) {
-                                                          await value
-                                                              .deleteIssue(
-                                                                  issueId: value
-                                                                      .myIssuesList[
-                                                                          index]
-                                                                      .id,
-                                                                  authToken: widget
-                                                                      .authToken)
-                                                              .then(
-                                                                (_) => value
-                                                                    .getMyIssues(
-                                                                        widget
-                                                                            .authToken),
-                                                              );
-                                                        }
-                                                      },
-                                                    );
-                                                  },
-                                                  child: const Text("Delete"),
-                                                ),
+                                                CustomDeleteButton(
+                                                  issue:
+                                                      value.myIssuesList[index],
+                                                )
                                               ],
                                             ),
                                         ],

@@ -105,31 +105,10 @@ class _IssuesAssignedToMeState extends State<IssuesAssignedToMe> {
                                                   mainAxisSize:
                                                       MainAxisSize.min,
                                                   children: [
-                                                    Container(
-                                                      padding: const EdgeInsets
-                                                              .symmetric(
-                                                          horizontal: 10,
-                                                          vertical: 8),
-                                                      decoration: BoxDecoration(
-                                                          color: priorityColor(
-                                                              value
-                                                                  .myIssuesList[
-                                                                      index]
-                                                                  .priority),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(8)),
-                                                      child: Center(
-                                                        child: Text(
-                                                            value
-                                                                .myIssuesList[
-                                                                    index]
-                                                                .priority,
-                                                            style:
-                                                                const TextStyle(
-                                                                    color: Colors
-                                                                        .white)),
-                                                      ),
+                                                    PriorityBox(
+                                                      value: value
+                                                          .myIssuesList[index]
+                                                          .priority,
                                                     ),
                                                     const Spacer(),
                                                     IconButton(
@@ -222,50 +201,27 @@ class _IssuesAssignedToMeState extends State<IssuesAssignedToMe> {
                                                       Text(value
                                                           .myIssuesList[index]
                                                           .status),
-                                                      Spacer(),
+                                                      const Spacer(),
                                                       if (value
                                                               .myIssuesList[
                                                                   index]
                                                               .createdById ==
                                                           myId)
-                                                        TextButton(
-                                                          onPressed: () {
-                                                            showEditDialog(
-                                                                context,
-                                                                value.myIssuesList[
-                                                                    index]);
-                                                          },
-                                                          style: TextButton.styleFrom(
-                                                              foregroundColor:
-                                                                  Colors
-                                                                      .deepOrange),
-                                                          child: const Text(
-                                                            "Edit",
-                                                          ),
+                                                        CustomEditButton(
+                                                          issue: value
+                                                                  .myIssuesList[
+                                                              index],
                                                         ),
-                                                      TextButton(
-                                                        onPressed: () {
-                                                          showAssignDialog(
-                                                              context);
-                                                        },
-                                                        style: TextButton.styleFrom(
-                                                            foregroundColor:
-                                                                Colors
-                                                                    .deepOrange),
-                                                        child: const Text(
-                                                          "Assign To Other",
-                                                        ),
+                                                      CustomAssignToOtherButton(
+                                                        issue:
+                                                            value.myIssuesList[
+                                                                index],
                                                       ),
-                                                      TextButton(
-                                                        onPressed: () {},
-                                                        style: TextButton.styleFrom(
-                                                            foregroundColor:
-                                                                Colors
-                                                                    .deepOrange),
-                                                        child: const Text(
-                                                          "Update Status",
-                                                        ),
-                                                      ),
+                                                      CustomUpdateStatusButton(
+                                                        issue:
+                                                            value.myIssuesList[
+                                                                index],
+                                                      )
                                                     ],
                                                   ),
                                               ],

@@ -43,20 +43,7 @@ Future<bool?> showDescriptionDialog(BuildContext context, Issue issue) async {
                           SizedBox(
                             width: size.width / 2 * .03,
                           ),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 8),
-                            decoration: BoxDecoration(
-                                color: priorityColor(issue.priority),
-                                borderRadius: BorderRadius.circular(8)),
-                            child: Text(
-                              issue.priority,
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
+                          PriorityBox(value: issue.priority)
                         ],
                       ),
                     ),
@@ -86,19 +73,8 @@ Future<bool?> showDescriptionDialog(BuildContext context, Issue issue) async {
                           .copyWith(fontWeight: FontWeight.bold),
                     ),
                     hSizedBoxMedium(),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 8),
-                      decoration: BoxDecoration(
-                          color: statusColor(issue.status),
-                          borderRadius: BorderRadius.circular(8)),
-                      child: Text(
-                        issue.status.toUpperCase(),
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                    StatusBox(
+                      status: issue.status,
                     ),
                   ],
                 ),
@@ -115,11 +91,20 @@ Future<bool?> showDescriptionDialog(BuildContext context, Issue issue) async {
                 const Spacer(),
                 Align(
                   alignment: Alignment.bottomRight,
-                  child: ElevatedButton(
-                      child: Text("Dismiss"),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      }),
+                  child: OutlinedButton(
+                    child: const Text("Dismiss"),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    style: OutlinedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      side: BorderSide(
+                        width: 2,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -130,9 +115,9 @@ Future<bool?> showDescriptionDialog(BuildContext context, Issue issue) async {
     transitionBuilder: (_, anim, __, child) {
       Tween<Offset> tween;
       if (anim.status == AnimationStatus.reverse) {
-        tween = Tween(begin: Offset(0, .1), end: Offset.zero);
+        tween = Tween(begin: const Offset(0, .1), end: Offset.zero);
       } else {
-        tween = Tween(begin: Offset(0, -.1), end: Offset.zero);
+        tween = Tween(begin: const Offset(0, -.1), end: Offset.zero);
       }
 
       return SlideTransition(

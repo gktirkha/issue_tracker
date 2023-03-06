@@ -74,36 +74,24 @@ class _AssignedIssueHomeState extends State<AssignedIssueHome> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                      sortedListProvider
-                                          .sortedList[index].title,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleLarge),
+                                  Row(
+                                    children: [
+                                      Text(
+                                          sortedListProvider
+                                              .sortedList[index].title,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleLarge),
+                                      hSizedBoxMedium(),
+                                      PriorityBox(
+                                        value: sortedListProvider
+                                            .sortedList[index].priority,
+                                      ),
+                                    ],
+                                  ),
                                   vSizedBoxSmall(),
                                   Row(
                                     children: [
-                                      Container(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 10, vertical: 8),
-                                        decoration: BoxDecoration(
-                                          color: priorityColor(
-                                            sortedListProvider
-                                                .sortedList[index].priority,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            sortedListProvider
-                                                .sortedList[index].priority,
-                                            style:
-                                                TextStyle(color: Colors.white),
-                                          ),
-                                        ),
-                                      ),
-                                      hSizedBoxSmall(),
                                       SizedBox(
                                         width: widget.safesize.width * .18,
                                         child: Column(
@@ -166,38 +154,25 @@ class _AssignedIssueHomeState extends State<AssignedIssueHome> {
                                         ),
                                       ),
                                       const Spacer(),
-                                      TextButton(
-                                          onPressed: () async {
-                                            showDescriptionDialog(
-                                                context,
-                                                sortedListProvider
-                                                    .sortedList[index]);
-                                          },
-                                          child: Text("View")),
-                                      TextButton(
-                                          onPressed: () async {
-                                            showDescriptionDialog(
-                                                context,
-                                                sortedListProvider
-                                                    .sortedList[index]);
-                                          },
-                                          child: Text("Update Status")),
+                                      CustomViewIssueButton(
+                                        issue: sortedListProvider
+                                            .sortedList[index],
+                                      ),
+                                      CustomUpdateStatusButton(
+                                        issue: sortedListProvider
+                                            .sortedList[index],
+                                      ),
                                       if (sortedListProvider
                                               .sortedList[index].createdById ==
                                           myId)
-                                        TextButton(
-                                            onPressed: () {
-                                              showEditDialog(
-                                                  context,
-                                                  sortedListProvider
-                                                      .sortedList[index]);
-                                            },
-                                            child: Text("Edit")),
-                                      TextButton(
-                                          onPressed: () async {
-                                            showAssignDialog(context);
-                                          },
-                                          child: Text("Assign To other")),
+                                        CustomEditButton(
+                                          issue: sortedListProvider
+                                              .sortedList[index],
+                                        ),
+                                      CustomAssignToOtherButton(
+                                        issue: sortedListProvider
+                                            .sortedList[index],
+                                      ),
                                       SizedBox(
                                           width: widget.safesize.width * .03)
                                     ],

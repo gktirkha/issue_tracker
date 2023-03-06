@@ -77,36 +77,26 @@ class _MyIssueHomeState extends State<MyIssueHome> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                      sortedListProvider
-                                          .sortedList[index].title,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleLarge),
-                                  vSizedBoxSmall(),
                                   Row(
                                     children: [
-                                      Container(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 10, vertical: 8),
-                                        decoration: BoxDecoration(
-                                          color: priorityColor(
-                                            sortedListProvider
-                                                .sortedList[index].priority,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            sortedListProvider
-                                                .sortedList[index].priority,
-                                            style:
-                                                TextStyle(color: Colors.white),
-                                          ),
-                                        ),
+                                      Text(
+                                          sortedListProvider
+                                              .sortedList[index].title,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleLarge),
+                                      hSizedBoxMedium(),
+                                      PriorityBox(
+                                        value: sortedListProvider
+                                            .sortedList[index].priority,
                                       ),
-                                      hSizedBoxSmall(),
+                                    ],
+                                  ),
+                                  vSizedBoxSmall(),
+                                  Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
                                       SizedBox(
                                         width: widget.safesize.width * .18,
                                         child: Column(
@@ -192,89 +182,44 @@ class _MyIssueHomeState extends State<MyIssueHome> {
                                               ],
                                             ),
                                           ),
-                                          if (sortedListProvider
-                                                  .sortedList[index].status !=
-                                              UNASSIGNED)
-                                            Text.rich(
-                                              TextSpan(
-                                                children: [
-                                                  const TextSpan(
-                                                    text: "Assigned To: ",
-                                                    style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                    ),
-                                                  ),
-                                                  TextSpan(
-                                                      text: sortedListProvider
-                                                          .sortedList[index]
-                                                          .assignedTo),
-                                                ],
-                                              ),
-                                            ),
                                         ],
                                       ),
+                                      Text.rich(
+                                        TextSpan(
+                                          children: [
+                                            const TextSpan(
+                                              text: "Assigned To : ",
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            TextSpan(
+                                              text: sortedListProvider
+                                                      .sortedList[index]
+                                                      .assignedTo ??
+                                                  "None",
+                                            ),
+                                          ],
+                                        ),
+                                      ),
                                       const Spacer(),
-                                      TextButton(
-                                        onPressed: () {
-                                          showEditDialog(
-                                              context,
-                                              sortedListProvider
-                                                  .sortedList[index]);
-                                        },
-                                        child: Text("Edit"),
+                                      CustomEditButton(
+                                        issue: sortedListProvider
+                                            .sortedList[index],
                                       ),
                                       if (sortedListProvider
                                               .sortedList[index].assignedToId ==
                                           myId)
-                                        TextButton(
-                                            onPressed: () async {
-                                              showDescriptionDialog(
-                                                  context,
-                                                  sortedListProvider
-                                                      .sortedList[index]);
-                                            },
-                                            child: Text("Update Status")),
-                                      TextButton(
-                                        onPressed: () {
-                                          showDescriptionDialog(
-                                              context,
-                                              sortedListProvider
-                                                  .sortedList[index]);
-                                        },
-                                        child: Text("View"),
-                                      ),
-                                      Consumer<MyIssuesProvider>(
-                                        builder: (context, value, child) =>
-                                            TextButton(
-                                          onPressed: () async {
-                                            await showDeleteDialog(context)
-                                                .then(
-                                              (dialogBool) async {
-                                                if (dialogBool != null &&
-                                                    dialogBool == true) {
-                                                  await value
-                                                      .deleteIssue(
-                                                          issueId: value
-                                                              .myIssuesList[
-                                                                  index]
-                                                              .id,
-                                                          authToken:
-                                                              widget.authToken)
-                                                      .then(
-                                                        (_) => value
-                                                            .getMyIssues(widget
-                                                                .authToken)
-                                                            .then((value) {
-                                                          refresh();
-                                                        }),
-                                                      );
-                                                }
-                                              },
-                                            );
-                                          },
-                                          child: const Text("Delete"),
+                                        CustomUpdateStatusButton(
+                                          issue: sortedListProvider
+                                              .sortedList[index],
                                         ),
+                                      CustomViewIssueButton(
+                                        issue: sortedListProvider
+                                            .sortedList[index],
+                                      ),
+                                      CustomDeleteButton(
+                                        issue: sortedListProvider
+                                            .sortedList[index],
                                       ),
                                       SizedBox(
                                           width: widget.safesize.width * .03)
