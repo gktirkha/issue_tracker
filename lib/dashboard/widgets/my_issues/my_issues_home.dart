@@ -26,10 +26,12 @@ class _MyIssueHomeState extends State<MyIssueHome> {
   void initState() {
     super.initState();
 
-    if (!Provider.of<MyIssuesProvider>(context, listen: false).isLoading) {
-      Provider.of<SortedListProvider>(context, listen: false).setSortedList(
-          Provider.of<MyIssuesProvider>(context, listen: false).myIssuesList);
-    }
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if (!Provider.of<MyIssuesProvider>(context, listen: false).isLoading) {
+        Provider.of<SortedListProvider>(context, listen: false).setSortedList(
+            Provider.of<MyIssuesProvider>(context, listen: false).myIssuesList);
+      }
+    });
   }
 
   ValueNotifier<bool> isExpanded = ValueNotifier(false);

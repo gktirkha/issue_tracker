@@ -25,8 +25,8 @@ Future<String?> showAssignDialog(BuildContext context) async {
 
       return Center(
         child: Container(
-          width: size.width / 2,
-          height: size.height * .55,
+          width: size.width * .6,
+          height: size.height * .75,
           padding: EdgeInsets.all(8),
           decoration: const BoxDecoration(
             color: Colors.white,
@@ -46,7 +46,7 @@ Future<String?> showAssignDialog(BuildContext context) async {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
-                            width: size.width / 2 * .48,
+                            width: size.width / 2 * .50,
                             height: size.height / 2,
                             padding: const EdgeInsets.all(16),
                             child: ListView.separated(
@@ -69,7 +69,7 @@ Future<String?> showAssignDialog(BuildContext context) async {
                           ),
                           VerticalDivider(width: size.width / 2 * .02),
                           Container(
-                            width: size.width / 2 * .48,
+                            width: size.width / 2 * .50,
                             height: size.height / 2,
                             padding: const EdgeInsets.all(16),
                             child: ValueListenableBuilder(

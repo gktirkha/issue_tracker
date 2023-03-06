@@ -91,6 +91,12 @@ Future<bool?> showEditDialog(BuildContext context, Issue selectedIssue) async {
                             : null),
                   ),
                 ),
+                Text.rich(TextSpan(children: [
+                  TextSpan(
+                    text:
+                        ("Assigned To : ${selectedIssue.assignedTo ?? "none"}"),
+                  )
+                ])),
                 const Spacer(),
                 Row(
                   children: [

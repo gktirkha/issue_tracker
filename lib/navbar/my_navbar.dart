@@ -60,7 +60,7 @@ class MyNavBar extends StatelessWidget {
                     SizedBox(
                       width: safeSize.width * .03,
                     ),
-                    Text(navbarData[index].title),
+                    Flexible(child: Text(navbarData[index].title)),
                   ],
                 ),
               );

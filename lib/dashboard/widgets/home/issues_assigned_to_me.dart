@@ -20,8 +20,10 @@ class _IssuesAssignedToMeState extends State<IssuesAssignedToMe> {
   @override
   void initState() {
     super.initState();
-    Provider.of<IssuesAssignedToMeProvider>(context, listen: false)
-        .getIssuesAssignedToMe(widget.authToken);
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      Provider.of<IssuesAssignedToMeProvider>(context, listen: false)
+          .getIssuesAssignedToMe(widget.authToken);
+    });
   }
 
   @override

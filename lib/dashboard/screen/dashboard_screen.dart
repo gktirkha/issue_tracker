@@ -32,16 +32,18 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   @override
   void initState() {
     super.initState();
-    Provider.of<AreaChartProvider>(context, listen: false);
-    Provider.of<DonutChartProvider>(context, listen: false)
-        .getDonutData(widget.authToken);
-    Provider.of<MyIssuesProvider>(context, listen: false)
-        .getMyIssues(widget.authToken);
-    Provider.of<AllIssuesProvider>(context, listen: false)
-        .getAllIssues(widget.authToken);
-    Provider.of<AllUserProvider>(context, listen: false).getAllUsers();
-    Provider.of<IssuesAssignedToMeProvider>(context, listen: false)
-        .getIssuesAssignedToMe(widget.authToken);
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      Provider.of<AreaChartProvider>(context, listen: false);
+      Provider.of<DonutChartProvider>(context, listen: false)
+          .getDonutData(widget.authToken);
+      Provider.of<MyIssuesProvider>(context, listen: false)
+          .getMyIssues(widget.authToken);
+      Provider.of<AllIssuesProvider>(context, listen: false)
+          .getAllIssues(widget.authToken);
+      Provider.of<AllUserProvider>(context, listen: false).getAllUsers();
+      Provider.of<IssuesAssignedToMeProvider>(context, listen: false)
+          .getIssuesAssignedToMe(widget.authToken);
+    });
   }
 
   @override
