@@ -1,4 +1,5 @@
 import 'package:brd_issue_tracker/dashboard/provider/issues_assigned_to_me_provider.dart';
+import 'package:brd_issue_tracker/dashboard/widgets/dialogs/create_issue_dialog.dart';
 import 'package:brd_issue_tracker/login/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -69,7 +70,11 @@ class StatBoxRow extends StatelessWidget {
                     ),
               hSizedBoxSmall(),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () async {
+                  await showCreateDialog(context).then(
+                    (value) => refresh(context),
+                  );
+                },
                 style: ElevatedButton.styleFrom(
                     shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(

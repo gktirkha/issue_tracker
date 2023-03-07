@@ -1,5 +1,6 @@
 import 'package:brd_issue_tracker/dashboard/api/assign_issue_api.dart';
 import 'package:brd_issue_tracker/dashboard/api/my_issue_list_api.dart';
+import 'package:brd_issue_tracker/dashboard/api/update_status_api.dart';
 import 'package:brd_issue_tracker/dashboard/widgets/dialogs/delete_dialog.dart';
 import 'package:brd_issue_tracker/dashboard/widgets/dialogs/edit_dialog.dart';
 import 'package:brd_issue_tracker/dashboard/widgets/dialogs/show_description_dialog.dart';
@@ -216,12 +217,31 @@ class CustomUpdateStatusButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final String token =
+        Provider.of<AuthProvider>(context, listen: false).loggedInUser!.token!;
     return ValueListenableBuilder(
       valueListenable: loadingBool,
       builder: (context, value, child) {
-        return TextButton(
-          onPressed: value ? null : () async {},
-          child: const Text("Update Status"),
+        return PopupMenuButton<String>(
+          onSelected: (value) async {
+            await updateStatusService(issue.id, value, token).then(
+              (value) => refresh(context),
+            );
+          },
+          child: Text(
+            "Update Status",
+            style: TextStyle(
+                color: Theme.of(context).colorScheme.primary,
+                fontWeight: FontWeight.w500),
+          ),
+          itemBuilder: (context) => [
+            ...statusList.map(
+              (e) => PopupMenuItem(
+                value: e,
+                child: Text(e),
+              ),
+            ),
+          ],
         );
       },
     );
@@ -297,4 +317,6 @@ Future<void> refresh(BuildContext context) async {
   Provider.of<AllUserProvider>(context, listen: false).getAllUsers(authToken);
   Provider.of<IssuesAssignedToMeProvider>(context, listen: false)
       .getIssuesAssignedToMe(authToken);
+
+  Provider.of<AreaChartProvider>(context, listen: false).getAreaData(authToken);
 }

@@ -14,7 +14,7 @@ class NavBarData {
 
 List<NavBarData> get userButtonData => [
       NavBarData(title: "Dash Board", icon: Icons.dashboard),
-      NavBarData(title: "Issues Assigned To Me", icon: Icons.dashboard),
-      NavBarData(title: "Issues Created By Me", icon: Icons.dashboard),
+      NavBarData(title: "Assigned To Me", icon: Icons.dashboard),
+      NavBarData(title: "Created By Me", icon: Icons.dashboard),
       NavBarData(title: "All Issues", icon: Icons.all_inbox),
     ];

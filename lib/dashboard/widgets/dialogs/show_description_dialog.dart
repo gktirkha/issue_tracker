@@ -1,6 +1,6 @@
 import 'package:brd_issue_tracker/shared/models/issues_model.dart';
 import 'package:brd_issue_tracker/shared/util_widgets.dart';
-import 'package:brd_issue_tracker/static_data.dart';
+
 import 'package:flutter/material.dart';
 
 Future<bool?> showDescriptionDialog(BuildContext context, Issue issue) async {
@@ -9,15 +9,15 @@ Future<bool?> showDescriptionDialog(BuildContext context, Issue issue) async {
     barrierLabel: "Barrier",
     barrierDismissible: true,
     barrierColor: Colors.black.withOpacity(0.5),
-    transitionDuration: Duration(milliseconds: 400),
+    transitionDuration: const Duration(milliseconds: 400),
     pageBuilder: (_, __, ___) {
       Size size = MediaQuery.of(context).size;
       return Center(
         child: Container(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           width: size.width / 2,
           height: size.height / 2,
-          margin: EdgeInsets.symmetric(horizontal: 20),
+          margin: const EdgeInsets.symmetric(horizontal: 20),
           decoration: BoxDecoration(
               color: Colors.white, borderRadius: BorderRadius.circular(20)),
           child: Material(
@@ -28,24 +28,21 @@ Future<bool?> showDescriptionDialog(BuildContext context, Issue issue) async {
               children: [
                 Row(
                   children: [
-                    Container(
-                      child: Row(
-                        // mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            "${issue.title}: ",
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleLarge!
-                                .copyWith(fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(
-                            width: size.width / 2 * .03,
-                          ),
-                          PriorityBox(value: issue.priority)
-                        ],
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          "${issue.title}: ",
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleLarge!
+                              .copyWith(fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(
+                          width: size.width / 2 * .03,
+                        ),
+                        PriorityBox(value: issue.priority)
+                      ],
                     ),
                     const Spacer(),
                     Text(
