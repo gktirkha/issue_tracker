@@ -68,118 +68,145 @@ class _AssignedIssueHomeState extends State<AssignedIssueHome> {
                 : assignedToMeProvider.isError
                     ? const Center(child: Text("Error Occured"))
                     : ListView.separated(
-                        itemBuilder: (context, index) => Container(
-                              padding: EdgeInsets.all(myPadding),
-                              color: const Color.fromARGB(255, 244, 246, 247),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Text(
-                                          sortedListProvider
-                                              .sortedList[index].title,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .titleLarge),
-                                      hSizedBoxMedium(),
-                                      PriorityBox(
-                                        value: sortedListProvider
-                                            .sortedList[index].priority,
-                                      ),
-                                    ],
-                                  ),
-                                  vSizedBoxSmall(),
-                                  Row(
-                                    children: [
-                                      SizedBox(
-                                        width: widget.safesize.width * .18,
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text.rich(
-                                              TextSpan(
-                                                children: [
-                                                  const TextSpan(
-                                                    text: "Created By: ",
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  ),
-                                                  TextSpan(
-                                                    text: sortedListProvider
-                                                        .sortedList[index]
-                                                        .createdBy,
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            Text.rich(
-                                              TextSpan(
-                                                children: [
-                                                  const TextSpan(
-                                                    text: "Created : ",
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  ),
-                                                  TextSpan(
-                                                    text: getIssueDayString(
-                                                        sortedListProvider
-                                                            .sortedList[index]
-                                                            .createdAt),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      Text.rich(
-                                        TextSpan(
-                                          children: [
-                                            const TextSpan(
-                                              text: "Last Updated : ",
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold),
-                                            ),
+                        itemBuilder: (context, index) {
+                          return Container(
+                            padding: EdgeInsets.all(myPadding),
+                            color: const Color.fromARGB(255, 244, 246, 247),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Text(
+                                        sortedListProvider
+                                            .sortedList[index].title,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleLarge),
+                                    hSizedBoxMedium(),
+                                    PriorityBox(
+                                      value: sortedListProvider
+                                          .sortedList[index].priority,
+                                    ),
+                                  ],
+                                ),
+                                vSizedBoxSmall(),
+                                Row(
+                                  children: [
+                                    SizedBox(
+                                      width: widget.safesize.width * .18,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text.rich(
                                             TextSpan(
-                                              text: getIssueDayString(
-                                                  sortedListProvider
+                                              children: [
+                                                const TextSpan(
+                                                  text: "Created By: ",
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                                TextSpan(
+                                                  text: sortedListProvider
                                                       .sortedList[index]
-                                                      .updatedAt),
+                                                      .createdBy,
+                                                ),
+                                              ],
                                             ),
-                                          ],
-                                        ),
+                                          ),
+                                          Text.rich(
+                                            TextSpan(
+                                              children: [
+                                                const TextSpan(
+                                                  text: "Created : ",
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                                TextSpan(
+                                                  text: getIssueDayString(
+                                                      sortedListProvider
+                                                          .sortedList[index]
+                                                          .createdAt),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                      const Spacer(),
-                                      CustomViewIssueButton(
+                                    ),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text.rich(
+                                          TextSpan(
+                                            children: [
+                                              const TextSpan(
+                                                text: "Last Updated : ",
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              TextSpan(
+                                                text: getIssueDayString(
+                                                    sortedListProvider
+                                                        .sortedList[index]
+                                                        .updatedAt),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Text.rich(
+                                          TextSpan(
+                                            children: [
+                                              const TextSpan(
+                                                text: "Status : ",
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              TextSpan(
+                                                text: sortedListProvider
+                                                    .sortedList[index].status,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    const Spacer(),
+                                    CustomViewIssueButton(
+                                      issue:
+                                          sortedListProvider.sortedList[index],
+                                    ),
+                                    CustomUpdateStatusButton(
+                                      issue:
+                                          sortedListProvider.sortedList[index],
+                                    ),
+                                    if (sortedListProvider
+                                            .sortedList[index].createdById ==
+                                        myId)
+                                      CustomEditButton(
                                         issue: sortedListProvider
                                             .sortedList[index],
                                       ),
-                                      CustomUpdateStatusButton(
-                                        issue: sortedListProvider
-                                            .sortedList[index],
-                                      ),
-                                      if (sortedListProvider
-                                              .sortedList[index].createdById ==
-                                          myId)
-                                        CustomEditButton(
-                                          issue: sortedListProvider
-                                              .sortedList[index],
-                                        ),
+                                    if (sortedListProvider
+                                            .sortedList[index].status !=
+                                        COMPLETED)
                                       CustomAssignToOtherButton(
                                         issue: sortedListProvider
                                             .sortedList[index],
                                       ),
-                                      SizedBox(
-                                          width: widget.safesize.width * .03)
-                                    ],
-                                  )
-                                ],
-                              ),
+                                    SizedBox(width: widget.safesize.width * .03)
+                                  ],
+                                )
+                              ],
                             ),
+                          );
+                        },
                         separatorBuilder: (context, index) =>
                             const SizedBox(height: 10),
                         itemCount: sortedListProvider.sortedList.length),

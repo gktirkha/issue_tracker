@@ -106,7 +106,7 @@ Future<dynamic> showAssignDialog(BuildContext context) async {
                         children: [
                           ElevatedButton(
                             onPressed: () {
-                              log(list[selUserIndex.value].name);
+                              Navigator.pop(context);
                             },
                             child: const Text("Discard"),
                           ),

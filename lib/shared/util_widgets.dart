@@ -1,8 +1,19 @@
+import 'package:brd_issue_tracker/dashboard/api/assign_issue_api.dart';
+import 'package:brd_issue_tracker/dashboard/api/my_issue_list_api.dart';
 import 'package:brd_issue_tracker/dashboard/widgets/dialogs/delete_dialog.dart';
 import 'package:brd_issue_tracker/dashboard/widgets/dialogs/edit_dialog.dart';
 import 'package:brd_issue_tracker/dashboard/widgets/dialogs/show_description_dialog.dart';
+import 'package:brd_issue_tracker/login/providers/auth_provider.dart';
+import 'package:brd_issue_tracker/shared/models/user_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../dashboard/provider/all_issue_provider.dart';
+import '../dashboard/provider/all_user_provider.dart';
+import '../dashboard/provider/area_chart_provider.dart';
+import '../dashboard/provider/donut_chart_provider.dart';
+import '../dashboard/provider/issues_assigned_to_me_provider.dart';
+import '../dashboard/provider/my_issue_provider.dart';
 import '../dashboard/widgets/dialogs/assign_to_dialog.dart';
 import '../static_data.dart';
 import 'models/issues_model.dart';
@@ -108,7 +119,10 @@ class CustomEditButton extends StatelessWidget {
           onPressed: value
               ? null
               : () async {
-                  await showEditDialog(context, issue);
+                  loadingBool.value = true;
+                  await showEditDialog(context, issue).then(
+                    (value) => loadingBool.value = false,
+                  );
                 },
           child: const Text("Edit"),
         );
@@ -124,6 +138,8 @@ class CustomDeleteButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final String token =
+        Provider.of<AuthProvider>(context, listen: false).loggedInUser!.token!;
     return ValueListenableBuilder(
       valueListenable: loadingBool,
       builder: (context, value, child) {
@@ -131,7 +147,18 @@ class CustomDeleteButton extends StatelessWidget {
           onPressed: value
               ? null
               : () async {
-                  await showDeleteDialog(context);
+                  loadingBool.value = true;
+                  await showDeleteDialog(context)
+                      .then((value) {
+                        if (value == true) {
+                          deleteIssueService(
+                              issueId: issue.id, authToken: token);
+                        }
+                      })
+                      .then(
+                        (value) => loadingBool.value = false,
+                      )
+                      .then((value) => refresh(context));
                 },
           child: const Text("Delete"),
         );
@@ -147,6 +174,8 @@ class CustomAssignToOtherButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final String token =
+        Provider.of<AuthProvider>(context, listen: false).loggedInUser!.token!;
     return ValueListenableBuilder(
       valueListenable: loadingBool,
       builder: (context, value, child) {
@@ -154,7 +183,24 @@ class CustomAssignToOtherButton extends StatelessWidget {
           onPressed: value
               ? null
               : () async {
-                  await showAssignDialog(context);
+                  loadingBool.value = true;
+                  try {
+                    await showAssignDialog(context).then(
+                      (value) {
+                        if (value["id"] != null) {
+                          assignIssue(
+                            authToken: token,
+                            issueID: issue.id,
+                            userID: value["id"],
+                          );
+                        }
+                      },
+                    ).then((value) {
+                      refresh(context);
+                    });
+                  } finally {
+                    loadingBool.value = false;
+                  }
                 },
           child: const Text("Assign To Other"),
         );
@@ -212,6 +258,8 @@ class CustomAssignToMeButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final UserModel user =
+        Provider.of<AuthProvider>(context, listen: false).loggedInUser!;
     return ValueListenableBuilder(
       valueListenable: loadingBool,
       builder: (context, value, child) {
@@ -219,11 +267,34 @@ class CustomAssignToMeButton extends StatelessWidget {
           onPressed: value
               ? null
               : () async {
-                  await showDescriptionDialog(context, issue);
+                  loadingBool.value = true;
+                  try {
+                    await assignIssue(
+                            issueID: issue.id,
+                            userID: user.id,
+                            authToken: user.token!)
+                        .then((value) => refresh(context));
+                  } finally {
+                    loadingBool.value = false;
+                  }
                 },
           child: const Text("Assign To Me"),
         );
       },
     );
   }
+}
+
+Future<void> refresh(BuildContext context) async {
+  String authToken =
+      Provider.of<AuthProvider>(context, listen: false).loggedInUser!.token!;
+  Provider.of<AreaChartProvider>(context, listen: false);
+  Provider.of<DonutChartProvider>(context, listen: false)
+      .getDonutData(authToken);
+  Provider.of<MyIssuesProvider>(context, listen: false).getMyIssues(authToken);
+  Provider.of<AllIssuesProvider>(context, listen: false)
+      .getAllIssues(authToken);
+  Provider.of<AllUserProvider>(context, listen: false).getAllUsers(authToken);
+  Provider.of<IssuesAssignedToMeProvider>(context, listen: false)
+      .getIssuesAssignedToMe(authToken);
 }

@@ -8,6 +8,7 @@ import 'package:brd_issue_tracker/dashboard/widgets/all_issues/all_issues_home.d
 import 'package:brd_issue_tracker/dashboard/widgets/my_issues/my_issues_home.dart';
 import 'package:brd_issue_tracker/login/providers/auth_provider.dart';
 import 'package:brd_issue_tracker/shared/models/user_model.dart';
+import 'package:brd_issue_tracker/shared/util_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../navbar/my_navbar.dart';
@@ -32,30 +33,22 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      Provider.of<AreaChartProvider>(context, listen: false);
-      Provider.of<DonutChartProvider>(context, listen: false)
-          .getDonutData(widget.authToken);
-      Provider.of<MyIssuesProvider>(context, listen: false)
-          .getMyIssues(widget.authToken);
-      Provider.of<AllIssuesProvider>(context, listen: false)
-          .getAllIssues(widget.authToken);
-      Provider.of<AllUserProvider>(context, listen: false).getAllUsers();
-      Provider.of<IssuesAssignedToMeProvider>(context, listen: false)
-          .getIssuesAssignedToMe(widget.authToken);
-    });
+    WidgetsBinding.instance.addPostFrameCallback(
+      (timeStamp) {
+        refresh(context);
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    allUsersApi();
     MediaQueryData mediaQueryData = MediaQuery.of(context);
     double myPadding = 12;
     Size safeSize = Size(mediaQueryData.size.width - myPadding * 2,
         mediaQueryData.size.height - myPadding * 2);
 
     bool searchbool = false;
-    // bool searchbool = _selectIndex != 0;
+
     UserModel loggedInUser =
         Provider.of<AuthProvider>(context, listen: false).loggedInUser!;
     List<Widget> route = [
@@ -94,20 +87,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                       StatBoxRow(
                         searchBool: searchbool,
                         voidCallback: () {
-                          Provider.of<AreaChartProvider>(context,
-                              listen: false);
-                          Provider.of<DonutChartProvider>(context,
-                                  listen: false)
-                              .getDonutData(widget.authToken);
-                          Provider.of<MyIssuesProvider>(context, listen: false)
-                              .getMyIssues(widget.authToken);
-                          Provider.of<AllIssuesProvider>(context, listen: false)
-                              .getAllIssues(widget.authToken);
-                          Provider.of<AllUserProvider>(context, listen: false)
-                              .getAllUsers();
-                          Provider.of<IssuesAssignedToMeProvider>(context,
-                                  listen: false)
-                              .getIssuesAssignedToMe(widget.authToken);
+                          refresh(context);
                         },
                       ),
                       Padding(

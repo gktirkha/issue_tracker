@@ -27,15 +27,3 @@ Future<List<Issue>?> allIssueApiCallService(String authToken) async {
   }
   return [..._allIssueList];
 }
-
-Future<void> deleteIssueService(
-    {required String issueId, required String authToken}) async {
-  try {
-    await Dio().delete(
-      "$host/api/deleteIssue/$issueId",
-      data: {"token": authToken},
-    );
-  } catch (e) {
-    dev.log(e.toString(), name: "All Issues Exception while delete");
-  }
-}

@@ -1,15 +1,10 @@
-import 'package:brd_issue_tracker/dashboard/widgets/dialogs/assign_to_dialog.dart';
-import 'package:brd_issue_tracker/dashboard/widgets/dialogs/edit_dialog.dart';
 import 'package:brd_issue_tracker/login/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
-
 import '../../../shared/util.dart';
 import '../../../shared/util_widgets.dart';
-import '../../../static_data.dart';
 import '../../provider/my_issue_provider.dart';
-import '../dialogs/delete_dialog.dart';
 
 class MyIssues extends StatefulWidget {
   const MyIssues({super.key, required this.authToken});
@@ -24,6 +19,7 @@ class _MyIssuesState extends State<MyIssues> {
   Widget build(BuildContext context) {
     String myId =
         Provider.of<AuthProvider>(context, listen: false).loggedInUser!.id;
+
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Consumer<MyIssuesProvider>(

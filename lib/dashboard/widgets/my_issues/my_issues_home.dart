@@ -45,13 +45,6 @@ class _MyIssueHomeState extends State<MyIssueHome> {
     String myId =
         Provider.of<AuthProvider>(context, listen: false).loggedInUser!.id;
 
-    void refresh() {
-      if (!Provider.of<MyIssuesProvider>(context, listen: false).isLoading) {
-        Provider.of<SortedListProvider>(context, listen: false).setSortedList(
-            Provider.of<MyIssuesProvider>(context, listen: false).myIssuesList);
-      }
-    }
-
     return Container(
       height: widget.safesize.height * .90,
       width: widget.safesize.width * .90,

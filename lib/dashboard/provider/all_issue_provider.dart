@@ -36,9 +36,4 @@ class AllIssuesProvider with ChangeNotifier {
     _myIssuesList.addAll(res);
     setLoading(false);
   }
-
-  Future<void> deleteIssue(
-      {required String issueId, required String authToken}) async {
-    await deleteIssueService(issueId: issueId, authToken: authToken);
-  }
 }

@@ -4,10 +4,13 @@ import 'package:brd_issue_tracker/shared/models/user_model.dart';
 import 'package:brd_issue_tracker/static_data.dart';
 import 'package:dio/dio.dart';
 
-Future<Map<String, List<UserModel>>?> allUsersApi() async {
+Future<Map<String, List<UserModel>>?> allUsersApi(String token) async {
   Map<String, List<UserModel>> _userMap = {};
   try {
-    final res = await Dio().get("$host/api/viewUser");
+    final res = await Dio().get(
+      "$host/api/viewUser",
+      options: Options(headers: {"Authorization": token}),
+    );
     if (res.statusCode != 200) {
       throw Exception("Invalid Status Code");
     }
