@@ -9,14 +9,13 @@ Future<List<Issue>?> issuesAssignedToMeService(String authToken) async {
   try {
     dev.log("myIssueApiCall called", name: "My Issues API");
     final res = await Dio().get(
-      "$host/api/userAssignedIssues",
+      "$host/userAssignedIssues",
       data: {"token": authToken},
     );
     dev.log(res.statusCode.toString(), name: "Issues Assigned To Me Res");
     if (!(res.statusCode != 201 || res.statusCode != 200)) {
       throw Exception("Invalid Status Code");
     }
-    // if (res.data["success"] != true) throw Exception("Invalid Status Code");
 
     _issuesAssignedToMeList.clear();
 

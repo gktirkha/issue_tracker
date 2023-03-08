@@ -8,7 +8,7 @@ Future<void> deleteIssueService(
     {required String issueId, required String authToken}) async {
   try {
     await Dio().delete(
-      "$host/api/deleteIssue/$issueId",
+      "$host/deleteIssue/$issueId",
       data: {"token": authToken},
     );
   } catch (e) {

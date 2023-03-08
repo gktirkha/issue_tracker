@@ -1,5 +1,6 @@
 import 'package:brd_issue_tracker/dashboard/provider/issues_assigned_to_me_provider.dart';
 import 'package:brd_issue_tracker/dashboard/widgets/dialogs/create_issue_dialog.dart';
+import 'package:brd_issue_tracker/dashboard/widgets/dialogs/new_user_dialog.dart';
 import 'package:brd_issue_tracker/login/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -7,7 +8,6 @@ import 'package:provider/provider.dart';
 
 import '../../shared/util_widgets.dart';
 import '../provider/donut_chart_provider.dart';
-import '../provider/issues_created_by_me_provider.dart';
 
 class StatBoxRow extends StatelessWidget {
   const StatBoxRow(
@@ -17,6 +17,7 @@ class StatBoxRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isAdmin = Provider.of<AuthProvider>(context).loggedInUser!.isAdmin;
     return Container(
       color: Colors.blueGrey[100],
       padding: const EdgeInsets.all(30),
@@ -69,11 +70,25 @@ class StatBoxRow extends StatelessWidget {
                       ),
                     ),
               hSizedBoxSmall(),
+              if (isAdmin)
+                ElevatedButton(
+                  onPressed: () async {
+                    await showNewUserDialog(context);
+                  },
+                  style: ElevatedButton.styleFrom(
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(10),
+                        ),
+                      ),
+                      padding: const EdgeInsets.all(22),
+                      backgroundColor: Colors.deepOrange),
+                  child: const Text("Create a New User"),
+                ),
+              hSizedBoxSmall(),
               ElevatedButton(
                 onPressed: () async {
-                  await showCreateDialog(context).then(
-                    (value) => refresh(context),
-                  );
+                  await showCreateDialog(context);
                 },
                 style: ElevatedButton.styleFrom(
                     shape: const RoundedRectangleBorder(

@@ -9,7 +9,7 @@ Future<List<Issue>?> issuesCreatedByMeService(String authToken) async {
   try {
     dev.log("myIssueApiCall called", name: "My Issues API");
     final res = await Dio().get(
-      "$host/api/userIssues",
+      "$host/userIssues",
       data: {"token": authToken},
     );
     dev.log(res.statusCode.toString(), name: "My Issue resCode");

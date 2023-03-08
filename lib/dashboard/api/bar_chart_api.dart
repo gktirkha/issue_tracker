@@ -7,7 +7,7 @@ Future<Map<String, int>?> areaChart(String token) async {
   Map<String, int> barChartMap = {};
   try {
     final res = await Dio().get(
-      "$host/api/barChart",
+      "$host/barChart",
       options: Options(
         headers: {
           "Authorization": token,

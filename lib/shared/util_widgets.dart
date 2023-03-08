@@ -149,17 +149,7 @@ class CustomDeleteButton extends StatelessWidget {
               ? null
               : () async {
                   loadingBool.value = true;
-                  await showDeleteDialog(context)
-                      .then((value) {
-                        if (value == true) {
-                          deleteIssueService(
-                              issueId: issue.id, authToken: token);
-                        }
-                      })
-                      .then(
-                        (value) => loadingBool.value = false,
-                      )
-                      .then((value) => refresh(context));
+                  await showDeleteDialog(context, issue, token);
                 },
           child: const Text("Delete"),
         );
@@ -328,5 +318,29 @@ class CustomDeleteUserButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(onPressed: () {}, child: Text("Delete"));
+  }
+}
+
+class AdminBox extends StatelessWidget {
+  const AdminBox({
+    super.key,
+    required this.isAdmin,
+  });
+  final bool isAdmin;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+          color: isAdmin ? Colors.green : Colors.yellow),
+      child: Center(
+        child: Text(
+          isAdmin ? "admin" : "not Admin",
+          style: const TextStyle(color: Colors.white),
+        ),
+      ),
+    );
   }
 }

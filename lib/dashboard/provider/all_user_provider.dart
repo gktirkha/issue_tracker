@@ -39,9 +39,10 @@ class AllUserProvider with ChangeNotifier {
 
   Future<void> getAllUsers(String token) async {
     log("All User Api Called", name: "All User Api");
-    final res = await allUsersApi(token);
+
     if (isError) setError(false);
     if (!isLoading) setLoading(true);
+    final res = await allUsersApi(token);
     if (res == null) {
       setError(true);
       setLoading(false);

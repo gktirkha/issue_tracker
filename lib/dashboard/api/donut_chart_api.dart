@@ -7,7 +7,7 @@ Future<Map<String, dynamic>?> donutChartService(String authToken) async {
   dev.log("DonutChartApi called", name: "Donut Chart API");
   try {
     final res = await Dio().get(
-      "$host/api/statusFilterCount",
+      "$host/statusFilterCount",
       data: {"token": authToken},
     );
     final Map donutChartMap = res.data["data"];

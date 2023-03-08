@@ -8,7 +8,7 @@ Future<Map<String, List<UserModel>>?> allUsersApi(String token) async {
   Map<String, List<UserModel>> _userMap = {};
   try {
     final res = await Dio().get(
-      "$host/api/viewUser",
+      "$host/viewUser",
       options: Options(headers: {"Authorization": token}),
     );
     if (res.statusCode != 200) {

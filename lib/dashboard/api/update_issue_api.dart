@@ -13,7 +13,7 @@ Future<void> updateIssueService({
 }) async {
   try {
     final res = await Dio().patch(
-      "$host/api/updateIssue/$id",
+      "$host/updateIssue/$id",
       data: {
         "title": title,
         "description": description,

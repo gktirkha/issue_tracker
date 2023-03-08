@@ -1,7 +1,12 @@
+import 'package:brd_issue_tracker/dashboard/api/delete_issue_api.dart';
+import 'package:brd_issue_tracker/shared/models/issues_model.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../../../shared/util_widgets.dart';
 
-Future<bool?> showDeleteDialog(BuildContext context) async {
+Future<bool?> showDeleteDialog(
+    BuildContext context, Issue issue, String token) async {
+  ValueNotifier<bool> isEnable = ValueNotifier(true);
   return showGeneralDialog<bool>(
     context: context,
     barrierLabel: "Barrier",
@@ -26,13 +31,26 @@ Future<bool?> showDeleteDialog(BuildContext context) async {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.deepOrange),
-                      onPressed: () {
-                        Navigator.pop(context, true);
-                      },
-                      child: Text("yes"),
+                    ValueListenableBuilder(
+                      valueListenable: isEnable,
+                      builder: (context, value, child) => ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.deepOrange),
+                        onPressed: !value
+                            ? null
+                            : () async {
+                                isEnable.value = !value;
+                                await deleteIssueService(
+                                        issueId: issue.id, authToken: token)
+                                    .then(
+                                  (value) {
+                                    refresh(context);
+                                    Navigator.pop(context);
+                                  },
+                                );
+                              },
+                        child: Text("yes"),
+                      ),
                     ),
                     hSizedBoxMedium(),
                     ElevatedButton(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-String host = "http://localhost:4000";
+String host = "http://localhost:4000/api";
 
 String get HIGH_PRIORITY => "HIGH";
 String get LOW_PRIORITY => "LOW";
@@ -72,3 +72,5 @@ Color statusColor(String status) {
   }
   return color;
 }
+
+List<String> departmentList = ['React', 'Node', 'Flutter', 'Java'];

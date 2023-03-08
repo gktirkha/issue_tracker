@@ -56,7 +56,7 @@ Future<bool?> showEditDialog(BuildContext context, Issue selectedIssue) async {
                 if (!enableEditting)
                   const Text("The Issue Is Not Created By You"),
                 if (isCompleted)
-                  Text(
+                  const Text(
                     "Can not edit completed task",
                     style: TextStyle(color: Colors.red),
                   ),

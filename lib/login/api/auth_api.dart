@@ -9,7 +9,7 @@ Future<UserModel?> loginService(String email, String password) async {
   dev.log("loginServise called", name: "Login Service");
   try {
     final res = await Dio().post(
-      "$host/api/Login",
+      "$host/Login",
       data: {
         "email": email,
         "password": password,
@@ -48,6 +48,7 @@ Future<UserModel?> loginCheck() async {
       token: token,
       department: department,
       name: name,
+      email: "loggedin User",
     );
   }
   return null;

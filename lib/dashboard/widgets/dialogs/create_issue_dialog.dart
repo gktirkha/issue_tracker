@@ -1,5 +1,6 @@
 import 'package:brd_issue_tracker/dashboard/api/create_issue_api.dart';
 import 'package:brd_issue_tracker/dashboard/widgets/dialogs/assign_to_dialog.dart';
+import 'package:brd_issue_tracker/shared/util_widgets.dart';
 import 'package:brd_issue_tracker/static_data.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -108,7 +109,10 @@ Future<bool?> showCreateDialog(BuildContext context) async {
                               priority: createdPriorityValue.value,
                               assignToId: assignToId,
                             ).then(
-                              (value) => Navigator.pop(context),
+                              (value) {
+                                refresh(context);
+                                Navigator.pop(context);
+                              },
                             );
                           },
                           child: const Text("Save")),

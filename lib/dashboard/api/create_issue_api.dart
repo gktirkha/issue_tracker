@@ -12,7 +12,7 @@ Future<void> createIssueService({
 }) async {
   try {
     final res = await Dio().post(
-      "$host/api/createIssue",
+      "$host/createIssue",
       data: {
         "title": title,
         "description": description,

@@ -9,7 +9,7 @@ Future<void> assignIssue(
     required String authToken}) async {
   try {
     final res = await Dio().post(
-      "$host/api/assignIssue",
+      "$host/assignIssue",
       data: {
         "_id": issueID,
         "assignedTo": userID,

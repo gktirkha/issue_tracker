@@ -1,5 +1,6 @@
 import '../static_data.dart';
 import 'models/issues_model.dart';
+import 'dart:math';
 
 List<Issue> sortByCreationDate(List<Issue> originalList, {bool dec = true}) {
   originalList.sort(
@@ -75,4 +76,10 @@ List<Issue> sortByStatus(List<Issue> originalList, {bool dec = true}) {
         : (b, a) => statusMap[a.status]!.compareTo(statusMap[b.status]!),
   );
   return originalList;
+}
+
+String generateRandomString(int len) {
+  var r = Random();
+  return String.fromCharCodes(
+      List.generate(len, (index) => r.nextInt(33) + 89));
 }
