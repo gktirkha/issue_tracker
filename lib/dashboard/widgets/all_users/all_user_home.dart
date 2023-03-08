@@ -1,4 +1,5 @@
 import 'package:brd_issue_tracker/dashboard/provider/all_user_provider.dart';
+import 'package:brd_issue_tracker/login/providers/auth_provider.dart';
 import 'package:brd_issue_tracker/shared/util_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -19,6 +20,7 @@ class _AllUsersHomeState extends State<AllUsersHome> {
   double myPadding = 16;
   @override
   Widget build(BuildContext context) {
+    final String myId = Provider.of<AuthProvider>(context).loggedInUser!.id;
     return Container(
       height: widget.safesize.height * .90,
       width: widget.safesize.width * .90,
@@ -53,6 +55,9 @@ class _AllUsersHomeState extends State<AllUsersHome> {
                                   ),
                                 ),
                                 const Spacer(),
+                                if (allUserProvider.userList[index].id == myId)
+                                  const YouBox(),
+                                hSizedBoxMedium(),
                                 if (allUserProvider.userList[index].isAdmin)
                                   AdminBox(
                                     isAdmin:
@@ -155,9 +160,9 @@ class _AllUsersHomeState extends State<AllUsersHome> {
                                   ],
                                 ),
                                 const Spacer(),
-                                TextButton(
-                                    onPressed: () {},
-                                    child: const Text("Delete")),
+                                if (!allUserProvider.userList[index].isAdmin)
+                                  CustomDeleteUserButton(
+                                      user: allUserProvider.userList[index]),
                                 SizedBox(width: widget.safesize.width * .03)
                               ],
                             ),

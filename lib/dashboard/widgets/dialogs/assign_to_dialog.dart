@@ -25,7 +25,7 @@ Future<dynamic> showAssignDialog(BuildContext context) async {
         child: Container(
           width: size.width * .6,
           height: size.height * .75,
-          padding: EdgeInsets.all(8),
+          padding: const EdgeInsets.all(8),
           decoration: const BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.all(

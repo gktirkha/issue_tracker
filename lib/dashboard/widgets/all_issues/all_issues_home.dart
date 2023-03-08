@@ -43,206 +43,222 @@ class _AllIssuesHomeState extends State<AllIssuesHome> {
               child: allIssueProvider.isLoading
                   ? const SpinKitFadingCube(color: Colors.deepOrange)
                   : allIssueProvider.isError
-                      ? Text("Error")
-                      : ListView.separated(
-                          itemBuilder: (context, index) => Container(
-                                padding: EdgeInsets.all(myPadding),
-                                color: const Color.fromARGB(255, 244, 246, 247),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
+                      ? const Text("Error")
+                      : allIssueProvider.allIssuesList.isEmpty
+                          ? const Text("No Issues")
+                          : ListView.separated(
+                              itemBuilder: (context, index) => Container(
+                                    padding: EdgeInsets.all(myPadding),
+                                    color: const Color.fromARGB(
+                                        255, 244, 246, 247),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text(
-                                            allIssueProvider
-                                                .allIssuesList[index].title,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleLarge),
-                                        hSizedBoxMedium(),
-                                        PriorityBox(
-                                          value: allIssueProvider
-                                              .allIssuesList[index].priority,
-                                        ),
-                                      ],
-                                    ),
-                                    vSizedBoxSmall(),
-                                    Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        SizedBox(
-                                          width: widget.safesize.width * .18,
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text.rich(
-                                                TextSpan(
-                                                  children: [
-                                                    const TextSpan(
-                                                      text: "Created By: ",
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.bold),
-                                                    ),
-                                                    TextSpan(
-                                                      text: allIssueProvider
-                                                          .allIssuesList[index]
-                                                          .createdBy,
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                              Text.rich(
-                                                TextSpan(
-                                                  children: [
-                                                    const TextSpan(
-                                                      text: "Created : ",
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.bold),
-                                                    ),
-                                                    TextSpan(
-                                                      text: getIssueDayString(
-                                                          allIssueProvider
-                                                              .allIssuesList[
-                                                                  index]
-                                                              .createdAt),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
+                                        Row(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            Text.rich(
-                                              TextSpan(
-                                                children: [
-                                                  const TextSpan(
-                                                    text: "Status : ",
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  ),
-                                                  TextSpan(
-                                                      text: allIssueProvider
-                                                          .allIssuesList[index]
-                                                          .status),
-                                                ],
-                                              ),
-                                            ),
-                                            Text.rich(
-                                              TextSpan(
-                                                children: [
-                                                  const TextSpan(
-                                                    text: "Last Updated : ",
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  ),
-                                                  TextSpan(
-                                                    text: getIssueDayString(
-                                                        allIssueProvider
-                                                            .allIssuesList[
-                                                                index]
-                                                            .updatedAt),
-                                                  ),
-                                                ],
-                                              ),
+                                            Text(
+                                                allIssueProvider
+                                                    .allIssuesList[index].title,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .titleLarge),
+                                            hSizedBoxMedium(),
+                                            PriorityBox(
+                                              value: allIssueProvider
+                                                  .allIssuesList[index]
+                                                  .priority,
                                             ),
                                           ],
                                         ),
-                                        hSizedBoxLarge(),
-                                        Text.rich(
-                                          TextSpan(
-                                            children: [
-                                              const TextSpan(
-                                                text: "Assigned To : ",
-                                                style: TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.bold),
+                                        vSizedBoxSmall(),
+                                        Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            SizedBox(
+                                              width:
+                                                  widget.safesize.width * .18,
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text.rich(
+                                                    TextSpan(
+                                                      children: [
+                                                        const TextSpan(
+                                                          text: "Created By: ",
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                        TextSpan(
+                                                          text: allIssueProvider
+                                                              .allIssuesList[
+                                                                  index]
+                                                              .createdBy,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  Text.rich(
+                                                    TextSpan(
+                                                      children: [
+                                                        const TextSpan(
+                                                          text: "Created : ",
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                        TextSpan(
+                                                          text: getIssueDayString(
+                                                              allIssueProvider
+                                                                  .allIssuesList[
+                                                                      index]
+                                                                  .createdAt),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
+                                            ),
+                                            Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text.rich(
+                                                  TextSpan(
+                                                    children: [
+                                                      const TextSpan(
+                                                        text: "Status : ",
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                      TextSpan(
+                                                          text: allIssueProvider
+                                                              .allIssuesList[
+                                                                  index]
+                                                              .status),
+                                                    ],
+                                                  ),
+                                                ),
+                                                Text.rich(
+                                                  TextSpan(
+                                                    children: [
+                                                      const TextSpan(
+                                                        text: "Last Updated : ",
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                      TextSpan(
+                                                        text: getIssueDayString(
+                                                            allIssueProvider
+                                                                .allIssuesList[
+                                                                    index]
+                                                                .updatedAt),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            hSizedBoxLarge(),
+                                            Text.rich(
                                               TextSpan(
-                                                text: allIssueProvider
-                                                        .allIssuesList[index]
-                                                        .assignedTo ??
-                                                    "None",
+                                                children: [
+                                                  const TextSpan(
+                                                    text: "Assigned To : ",
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                  TextSpan(
+                                                    text: allIssueProvider
+                                                            .allIssuesList[
+                                                                index]
+                                                            .assignedTo ??
+                                                        "None",
+                                                  ),
+                                                ],
                                               ),
-                                            ],
-                                          ),
-                                        ),
-                                        const Spacer(),
-                                        CustomViewIssueButton(
-                                          issue: allIssueProvider
-                                              .allIssuesList[index],
-                                        ),
-                                        if (allIssueProvider
-                                                .allIssuesList[index]
-                                                .createdById ==
-                                            myId)
-                                          CustomEditButton(
-                                            issue: allIssueProvider
-                                                .allIssuesList[index],
-                                          ),
-                                        if (allIssueProvider
-                                                .allIssuesList[index]
-                                                .createdById ==
-                                            myId)
-                                          CustomDeleteButton(
-                                            issue: allIssueProvider
-                                                .allIssuesList[index],
-                                          ),
-                                        if (allIssueProvider
-                                                .allIssuesList[index]
-                                                .assignedToId ==
-                                            myId)
-                                          CustomUpdateStatusButton(
-                                            issue: allIssueProvider
-                                                .allIssuesList[index],
-                                          ),
-                                        if (allIssueProvider
-                                                .allIssuesList[index]
-                                                .assignedToId !=
-                                            myId)
-                                          if (allIssueProvider
-                                                  .allIssuesList[index]
-                                                  .status !=
-                                              COMPLETED)
-                                            CustomAssignToMeButton(
+                                            ),
+                                            const Spacer(),
+                                            CustomViewIssueButton(
                                               issue: allIssueProvider
                                                   .allIssuesList[index],
                                             ),
-                                        if (allIssueProvider
-                                                .allIssuesList[index].status !=
-                                            COMPLETED)
-                                          if (allIssueProvider
-                                                  .allIssuesList[index]
-                                                  .createdById !=
-                                              myId)
-                                            CustomAssignToOtherButton(
-                                              issue: allIssueProvider
-                                                  .allIssuesList[index],
-                                            ),
-                                        SizedBox(
-                                            width: widget.safesize.width * .03)
+                                            if (allIssueProvider
+                                                    .allIssuesList[index]
+                                                    .createdById ==
+                                                myId)
+                                              CustomEditButton(
+                                                issue: allIssueProvider
+                                                    .allIssuesList[index],
+                                              ),
+                                            if (allIssueProvider
+                                                    .allIssuesList[index]
+                                                    .createdById ==
+                                                myId)
+                                              CustomDeleteButton(
+                                                issue: allIssueProvider
+                                                    .allIssuesList[index],
+                                              ),
+                                            if (allIssueProvider
+                                                    .allIssuesList[index]
+                                                    .assignedToId ==
+                                                myId)
+                                              CustomUpdateStatusButton(
+                                                issue: allIssueProvider
+                                                    .allIssuesList[index],
+                                              ),
+                                            if (allIssueProvider
+                                                    .allIssuesList[index]
+                                                    .assignedToId !=
+                                                myId)
+                                              if (allIssueProvider
+                                                      .allIssuesList[index]
+                                                      .status !=
+                                                  COMPLETED)
+                                                CustomAssignToMeButton(
+                                                  issue: allIssueProvider
+                                                      .allIssuesList[index],
+                                                ),
+                                            if (allIssueProvider
+                                                    .allIssuesList[index]
+                                                    .status !=
+                                                COMPLETED)
+                                              if (allIssueProvider
+                                                      .allIssuesList[index]
+                                                      .createdById !=
+                                                  myId)
+                                                CustomAssignToOtherButton(
+                                                  issue: allIssueProvider
+                                                      .allIssuesList[index],
+                                                ),
+                                            SizedBox(
+                                                width:
+                                                    widget.safesize.width * .03)
+                                          ],
+                                        )
                                       ],
-                                    )
-                                  ],
-                                ),
-                              ),
-                          separatorBuilder: (context, index) =>
-                              vSizedBoxMedium(),
-                          itemCount: allIssueProvider.allIssuesList.length),
+                                    ),
+                                  ),
+                              separatorBuilder: (context, index) =>
+                                  vSizedBoxMedium(),
+                              itemCount: allIssueProvider.allIssuesList.length),
             ),
             ValueListenableBuilder(
               valueListenable: isExpanded,
@@ -257,7 +273,7 @@ class _AllIssuesHomeState extends State<AllIssuesHome> {
                         onPressed: () {
                           isExpanded.value = !value;
                         },
-                        child: Icon(Icons.sort),
+                        child: const Icon(Icons.sort),
                       ),
                       if (value) const SizedBox(height: 10),
                       if (value)
@@ -266,7 +282,7 @@ class _AllIssuesHomeState extends State<AllIssuesHome> {
                           onPressed: () {
                             allIssueProvider.sortIssuesByCreationDate();
                           },
-                          child: Icon(Icons.calendar_month),
+                          child: const Icon(Icons.calendar_month),
                         ),
                       if (value) const SizedBox(height: 10),
                       if (value)
@@ -275,7 +291,7 @@ class _AllIssuesHomeState extends State<AllIssuesHome> {
                           onPressed: () {
                             allIssueProvider.sortIssuesByPriority();
                           },
-                          child: Icon(Icons.low_priority),
+                          child: const Icon(Icons.low_priority),
                         ),
                       if (value) const SizedBox(height: 10),
                       if (value)
@@ -284,7 +300,7 @@ class _AllIssuesHomeState extends State<AllIssuesHome> {
                           onPressed: () {
                             allIssueProvider.sortIssuesByUpdateDate();
                           },
-                          child: Icon(Icons.calendar_view_day_rounded),
+                          child: const Icon(Icons.calendar_view_day_rounded),
                         ),
                       if (value) const SizedBox(height: 10),
                       if (value)
@@ -293,7 +309,7 @@ class _AllIssuesHomeState extends State<AllIssuesHome> {
                           onPressed: () {
                             allIssueProvider.sortIssuesByStatus();
                           },
-                          child: Icon(Icons.query_stats_outlined),
+                          child: const Icon(Icons.query_stats_outlined),
                         ),
                     ],
                   ),

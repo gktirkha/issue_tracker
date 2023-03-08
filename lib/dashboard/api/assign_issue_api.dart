@@ -20,7 +20,6 @@ Future<void> assignIssue(
         },
       ),
     );
-    print(res);
   } catch (e) {
     log(e.toString(), name: "Assign To Other API");
   }

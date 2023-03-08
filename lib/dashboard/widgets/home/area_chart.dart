@@ -20,7 +20,7 @@ class _AreaChartState extends State<AreaChart> {
       builder: (context, value, child) => value.isLoading
           ? const SpinKitFadingCube(color: Colors.deepOrange, size: 50)
           : value.isError
-              ? const Text("Eroor Occured")
+              ? const Text("Error Occured")
               : SfCartesianChart(
                   tooltipBehavior: TooltipBehavior(
                     enable: true,

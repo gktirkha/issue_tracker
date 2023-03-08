@@ -1,4 +1,4 @@
-import 'package:brd_issue_tracker/dashboard/api/bar_chart_api.dart';
+import 'package:brd_issue_tracker/dashboard/api/area_chart_api.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -40,7 +40,9 @@ class AreaChartProvider with ChangeNotifier {
       _list.add(CharData(label: getName(element), value: areaMap[element]!));
     }
 
-    _setLoading(false);
+    _isLoading = false;
+    _isError = false;
+    notifyListeners();
   }
 }
 

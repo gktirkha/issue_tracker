@@ -1,9 +1,3 @@
-import 'package:brd_issue_tracker/dashboard/api/all_users_api.dart';
-import 'package:brd_issue_tracker/dashboard/provider/all_issue_provider.dart';
-import 'package:brd_issue_tracker/dashboard/provider/all_user_provider.dart';
-import 'package:brd_issue_tracker/dashboard/provider/area_chart_provider.dart';
-import 'package:brd_issue_tracker/dashboard/provider/issues_assigned_to_me_provider.dart';
-import 'package:brd_issue_tracker/dashboard/provider/issues_created_by_me_provider.dart';
 import 'package:brd_issue_tracker/dashboard/widgets/all_issues/all_issues_home.dart';
 import 'package:brd_issue_tracker/dashboard/widgets/created_by_me/created_by_me_home.dart';
 import 'package:brd_issue_tracker/login/providers/auth_provider.dart';
@@ -13,9 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../navbar/my_navbar.dart';
 import '../../navbar/navbar_data.dart';
-import '../provider/donut_chart_provider.dart';
+
 import '../widgets/all_users/all_user_home.dart';
-import '../widgets/dialogs/assign_to_dialog.dart';
+
 import '../widgets/home/dash_board_home.dart';
 import '../widgets/issues_assigned_to_me/issues_assigned_to_me_screen.dart';
 import '../widgets/statbox_row.dart';

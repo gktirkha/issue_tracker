@@ -88,7 +88,7 @@ class MyNavBar extends StatelessWidget {
                         ),
                         title: Text(
                           auth.loggedInUser!.name,
-                          style: TextStyle(color: Colors.white),
+                          style: const TextStyle(color: Colors.white),
                         ),
                       ),
                       if (value)

@@ -147,9 +147,9 @@ Future<bool?> showNewUserDialog(BuildContext context) async {
     transitionBuilder: (_, anim, __, child) {
       Tween<Offset> tween;
       if (anim.status == AnimationStatus.reverse) {
-        tween = Tween(begin: Offset(0, .1), end: Offset.zero);
+        tween = Tween(begin: const Offset(0, .1), end: Offset.zero);
       } else {
-        tween = Tween(begin: Offset(0, -.1), end: Offset.zero);
+        tween = Tween(begin: const Offset(0, -.1), end: Offset.zero);
       }
 
       return SlideTransition(

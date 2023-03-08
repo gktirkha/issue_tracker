@@ -21,7 +21,9 @@ Future<List<Issue>?> allIssueApiCallService(String authToken) async {
     for (var element in myIssuesDataList) {
       try {
         _allIssueList.add(Issue.fromJson(element));
-      } catch (e) {}
+      } catch (e) {
+        dev.log(e.toString(), name: "All Issues Exception");
+      }
     }
   } catch (e) {
     dev.log(e.toString(), name: "All Issues Exception");

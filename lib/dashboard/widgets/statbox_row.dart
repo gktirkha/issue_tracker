@@ -29,7 +29,7 @@ class StatBoxRow extends StatelessWidget {
             builder: (context, value, child) => Row(
               children: [
                 Text("Hello ${value.loggedInUser!.name}"),
-                Spacer(),
+                const Spacer(),
                 IconButton(
                     onPressed: voidCallback, icon: const Icon(Icons.refresh))
               ],

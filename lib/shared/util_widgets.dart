@@ -1,8 +1,9 @@
 import 'package:brd_issue_tracker/dashboard/api/assign_issue_api.dart';
-import 'package:brd_issue_tracker/dashboard/api/issues_created_by_me_api.dart';
+
 import 'package:brd_issue_tracker/dashboard/api/update_status_api.dart';
-import 'package:brd_issue_tracker/dashboard/widgets/dialogs/delete_dialog.dart';
+import 'package:brd_issue_tracker/dashboard/widgets/dialogs/delete_issue_dialog.dart';
 import 'package:brd_issue_tracker/dashboard/widgets/dialogs/edit_dialog.dart';
+import 'package:brd_issue_tracker/dashboard/widgets/dialogs/show_delete_user_dialog.dart';
 import 'package:brd_issue_tracker/dashboard/widgets/dialogs/show_description_dialog.dart';
 import 'package:brd_issue_tracker/login/providers/auth_provider.dart';
 import 'package:brd_issue_tracker/shared/models/user_model.dart';
@@ -149,7 +150,7 @@ class CustomDeleteButton extends StatelessWidget {
               ? null
               : () async {
                   loadingBool.value = true;
-                  await showDeleteDialog(context, issue, token);
+                  await showDeleteIssueDialog(context, issue, token);
                 },
           child: const Text("Delete"),
         );
@@ -317,7 +318,13 @@ class CustomDeleteUserButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(onPressed: () {}, child: Text("Delete"));
+    final String token =
+        Provider.of<AuthProvider>(context, listen: false).loggedInUser!.token!;
+    return TextButton(
+        onPressed: () async {
+          await showDeleteUserDialog(context, user, token);
+        },
+        child: const Text("Delete"));
   }
 }
 
@@ -339,6 +346,27 @@ class AdminBox extends StatelessWidget {
         child: Text(
           isAdmin ? "admin" : "not Admin",
           style: const TextStyle(color: Colors.white),
+        ),
+      ),
+    );
+  }
+}
+
+class YouBox extends StatelessWidget {
+  const YouBox({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8), color: Colors.blue),
+      child: const Center(
+        child: Text(
+          "You",
+          style: TextStyle(color: Colors.white),
         ),
       ),
     );

@@ -47,161 +47,170 @@ class _AssignedIssueHomeState extends State<AssignedIssueHome> {
                     )
                   : assignedToMeProvider.isError
                       ? const Center(child: Text("Error Occured"))
-                      : ListView.separated(
-                          itemBuilder: (context, index) {
-                            return Container(
-                              padding: EdgeInsets.all(myPadding),
-                              color: const Color.fromARGB(255, 244, 246, 247),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
+                      : assignedToMeProvider.issuesAssignedToMeList.isEmpty
+                          ? const Text("No Issues Assigned To You")
+                          : ListView.separated(
+                              itemBuilder: (context, index) {
+                                return Container(
+                                  padding: EdgeInsets.all(myPadding),
+                                  color:
+                                      const Color.fromARGB(255, 244, 246, 247),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
-                                      Text(
-                                          assignedToMeProvider
-                                              .issuesAssignedToMeList[index]
-                                              .title,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .titleLarge),
-                                      hSizedBoxMedium(),
-                                      PriorityBox(
-                                        value: assignedToMeProvider
-                                            .issuesAssignedToMeList[index]
-                                            .priority,
-                                      ),
-                                    ],
-                                  ),
-                                  vSizedBoxSmall(),
-                                  Row(
-                                    children: [
-                                      SizedBox(
-                                        width: widget.safesize.width * .18,
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text.rich(
-                                              TextSpan(
-                                                children: [
-                                                  const TextSpan(
-                                                    text: "Created By: ",
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  ),
-                                                  TextSpan(
-                                                    text: assignedToMeProvider
-                                                        .issuesAssignedToMeList[
-                                                            index]
-                                                        .createdBy,
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            Text.rich(
-                                              TextSpan(
-                                                children: [
-                                                  const TextSpan(
-                                                    text: "Created : ",
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  ),
-                                                  TextSpan(
-                                                    text: getIssueDayString(
-                                                        assignedToMeProvider
-                                                            .issuesAssignedToMeList[
-                                                                index]
-                                                            .createdAt),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                      Row(
                                         children: [
-                                          Text.rich(
-                                            TextSpan(
-                                              children: [
-                                                const TextSpan(
-                                                  text: "Last Updated : ",
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                                TextSpan(
-                                                  text: getIssueDayString(
-                                                      assignedToMeProvider
-                                                          .issuesAssignedToMeList[
-                                                              index]
-                                                          .updatedAt),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          Text.rich(
-                                            TextSpan(
-                                              children: [
-                                                const TextSpan(
-                                                  text: "Status : ",
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                                TextSpan(
-                                                  text: assignedToMeProvider
-                                                      .issuesAssignedToMeList[
-                                                          index]
-                                                      .status,
-                                                ),
-                                              ],
-                                            ),
+                                          Text(
+                                              assignedToMeProvider
+                                                  .issuesAssignedToMeList[index]
+                                                  .title,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleLarge),
+                                          hSizedBoxMedium(),
+                                          PriorityBox(
+                                            value: assignedToMeProvider
+                                                .issuesAssignedToMeList[index]
+                                                .priority,
                                           ),
                                         ],
                                       ),
-                                      const Spacer(),
-                                      CustomViewIssueButton(
-                                        issue: assignedToMeProvider
-                                            .issuesAssignedToMeList[index],
-                                      ),
-                                      CustomUpdateStatusButton(
-                                        issue: assignedToMeProvider
-                                            .issuesAssignedToMeList[index],
-                                      ),
-                                      if (assignedToMeProvider
-                                              .issuesAssignedToMeList[index]
-                                              .createdById ==
-                                          myId)
-                                        CustomEditButton(
-                                          issue: assignedToMeProvider
-                                              .issuesAssignedToMeList[index],
-                                        ),
-                                      if (assignedToMeProvider
-                                              .issuesAssignedToMeList[index]
-                                              .status !=
-                                          COMPLETED)
-                                        CustomAssignToOtherButton(
-                                          issue: assignedToMeProvider
-                                              .issuesAssignedToMeList[index],
-                                        ),
-                                      SizedBox(
-                                          width: widget.safesize.width * .03)
+                                      vSizedBoxSmall(),
+                                      Row(
+                                        children: [
+                                          SizedBox(
+                                            width: widget.safesize.width * .18,
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text.rich(
+                                                  TextSpan(
+                                                    children: [
+                                                      const TextSpan(
+                                                        text: "Created By: ",
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                      TextSpan(
+                                                        text: assignedToMeProvider
+                                                            .issuesAssignedToMeList[
+                                                                index]
+                                                            .createdBy,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                Text.rich(
+                                                  TextSpan(
+                                                    children: [
+                                                      const TextSpan(
+                                                        text: "Created : ",
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                      TextSpan(
+                                                        text: getIssueDayString(
+                                                            assignedToMeProvider
+                                                                .issuesAssignedToMeList[
+                                                                    index]
+                                                                .createdAt),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text.rich(
+                                                TextSpan(
+                                                  children: [
+                                                    const TextSpan(
+                                                      text: "Last Updated : ",
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                    TextSpan(
+                                                      text: getIssueDayString(
+                                                          assignedToMeProvider
+                                                              .issuesAssignedToMeList[
+                                                                  index]
+                                                              .updatedAt),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              Text.rich(
+                                                TextSpan(
+                                                  children: [
+                                                    const TextSpan(
+                                                      text: "Status : ",
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                    TextSpan(
+                                                      text: assignedToMeProvider
+                                                          .issuesAssignedToMeList[
+                                                              index]
+                                                          .status,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          const Spacer(),
+                                          CustomViewIssueButton(
+                                            issue: assignedToMeProvider
+                                                .issuesAssignedToMeList[index],
+                                          ),
+                                          CustomUpdateStatusButton(
+                                            issue: assignedToMeProvider
+                                                .issuesAssignedToMeList[index],
+                                          ),
+                                          if (assignedToMeProvider
+                                                  .issuesAssignedToMeList[index]
+                                                  .createdById ==
+                                              myId)
+                                            CustomEditButton(
+                                              issue: assignedToMeProvider
+                                                      .issuesAssignedToMeList[
+                                                  index],
+                                            ),
+                                          if (assignedToMeProvider
+                                                  .issuesAssignedToMeList[index]
+                                                  .status !=
+                                              COMPLETED)
+                                            CustomAssignToOtherButton(
+                                              issue: assignedToMeProvider
+                                                      .issuesAssignedToMeList[
+                                                  index],
+                                            ),
+                                          SizedBox(
+                                              width:
+                                                  widget.safesize.width * .03)
+                                        ],
+                                      )
                                     ],
-                                  )
-                                ],
-                              ),
-                            );
-                          },
-                          separatorBuilder: (context, index) =>
-                              const SizedBox(height: 10),
-                          itemCount: assignedToMeProvider
-                              .issuesAssignedToMeList.length,
-                        ),
+                                  ),
+                                );
+                              },
+                              separatorBuilder: (context, index) =>
+                                  const SizedBox(height: 10),
+                              itemCount: assignedToMeProvider
+                                  .issuesAssignedToMeList.length,
+                            ),
             ),
             ValueListenableBuilder(
               valueListenable: isExpanded,
@@ -216,7 +225,7 @@ class _AssignedIssueHomeState extends State<AssignedIssueHome> {
                         onPressed: () {
                           isExpanded.value = !value;
                         },
-                        child: Icon(Icons.sort),
+                        child: const Icon(Icons.sort),
                       ),
                       if (value) const SizedBox(height: 10),
                       if (value)
@@ -225,7 +234,7 @@ class _AssignedIssueHomeState extends State<AssignedIssueHome> {
                           onPressed: () {
                             assignedToMeProvider.sortIssuesByCreationDate();
                           },
-                          child: Icon(Icons.calendar_month),
+                          child: const Icon(Icons.calendar_month),
                         ),
                       if (value) const SizedBox(height: 10),
                       if (value)
@@ -234,7 +243,7 @@ class _AssignedIssueHomeState extends State<AssignedIssueHome> {
                           onPressed: () {
                             assignedToMeProvider.sortIssuesByPriority();
                           },
-                          child: Icon(Icons.low_priority),
+                          child: const Icon(Icons.low_priority),
                         ),
                       if (value) const SizedBox(height: 10),
                       if (value)
@@ -243,7 +252,7 @@ class _AssignedIssueHomeState extends State<AssignedIssueHome> {
                           onPressed: () {
                             assignedToMeProvider.sortIssuesByUpdateDate();
                           },
-                          child: Icon(Icons.calendar_view_day_rounded),
+                          child: const Icon(Icons.calendar_view_day_rounded),
                         ),
                     ],
                   ),
