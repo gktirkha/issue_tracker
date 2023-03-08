@@ -22,12 +22,14 @@ Future<List<Issue>?> issuesAssignedToMeService(String authToken) async {
 
     List<dynamic>? myIssuesDataList = res.data["data"];
     if (myIssuesDataList == null) return null;
-    if (myIssuesDataList.length == 0) {
+    if (myIssuesDataList.isEmpty) {
       _issuesAssignedToMeList.clear();
       return [];
     }
     for (var element in myIssuesDataList) {
-      _issuesAssignedToMeList.add(Issue.fromJson(element));
+      try {
+        _issuesAssignedToMeList.add(Issue.fromJson(element));
+      } catch (e) {}
     }
   } catch (e) {
     dev.log(e.toString(), name: "Issue Assigned to me Exception");

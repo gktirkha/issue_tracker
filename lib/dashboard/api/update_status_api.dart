@@ -5,7 +5,7 @@ import 'package:dio/dio.dart';
 
 Future<void> updateStatusService(String id, String status, String token) async {
   try {
-    Dio().patch(
+    await Dio().patch(
       "$host/api/updateStatus",
       options: Options(
         headers: {"Authorization": token},

@@ -97,11 +97,13 @@ Future<bool?> showEditDialog(BuildContext context, Issue selectedIssue) async {
                             ? () async {
                                 await showAssignDialog(context).then(
                                   (selVal) {
-                                    selectedIssue.assignedToId = selVal["id"];
-                                    selectedIssue.assignedTo = selVal["name"];
-
-                                    issueNotify.value =
-                                        selectedIssue.assignedTo ?? "None";
+                                    if (selVal != null) {
+                                      selectedIssue.assignedToId = selVal["id"];
+                                      selectedIssue.assignedTo = selVal["name"];
+                                      print(selectedIssue.assignedToId);
+                                      issueNotify.value =
+                                          selectedIssue.assignedTo ?? "none";
+                                    }
                                   },
                                 );
                               }
@@ -121,14 +123,15 @@ Future<bool?> showEditDialog(BuildContext context, Issue selectedIssue) async {
                           onPressed: value
                               ? null
                               : () async {
+                                  print(selectedIssue.assignedToId);
                                   isLoading.value = true;
-                                  updateIssueService(
-                                    titleController.text,
-                                    descriptionController.text,
-                                    selectedIssue.id,
-                                    selectedPriorityValue.value,
-                                    selectedIssue.assignedToId,
-                                    token,
+                                  await updateIssueService(
+                                    description: descriptionController.text,
+                                    id: selectedIssue.id,
+                                    title: titleController.text,
+                                    priority: selectedPriorityValue.value,
+                                    token: token,
+                                    assignToUser: selectedIssue.assignedToId,
                                   ).then((value) => refresh(context)).then(
                                         (value) => Navigator.pop(context),
                                       );

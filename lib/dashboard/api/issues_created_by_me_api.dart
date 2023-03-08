@@ -4,7 +4,7 @@ import 'dart:developer' as dev;
 import '../../shared/models/issues_model.dart';
 import '../../static_data.dart';
 
-Future<List<Issue>?> myIssueApiCallService(String authToken) async {
+Future<List<Issue>?> issuesCreatedByMeService(String authToken) async {
   List<Issue> _myIssueList = [];
   try {
     dev.log("myIssueApiCall called", name: "My Issues API");
@@ -23,7 +23,9 @@ Future<List<Issue>?> myIssueApiCallService(String authToken) async {
       return [];
     }
     for (var element in myIssuesDataList) {
-      _myIssueList.add(Issue.fromJson(element));
+      try {
+        _myIssueList.add(Issue.fromJson(element));
+      } catch (e) {}
     }
   } catch (e) {
     dev.log(e.toString(), name: "My Issue Exception");

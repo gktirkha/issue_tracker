@@ -19,7 +19,9 @@ Future<List<Issue>?> allIssueApiCallService(String authToken) async {
     List myIssuesDataList = res.data["data"];
 
     for (var element in myIssuesDataList) {
-      _allIssueList.add(Issue.fromJson(element));
+      try {
+        _allIssueList.add(Issue.fromJson(element));
+      } catch (e) {}
     }
   } catch (e) {
     dev.log(e.toString(), name: "All Issues Exception");

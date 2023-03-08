@@ -1,13 +1,11 @@
 import 'dart:developer';
-
 import 'package:brd_issue_tracker/dashboard/api/all_users_api.dart';
 import 'package:flutter/material.dart';
-
 import '../../shared/models/user_model.dart';
 
 class AllUserProvider with ChangeNotifier {
   Map<String, List<UserModel>> _userMap = {};
-  List<UserModel> _userList = [];
+  final List<UserModel> _userList = [];
   bool _isLoading = true;
   bool _isError = false;
   bool get isLoading => _isLoading;
@@ -32,6 +30,7 @@ class AllUserProvider with ChangeNotifier {
   }
 
   void setUserList(Map<String, List<UserModel>> userMap) {
+    _userList.clear();
     userMap.forEach((key, value) {
       _userList.addAll(value);
     });

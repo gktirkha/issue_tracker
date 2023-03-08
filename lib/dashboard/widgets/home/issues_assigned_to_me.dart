@@ -37,7 +37,7 @@ class _IssuesAssignedToMeState extends State<IssuesAssignedToMe> {
             ? const SpinKitFadingCube(color: Colors.deepOrange, size: 50)
             : value.isError
                 ? const Text("Error")
-                : value.myIssuesList.isEmpty
+                : value.issuesAssignedToMeList.isEmpty
                     ? const Text("No Issues")
                     : Column(
                         children: [
@@ -56,7 +56,7 @@ class _IssuesAssignedToMeState extends State<IssuesAssignedToMe> {
                           vSizedBoxSmall(),
                           ListView.separated(
                               shrinkWrap: true,
-                              itemCount: value.myIssuesList.length,
+                              itemCount: value.issuesAssignedToMeList.length,
                               itemBuilder: (context, index) => LayoutBuilder(
                                     builder: (context, constraints) {
                                       ValueNotifier<bool> isExpanded =
@@ -89,7 +89,7 @@ class _IssuesAssignedToMeState extends State<IssuesAssignedToMe> {
                                                         ),
                                                         TextSpan(
                                                             text: value
-                                                                .myIssuesList[
+                                                                .issuesAssignedToMeList[
                                                                     index]
                                                                 .title
                                                                 .toUpperCase())
@@ -105,7 +105,8 @@ class _IssuesAssignedToMeState extends State<IssuesAssignedToMe> {
                                                   children: [
                                                     PriorityBox(
                                                       value: value
-                                                          .myIssuesList[index]
+                                                          .issuesAssignedToMeList[
+                                                              index]
                                                           .priority,
                                                     ),
                                                     const Spacer(),
@@ -138,7 +139,7 @@ class _IssuesAssignedToMeState extends State<IssuesAssignedToMe> {
                                                           ),
                                                           TextSpan(
                                                               text: value
-                                                                  .myIssuesList[
+                                                                  .issuesAssignedToMeList[
                                                                       index]
                                                                   .description)
                                                         ],
@@ -162,7 +163,7 @@ class _IssuesAssignedToMeState extends State<IssuesAssignedToMe> {
                                                         TextSpan(
                                                           text: getIssueDayString(
                                                               value
-                                                                  .myIssuesList[
+                                                                  .issuesAssignedToMeList[
                                                                       index]
                                                                   .createdAt),
                                                         ),
@@ -184,7 +185,7 @@ class _IssuesAssignedToMeState extends State<IssuesAssignedToMe> {
                                                         TextSpan(
                                                           text: getIssueDayString(
                                                               value
-                                                                  .myIssuesList[
+                                                                  .issuesAssignedToMeList[
                                                                       index]
                                                                   .updatedAt),
                                                         ),
@@ -197,28 +198,29 @@ class _IssuesAssignedToMeState extends State<IssuesAssignedToMe> {
                                                         MainAxisAlignment.start,
                                                     children: [
                                                       Text(value
-                                                          .myIssuesList[index]
+                                                          .issuesAssignedToMeList[
+                                                              index]
                                                           .status),
                                                       const Spacer(),
                                                       if (value
-                                                              .myIssuesList[
+                                                              .issuesAssignedToMeList[
                                                                   index]
                                                               .createdById ==
                                                           myId)
                                                         CustomEditButton(
                                                           issue: value
-                                                                  .myIssuesList[
+                                                                  .issuesAssignedToMeList[
                                                               index],
                                                         ),
                                                       CustomAssignToOtherButton(
-                                                        issue:
-                                                            value.myIssuesList[
-                                                                index],
+                                                        issue: value
+                                                                .issuesAssignedToMeList[
+                                                            index],
                                                       ),
                                                       CustomUpdateStatusButton(
-                                                        issue:
-                                                            value.myIssuesList[
-                                                                index],
+                                                        issue: value
+                                                                .issuesAssignedToMeList[
+                                                            index],
                                                       )
                                                     ],
                                                   ),

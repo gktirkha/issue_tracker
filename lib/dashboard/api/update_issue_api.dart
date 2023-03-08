@@ -3,14 +3,14 @@ import 'dart:developer';
 import 'package:brd_issue_tracker/static_data.dart';
 import 'package:dio/dio.dart';
 
-Future<void> updateIssueService(
-  String title,
-  String description,
-  String id,
-  String priority,
+Future<void> updateIssueService({
+  required String title,
+  required String description,
+  required String id,
+  required String priority,
   String? assignToUser,
-  String token,
-) async {
+  required String token,
+}) async {
   try {
     final res = await Dio().patch(
       "$host/api/updateIssue/$id",

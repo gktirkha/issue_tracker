@@ -3,7 +3,7 @@ import 'package:brd_issue_tracker/dashboard/provider/all_user_provider.dart';
 import 'package:brd_issue_tracker/dashboard/provider/area_chart_provider.dart';
 import 'package:brd_issue_tracker/dashboard/provider/donut_chart_provider.dart';
 import 'package:brd_issue_tracker/dashboard/provider/issues_assigned_to_me_provider.dart';
-import 'package:brd_issue_tracker/dashboard/provider/my_issue_provider.dart';
+import 'package:brd_issue_tracker/dashboard/provider/issues_created_by_me_provider.dart';
 import 'package:brd_issue_tracker/dashboard/provider/sorted_list_provider.dart';
 import 'package:brd_issue_tracker/dashboard/screen/dashboard_screen.dart';
 import 'package:flutter/material.dart';
@@ -35,8 +35,8 @@ class MainApp extends StatelessWidget {
         ChangeNotifierProvider<IssuesAssignedToMeProvider>(
           create: (context) => IssuesAssignedToMeProvider(),
         ),
-        ChangeNotifierProvider<MyIssuesProvider>(
-          create: (context) => MyIssuesProvider(),
+        ChangeNotifierProvider<IssuesCreatedByMeProvider>(
+          create: (context) => IssuesCreatedByMeProvider(),
         ),
         ChangeNotifierProvider<SortedListProvider>(
           create: (context) => SortedListProvider(),

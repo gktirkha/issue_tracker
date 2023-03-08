@@ -13,8 +13,8 @@ List<Issue> sortByCreationDate(List<Issue> originalList, {bool dec = true}) {
 List<Issue> sortByUpdatedDate(List<Issue> originalList, {bool dec = true}) {
   originalList.sort(
     dec
-        ? (a, b) => a.createdAt.compareTo(b.createdAt)
-        : (b, a) => a.createdAt.compareTo(b.createdAt),
+        ? (a, b) => a.updatedAt.compareTo(b.updatedAt)
+        : (b, a) => a.updatedAt.compareTo(b.updatedAt),
   );
   return originalList;
 }

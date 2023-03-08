@@ -1,8 +1,5 @@
 import 'package:brd_issue_tracker/dashboard/provider/all_issue_provider.dart';
-
-import 'package:brd_issue_tracker/dashboard/provider/sorted_list_provider.dart';
 import 'package:brd_issue_tracker/static_data.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
@@ -23,29 +20,9 @@ class AllIssuesHome extends StatefulWidget {
 
 class _AllIssuesHomeState extends State<AllIssuesHome> {
   double myPadding = 16;
-  @override
-  void initState() {
-    super.initState();
-
-    WidgetsBinding.instance.addPostFrameCallback(
-      (timeStamp) {
-        if (!Provider.of<AllIssuesProvider>(context, listen: false).isLoading) {
-          Provider.of<SortedListProvider>(context, listen: false).setSortedList(
-              Provider.of<AllIssuesProvider>(context, listen: false)
-                  .myIssuesList);
-        }
-      },
-    );
-  }
-
   ValueNotifier<bool> isExpanded = ValueNotifier(false);
-
   @override
   Widget build(BuildContext context) {
-    AllIssuesProvider allIssuesProvider =
-        Provider.of<AllIssuesProvider>(context);
-    SortedListProvider sortedListProvider =
-        Provider.of<SortedListProvider>(context);
     String myId =
         Provider.of<AuthProvider>(context, listen: false).loggedInUser!.id;
 
@@ -59,254 +36,518 @@ class _AllIssuesHomeState extends State<AllIssuesHome> {
           Radius.circular(8),
         ),
       ),
-      child: Stack(
-        children: [
-          Container(
-            child: allIssuesProvider.isLoading
-                ? const Center(
-                    child: SpinKitFadingCube(color: Colors.deepOrange))
-                : allIssuesProvider.isError
-                    ? const Center(child: Text("Error Occured"))
-                    : ListView.separated(
-                        itemBuilder: (context, index) {
-                          return Container(
-                            padding: EdgeInsets.all(myPadding),
-                            color: const Color.fromARGB(255, 244, 246, 247),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  children: [
-                                    Text(
-                                        sortedListProvider
-                                            .sortedList[index].title,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .titleLarge),
-                                    hSizedBoxMedium(),
-                                    PriorityBox(
-                                      value: sortedListProvider
-                                          .sortedList[index].priority,
-                                    ),
-                                  ],
-                                ),
-                                vSizedBoxSmall(),
-                                Row(
+      child: Consumer<AllIssuesProvider>(
+        builder: (context, allIssueProvider, child) => Stack(
+          children: [
+            Container(
+              child: allIssueProvider.isLoading
+                  ? const SpinKitFadingCube(color: Colors.deepOrange)
+                  : allIssueProvider.isError
+                      ? Text("Error")
+                      : ListView.separated(
+                          itemBuilder: (context, index) => Container(
+                                padding: EdgeInsets.all(myPadding),
+                                color: const Color.fromARGB(255, 244, 246, 247),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    SizedBox(
-                                      width: widget.safesize.width * .18,
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text.rich(
-                                            TextSpan(
-                                              children: [
-                                                const TextSpan(
-                                                  text: "Created By: ",
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                                TextSpan(
-                                                  text: sortedListProvider
-                                                      .sortedList[index]
-                                                      .createdBy,
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          Text.rich(
-                                            TextSpan(
-                                              children: [
-                                                const TextSpan(
-                                                  text: "Created : ",
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                                TextSpan(
-                                                  text: getIssueDayString(
-                                                      sortedListProvider
-                                                          .sortedList[index]
-                                                          .createdAt),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Column(
+                                    Row(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text.rich(
-                                          TextSpan(
-                                            children: [
-                                              const TextSpan(
-                                                text: "Status : ",
-                                                style: TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
-                                              TextSpan(
-                                                  text: sortedListProvider
-                                                      .sortedList[index]
-                                                      .status),
-                                            ],
-                                          ),
-                                        ),
-                                        Text.rich(
-                                          TextSpan(
-                                            children: [
-                                              const TextSpan(
-                                                text: "Last Updated : ",
-                                                style: TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
-                                              TextSpan(
-                                                text: getIssueDayString(
-                                                    sortedListProvider
-                                                        .sortedList[index]
-                                                        .updatedAt),
-                                              ),
-                                            ],
-                                          ),
+                                        Text(
+                                            allIssueProvider
+                                                .allIssuesList[index].title,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleLarge),
+                                        hSizedBoxMedium(),
+                                        PriorityBox(
+                                          value: allIssueProvider
+                                              .allIssuesList[index].priority,
                                         ),
                                       ],
                                     ),
-                                    hSizedBoxLarge(),
-                                    Text.rich(
-                                      TextSpan(
-                                        children: [
-                                          const TextSpan(
-                                            text: "Assigned To : ",
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold),
+                                    vSizedBoxSmall(),
+                                    Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        SizedBox(
+                                          width: widget.safesize.width * .18,
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text.rich(
+                                                TextSpan(
+                                                  children: [
+                                                    const TextSpan(
+                                                      text: "Created By: ",
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                    TextSpan(
+                                                      text: allIssueProvider
+                                                          .allIssuesList[index]
+                                                          .createdBy,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              Text.rich(
+                                                TextSpan(
+                                                  children: [
+                                                    const TextSpan(
+                                                      text: "Created : ",
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                    TextSpan(
+                                                      text: getIssueDayString(
+                                                          allIssueProvider
+                                                              .allIssuesList[
+                                                                  index]
+                                                              .createdAt),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
                                           ),
+                                        ),
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text.rich(
+                                              TextSpan(
+                                                children: [
+                                                  const TextSpan(
+                                                    text: "Status : ",
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                  TextSpan(
+                                                      text: allIssueProvider
+                                                          .allIssuesList[index]
+                                                          .status),
+                                                ],
+                                              ),
+                                            ),
+                                            Text.rich(
+                                              TextSpan(
+                                                children: [
+                                                  const TextSpan(
+                                                    text: "Last Updated : ",
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                  TextSpan(
+                                                    text: getIssueDayString(
+                                                        allIssueProvider
+                                                            .allIssuesList[
+                                                                index]
+                                                            .updatedAt),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        hSizedBoxLarge(),
+                                        Text.rich(
                                           TextSpan(
-                                            text: sortedListProvider
-                                                    .sortedList[index]
-                                                    .assignedTo ??
-                                                "None",
+                                            children: [
+                                              const TextSpan(
+                                                text: "Assigned To : ",
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              TextSpan(
+                                                text: allIssueProvider
+                                                        .allIssuesList[index]
+                                                        .assignedTo ??
+                                                    "None",
+                                              ),
+                                            ],
                                           ),
-                                        ],
-                                      ),
-                                    ),
-                                    const Spacer(),
-                                    CustomViewIssueButton(
-                                      issue:
-                                          sortedListProvider.sortedList[index],
-                                    ),
-                                    if (sortedListProvider
-                                            .sortedList[index].createdById ==
-                                        myId)
-                                      CustomEditButton(
-                                        issue: sortedListProvider
-                                            .sortedList[index],
-                                      ),
-                                    if (sortedListProvider
-                                            .sortedList[index].createdById ==
-                                        myId)
-                                      CustomDeleteButton(
-                                        issue: sortedListProvider
-                                            .sortedList[index],
-                                      ),
-                                    if (sortedListProvider
-                                            .sortedList[index].assignedToId ==
-                                        myId)
-                                      CustomUpdateStatusButton(
-                                        issue: sortedListProvider
-                                            .sortedList[index],
-                                      ),
-                                    if (sortedListProvider
-                                            .sortedList[index].assignedToId !=
-                                        myId)
-                                      CustomAssignToMeButton(
-                                        issue: sortedListProvider
-                                            .sortedList[index],
-                                      ),
-                                    if (sortedListProvider
-                                            .sortedList[index].status !=
-                                        COMPLETED)
-                                      CustomAssignToOtherButton(
-                                        issue: sortedListProvider
-                                            .sortedList[index],
-                                      ),
-                                    SizedBox(width: widget.safesize.width * .03)
+                                        ),
+                                        const Spacer(),
+                                        CustomViewIssueButton(
+                                          issue: allIssueProvider
+                                              .allIssuesList[index],
+                                        ),
+                                        if (allIssueProvider
+                                                .allIssuesList[index]
+                                                .createdById ==
+                                            myId)
+                                          CustomEditButton(
+                                            issue: allIssueProvider
+                                                .allIssuesList[index],
+                                          ),
+                                        if (allIssueProvider
+                                                .allIssuesList[index]
+                                                .createdById ==
+                                            myId)
+                                          CustomDeleteButton(
+                                            issue: allIssueProvider
+                                                .allIssuesList[index],
+                                          ),
+                                        if (allIssueProvider
+                                                .allIssuesList[index]
+                                                .assignedToId ==
+                                            myId)
+                                          CustomUpdateStatusButton(
+                                            issue: allIssueProvider
+                                                .allIssuesList[index],
+                                          ),
+                                        if (allIssueProvider
+                                                .allIssuesList[index]
+                                                .assignedToId !=
+                                            myId)
+                                          if (allIssueProvider
+                                                  .allIssuesList[index]
+                                                  .status !=
+                                              COMPLETED)
+                                            CustomAssignToMeButton(
+                                              issue: allIssueProvider
+                                                  .allIssuesList[index],
+                                            ),
+                                        if (allIssueProvider
+                                                .allIssuesList[index].status !=
+                                            COMPLETED)
+                                          if (allIssueProvider
+                                                  .allIssuesList[index]
+                                                  .createdById !=
+                                              myId)
+                                            CustomAssignToOtherButton(
+                                              issue: allIssueProvider
+                                                  .allIssuesList[index],
+                                            ),
+                                        SizedBox(
+                                            width: widget.safesize.width * .03)
+                                      ],
+                                    )
                                   ],
-                                )
-                              ],
-                            ),
-                          );
-                        },
-                        separatorBuilder: (context, index) =>
-                            const SizedBox(height: 10),
-                        itemCount: sortedListProvider.sortedList.length),
-          ),
-          ValueListenableBuilder(
-            valueListenable: isExpanded,
-            builder: (context, value, child) {
-              SortedListProvider provider =
-                  Provider.of<SortedListProvider>(context, listen: false);
-              return Align(
-                alignment: Alignment.topRight,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    FloatingActionButton(
-                      tooltip: "sort",
-                      onPressed: () {
-                        isExpanded.value = !value;
-                      },
-                      child: Icon(Icons.sort),
-                    ),
-                    if (value) const SizedBox(height: 10),
-                    if (value)
+                                ),
+                              ),
+                          separatorBuilder: (context, index) =>
+                              vSizedBoxMedium(),
+                          itemCount: allIssueProvider.allIssuesList.length),
+            ),
+            ValueListenableBuilder(
+              valueListenable: isExpanded,
+              builder: (context, value, child) {
+                return Align(
+                  alignment: Alignment.topRight,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
                       FloatingActionButton(
-                        tooltip: "Sort By Date",
+                        tooltip: "sort",
                         onPressed: () {
-                          provider.sortIssuesByCreationDate();
+                          isExpanded.value = !value;
                         },
-                        child: Icon(Icons.calendar_month),
+                        child: Icon(Icons.sort),
                       ),
-                    if (value) const SizedBox(height: 10),
-                    if (value)
-                      FloatingActionButton(
-                        tooltip: "Sort By Priority",
-                        onPressed: () {
-                          provider.sortIssuesByPriority();
-                        },
-                        child: Icon(Icons.low_priority),
-                      ),
-                    if (value) const SizedBox(height: 10),
-                    if (value)
-                      FloatingActionButton(
-                        tooltip: "Sort By Updated",
-                        onPressed: () {
-                          provider.sortIssuesByUpdateDate();
-                        },
-                        child: Icon(Icons.calendar_view_day_rounded),
-                      ),
-                    if (value) const SizedBox(height: 10),
-                    if (value)
-                      FloatingActionButton(
-                        tooltip: "Sort By Status",
-                        onPressed: () {
-                          provider.sortIssuesByStatus();
-                        },
-                        child: Icon(Icons.query_stats_outlined),
-                      ),
-                  ],
-                ),
-              );
-            },
-          )
-        ],
+                      if (value) const SizedBox(height: 10),
+                      if (value)
+                        FloatingActionButton(
+                          tooltip: "Sort By Date",
+                          onPressed: () {
+                            allIssueProvider.sortIssuesByCreationDate();
+                          },
+                          child: Icon(Icons.calendar_month),
+                        ),
+                      if (value) const SizedBox(height: 10),
+                      if (value)
+                        FloatingActionButton(
+                          tooltip: "Sort By Priority",
+                          onPressed: () {
+                            allIssueProvider.sortIssuesByPriority();
+                          },
+                          child: Icon(Icons.low_priority),
+                        ),
+                      if (value) const SizedBox(height: 10),
+                      if (value)
+                        FloatingActionButton(
+                          tooltip: "Sort By Updated",
+                          onPressed: () {
+                            allIssueProvider.sortIssuesByUpdateDate();
+                          },
+                          child: Icon(Icons.calendar_view_day_rounded),
+                        ),
+                      if (value) const SizedBox(height: 10),
+                      if (value)
+                        FloatingActionButton(
+                          tooltip: "Sort By Status",
+                          onPressed: () {
+                            allIssueProvider.sortIssuesByStatus();
+                          },
+                          child: Icon(Icons.query_stats_outlined),
+                        ),
+                    ],
+                  ),
+                );
+              },
+            )
+          ],
+        ),
       ),
     );
   }
 }
+
+
+
+// Container(
+//                             padding: EdgeInsets.all(myPadding),
+//                             color: const Color.fromARGB(255, 244, 246, 247),
+//                             child: Column(
+//                               crossAxisAlignment: CrossAxisAlignment.start,
+//                               children: [
+//                                 Row(
+//                                   children: [
+//                                     Text(
+//                                         sortedListProvider
+//                                             .sortedList[index].title,
+//                                         style: Theme.of(context)
+//                                             .textTheme
+//                                             .titleLarge),
+//                                     hSizedBoxMedium(),
+//                                     PriorityBox(
+//                                       value: sortedListProvider
+//                                           .sortedList[index].priority,
+//                                     ),
+//                                   ],
+//                                 ),
+//                                 vSizedBoxSmall(),
+//                                 Row(
+//                                   crossAxisAlignment: CrossAxisAlignment.start,
+//                                   children: [
+//                                     SizedBox(
+//                                       width: widget.safesize.width * .18,
+//                                       child: Column(
+//                                         crossAxisAlignment:
+//                                             CrossAxisAlignment.start,
+//                                         children: [
+//                                           Text.rich(
+//                                             TextSpan(
+//                                               children: [
+//                                                 const TextSpan(
+//                                                   text: "Created By: ",
+//                                                   style: TextStyle(
+//                                                       fontWeight:
+//                                                           FontWeight.bold),
+//                                                 ),
+//                                                 TextSpan(
+//                                                   text: sortedListProvider
+//                                                       .sortedList[index]
+//                                                       .createdBy,
+//                                                 ),
+//                                               ],
+//                                             ),
+//                                           ),
+//                                           Text.rich(
+//                                             TextSpan(
+//                                               children: [
+//                                                 const TextSpan(
+//                                                   text: "Created : ",
+//                                                   style: TextStyle(
+//                                                       fontWeight:
+//                                                           FontWeight.bold),
+//                                                 ),
+//                                                 TextSpan(
+//                                                   text: getIssueDayString(
+//                                                       sortedListProvider
+//                                                           .sortedList[index]
+//                                                           .createdAt),
+//                                                 ),
+//                                               ],
+//                                             ),
+//                                           ),
+//                                         ],
+//                                       ),
+//                                     ),
+//                                     Column(
+//                                       crossAxisAlignment:
+//                                           CrossAxisAlignment.start,
+//                                       children: [
+//                                         Text.rich(
+//                                           TextSpan(
+//                                             children: [
+//                                               const TextSpan(
+//                                                 text: "Status : ",
+//                                                 style: TextStyle(
+//                                                     fontWeight:
+//                                                         FontWeight.bold),
+//                                               ),
+//                                               TextSpan(
+//                                                   text: sortedListProvider
+//                                                       .sortedList[index]
+//                                                       .status),
+//                                             ],
+//                                           ),
+//                                         ),
+//                                         Text.rich(
+//                                           TextSpan(
+//                                             children: [
+//                                               const TextSpan(
+//                                                 text: "Last Updated : ",
+//                                                 style: TextStyle(
+//                                                     fontWeight:
+//                                                         FontWeight.bold),
+//                                               ),
+//                                               TextSpan(
+//                                                 text: getIssueDayString(
+//                                                     sortedListProvider
+//                                                         .sortedList[index]
+//                                                         .updatedAt),
+//                                               ),
+//                                             ],
+//                                           ),
+//                                         ),
+//                                       ],
+//                                     ),
+//                                     hSizedBoxLarge(),
+//                                     Text.rich(
+//                                       TextSpan(
+//                                         children: [
+//                                           const TextSpan(
+//                                             text: "Assigned To : ",
+//                                             style: TextStyle(
+//                                                 fontWeight: FontWeight.bold),
+//                                           ),
+//                                           TextSpan(
+//                                             text: sortedListProvider
+//                                                     .sortedList[index]
+//                                                     .assignedTo ??
+//                                                 "None",
+//                                           ),
+//                                         ],
+//                                       ),
+//                                     ),
+//                                     const Spacer(),
+//                                     CustomViewIssueButton(
+//                                       issue:
+//                                           sortedListProvider.sortedList[index],
+//                                     ),
+//                                     if (sortedListProvider
+//                                             .sortedList[index].createdById ==
+//                                         myId)
+//                                       CustomEditButton(
+//                                         issue: sortedListProvider
+//                                             .sortedList[index],
+//                                       ),
+//                                     if (sortedListProvider
+//                                             .sortedList[index].createdById ==
+//                                         myId)
+//                                       CustomDeleteButton(
+//                                         issue: sortedListProvider
+//                                             .sortedList[index],
+//                                       ),
+//                                     if (sortedListProvider
+//                                             .sortedList[index].assignedToId ==
+//                                         myId)
+//                                       CustomUpdateStatusButton(
+//                                         issue: sortedListProvider
+//                                             .sortedList[index],
+//                                       ),
+//                                     if (sortedListProvider
+//                                             .sortedList[index].assignedToId !=
+//                                         myId)
+//                                       CustomAssignToMeButton(
+//                                         issue: sortedListProvider
+//                                             .sortedList[index],
+//                                       ),
+//                                     if (sortedListProvider
+//                                             .sortedList[index].status !=
+//                                         COMPLETED)
+//                                       CustomAssignToOtherButton(
+//                                         issue: sortedListProvider
+//                                             .sortedList[index],
+//                                       ),
+//                                     SizedBox(width: widget.safesize.width * .03)
+//                                   ],
+//                                 )
+//                               ],
+//                             ),
+//                           );
+
+
+
+
+
+
+
+
+
+
+
+          //                 ValueListenableBuilder(
+          //   valueListenable: isExpanded,
+          //   builder: (context, value, child) {
+          //     SortedListProvider provider =
+          //         Provider.of<SortedListProvider>(context, listen: false);
+          //     return Align(
+          //       alignment: Alignment.topRight,
+          //       child: Column(
+          //         mainAxisSize: MainAxisSize.min,
+          //         children: [
+          //           FloatingActionButton(
+          //             tooltip: "sort",
+          //             onPressed: () {
+          //               isExpanded.value = !value;
+          //             },
+          //             child: Icon(Icons.sort),
+          //           ),
+          //           if (value) const SizedBox(height: 10),
+          //           if (value)
+          //             FloatingActionButton(
+          //               tooltip: "Sort By Date",
+          //               onPressed: () {
+          //                 provider.sortIssuesByCreationDate();
+          //               },
+          //               child: Icon(Icons.calendar_month),
+          //             ),
+          //           if (value) const SizedBox(height: 10),
+          //           if (value)
+          //             FloatingActionButton(
+          //               tooltip: "Sort By Priority",
+          //               onPressed: () {
+          //                 provider.sortIssuesByPriority();
+          //               },
+          //               child: Icon(Icons.low_priority),
+          //             ),
+          //           if (value) const SizedBox(height: 10),
+          //           if (value)
+          //             FloatingActionButton(
+          //               tooltip: "Sort By Updated",
+          //               onPressed: () {
+          //                 provider.sortIssuesByUpdateDate();
+          //               },
+          //               child: Icon(Icons.calendar_view_day_rounded),
+          //             ),
+          //           if (value) const SizedBox(height: 10),
+          //           if (value)
+          //             FloatingActionButton(
+          //               tooltip: "Sort By Status",
+          //               onPressed: () {
+          //                 provider.sortIssuesByStatus();
+          //               },
+          //               child: Icon(Icons.query_stats_outlined),
+          //             ),
+          //         ],
+          //       ),
+          //     );
+          //   },
+          // )

@@ -4,7 +4,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import '../../../shared/util.dart';
 import '../../../shared/util_widgets.dart';
-import '../../provider/my_issue_provider.dart';
+import '../../provider/issues_created_by_me_provider.dart';
 
 class MyIssues extends StatefulWidget {
   const MyIssues({super.key, required this.authToken});
@@ -22,7 +22,7 @@ class _MyIssuesState extends State<MyIssues> {
 
     return Padding(
       padding: const EdgeInsets.all(16.0),
-      child: Consumer<MyIssuesProvider>(
+      child: Consumer<IssuesCreatedByMeProvider>(
         builder: (context, value, child) => value.isLoading
             ? const SpinKitFadingCube(color: Colors.deepOrange, size: 50)
             : value.isError

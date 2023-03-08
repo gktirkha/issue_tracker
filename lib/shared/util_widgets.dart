@@ -1,5 +1,5 @@
 import 'package:brd_issue_tracker/dashboard/api/assign_issue_api.dart';
-import 'package:brd_issue_tracker/dashboard/api/my_issue_list_api.dart';
+import 'package:brd_issue_tracker/dashboard/api/issues_created_by_me_api.dart';
 import 'package:brd_issue_tracker/dashboard/api/update_status_api.dart';
 import 'package:brd_issue_tracker/dashboard/widgets/dialogs/delete_dialog.dart';
 import 'package:brd_issue_tracker/dashboard/widgets/dialogs/edit_dialog.dart';
@@ -14,7 +14,7 @@ import '../dashboard/provider/all_user_provider.dart';
 import '../dashboard/provider/area_chart_provider.dart';
 import '../dashboard/provider/donut_chart_provider.dart';
 import '../dashboard/provider/issues_assigned_to_me_provider.dart';
-import '../dashboard/provider/my_issue_provider.dart';
+import '../dashboard/provider/issues_created_by_me_provider.dart';
 import '../dashboard/widgets/dialogs/assign_to_dialog.dart';
 import '../static_data.dart';
 import 'models/issues_model.dart';
@@ -187,9 +187,9 @@ class CustomAssignToOtherButton extends StatelessWidget {
                   loadingBool.value = true;
                   try {
                     await showAssignDialog(context).then(
-                      (value) {
+                      (value) async {
                         if (value["id"] != null) {
-                          assignIssue(
+                          await assignIssue(
                             authToken: token,
                             issueID: issue.id,
                             userID: value["id"],
@@ -223,17 +223,17 @@ class CustomUpdateStatusButton extends StatelessWidget {
       valueListenable: loadingBool,
       builder: (context, value, child) {
         return PopupMenuButton<String>(
+          child: TextButton(
+            onPressed: null,
+            style: TextButton.styleFrom(
+                disabledForegroundColor: Colors.deepOrange),
+            child: const Text("Update Status"),
+          ),
           onSelected: (value) async {
             await updateStatusService(issue.id, value, token).then(
               (value) => refresh(context),
             );
           },
-          child: Text(
-            "Update Status",
-            style: TextStyle(
-                color: Theme.of(context).colorScheme.primary,
-                fontWeight: FontWeight.w500),
-          ),
           itemBuilder: (context) => [
             ...statusList.map(
               (e) => PopupMenuItem(
@@ -311,7 +311,8 @@ Future<void> refresh(BuildContext context) async {
   Provider.of<AreaChartProvider>(context, listen: false);
   Provider.of<DonutChartProvider>(context, listen: false)
       .getDonutData(authToken);
-  Provider.of<MyIssuesProvider>(context, listen: false).getMyIssues(authToken);
+  Provider.of<IssuesCreatedByMeProvider>(context, listen: false)
+      .getMyIssues(authToken);
   Provider.of<AllIssuesProvider>(context, listen: false)
       .getAllIssues(authToken);
   Provider.of<AllUserProvider>(context, listen: false).getAllUsers(authToken);

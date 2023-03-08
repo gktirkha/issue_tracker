@@ -40,11 +40,17 @@ class Issue {
       comments: json["comments"],
       createdAt: json["createdAt"],
       updatedAt: json["updatedAt"],
-      assignedTo:
-          json["status"] != UNASSIGNED ? json["assignedTo"]["name"] : null,
-      assignedToId:
-          json["status"] != UNASSIGNED ? json["assignedTo"]["_id"] : null,
       createdById: json["createdBy"]["_id"],
+      assignedTo: json["status"] != UNASSIGNED
+          ? json["assignedTo"] == null
+              ? "Not Available"
+              : json["assignedTo"]["name"]
+          : null,
+      assignedToId: json["status"] != UNASSIGNED
+          ? json["assignedTo"] == null
+              ? "Not Available"
+              : json["assignedTo"]["_id"]
+          : null,
     );
   }
 }

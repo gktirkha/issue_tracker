@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 
 import '../../shared/util_widgets.dart';
 import '../provider/donut_chart_provider.dart';
-import '../provider/my_issue_provider.dart';
+import '../provider/issues_created_by_me_provider.dart';
 
 class StatBoxRow extends StatelessWidget {
   const StatBoxRow(
@@ -108,7 +108,8 @@ class StatBoxRow extends StatelessWidget {
                           ),
                           statBox(
                             title: "Assigned To Me",
-                            stat: value2.myIssuesList.length.toString(),
+                            stat:
+                                value2.issuesAssignedToMeList.length.toString(),
                             context: context,
                           ),
                           statBox(

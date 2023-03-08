@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'dart:developer' as dev;
 
 import '../../shared/models/issues_model.dart';
+import '../../shared/util.dart';
+import '../../static_data.dart';
 import '../api/issue_assigned_to_me_api.dart';
 
 class IssuesAssignedToMeProvider with ChangeNotifier {
@@ -9,8 +11,8 @@ class IssuesAssignedToMeProvider with ChangeNotifier {
   bool _isError = false;
   bool get isLoading => _isLoading;
   bool get isError => _isError;
-  final List<Issue> _myIssuesList = [];
-  List<Issue> get myIssuesList => [..._myIssuesList];
+  final List<Issue> _issuesAssignedToMeList = [];
+  List<Issue> get issuesAssignedToMeList => [..._issuesAssignedToMeList];
   void setLoading(bool loadingBool) {
     _isLoading = loadingBool;
     notifyListeners();
@@ -32,8 +34,48 @@ class IssuesAssignedToMeProvider with ChangeNotifier {
       setLoading(false);
       return;
     }
-    _myIssuesList.clear();
-    _myIssuesList.addAll(res);
+    _issuesAssignedToMeList.clear();
+    _issuesAssignedToMeList.addAll(res);
     setLoading(false);
+  }
+
+  Map<String, bool> sortedStatusMap = {
+    CREATION_DATE: false,
+    UPDATE_DATE: false,
+    CREATED_BY: false,
+    PRIORITY: false,
+    STATUS: false,
+  };
+
+  void sortIssuesByCreationDate() {
+    sortedStatusMap[CREATION_DATE] = !sortedStatusMap[CREATION_DATE]!;
+    sortByCreationDate(issuesAssignedToMeList,
+        dec: sortedStatusMap[CREATION_DATE]!);
+    notifyListeners();
+  }
+
+  void sortIssuesByUpdateDate() {
+    sortedStatusMap[UPDATE_DATE] = !sortedStatusMap[UPDATE_DATE]!;
+    sortByUpdatedDate(issuesAssignedToMeList,
+        dec: sortedStatusMap[UPDATE_DATE]!);
+    notifyListeners();
+  }
+
+  void sortIssuesByPriority() {
+    sortedStatusMap[PRIORITY] = !sortedStatusMap[PRIORITY]!;
+    sortByPriority(issuesAssignedToMeList, dec: sortedStatusMap[PRIORITY]!);
+    notifyListeners();
+  }
+
+  void sortIssuesByStatus() {
+    sortedStatusMap[STATUS] = !sortedStatusMap[STATUS]!;
+    sortByStatus(issuesAssignedToMeList, dec: sortedStatusMap[STATUS]!);
+    notifyListeners();
+  }
+
+  void sortIssuesByOwner() {
+    sortedStatusMap[CREATED_BY] = !sortedStatusMap[CREATED_BY]!;
+    sortByCreatedBy(issuesAssignedToMeList, dec: sortedStatusMap[CREATED_BY]!);
+    notifyListeners();
   }
 }
