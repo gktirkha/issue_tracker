@@ -5,6 +5,7 @@ import 'package:brd_issue_tracker/dashboard/widgets/dialogs/delete_issue_dialog.
 import 'package:brd_issue_tracker/dashboard/widgets/dialogs/edit_dialog.dart';
 import 'package:brd_issue_tracker/dashboard/widgets/dialogs/show_delete_user_dialog.dart';
 import 'package:brd_issue_tracker/dashboard/widgets/dialogs/show_description_dialog.dart';
+import 'package:brd_issue_tracker/login/api/check_auth_token.dart';
 import 'package:brd_issue_tracker/login/providers/auth_provider.dart';
 import 'package:brd_issue_tracker/shared/models/user_model.dart';
 import 'package:flutter/material.dart';
@@ -299,6 +300,7 @@ class CustomAssignToMeButton extends StatelessWidget {
 Future<void> refresh(BuildContext context) async {
   String authToken =
       Provider.of<AuthProvider>(context, listen: false).loggedInUser!.token!;
+
   Provider.of<AreaChartProvider>(context, listen: false);
   Provider.of<DonutChartProvider>(context, listen: false)
       .getDonutData(authToken);
@@ -310,6 +312,18 @@ Future<void> refresh(BuildContext context) async {
   Provider.of<IssuesAssignedToMeProvider>(context, listen: false)
       .getIssuesAssignedToMe(authToken);
   Provider.of<AreaChartProvider>(context, listen: false).getAreaData(authToken);
+
+  await tokenValidationService(token: authToken).then(
+    (value) async {
+      if (value != true) {
+        await Provider.of<AuthProvider>(context, listen: false)
+            .logout()
+            .then((value) {
+          Navigator.pushNamedAndRemoveUntil(context, "/", (route) => false);
+        });
+      }
+    },
+  );
 }
 
 class CustomDeleteUserButton extends StatelessWidget {
