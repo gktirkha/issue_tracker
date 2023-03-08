@@ -45,6 +45,10 @@ class AuthProvider with ChangeNotifier {
       if (res != null) {
         _isLoggedIn = true;
         _loggedInUser = res;
+      } else {
+        _isLoggedIn = false;
+        _error = true;
+        notifyListeners();
       }
     } catch (e) {
       dev.log(e.toString(), name: "Auth Provider Exception in Check");

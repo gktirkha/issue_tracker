@@ -24,6 +24,18 @@ class _LoginScreenState extends State<LoginScreen> {
     Size safeSize = Size(mediaQueryData.size.width - horzontalPadding * 2,
         mediaQueryData.size.height - verticalPadding * 2);
 
+    Future<void> login(AuthProvider authProvider) async {
+      isLogging.value = true;
+      if (!formKey.currentState!.validate()) {
+        isLogging.value = false;
+        return;
+      }
+      await authProvider.login(
+        email: emailController.text.trim().toString(),
+        password: passwordController.text.trim().toString(),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -107,6 +119,15 @@ class _LoginScreenState extends State<LoginScreen> {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 TextFormField(
+                                    validator: (value) {
+                                      if (value == null) {
+                                        return "Please Enter Password";
+                                      }
+                                      if (value.length < 8) {
+                                        return "Please Enter Password";
+                                      }
+                                      return null;
+                                    },
                                     keyboardType: TextInputType.emailAddress,
                                     enabled: !loggingBool,
                                     controller: emailController,
@@ -119,6 +140,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                   valueListenable: isPasswordVisible,
                                   builder: (context, passwordBool, child) =>
                                       TextFormField(
+                                    validator: (value) {
+                                      if (value == null) {
+                                        return "Please Enter Password";
+                                      }
+                                      if (value.length < 8) {
+                                        return "Please Enter Password";
+                                      }
+                                      return null;
+                                    },
                                     enabled: !loggingBool,
                                     obscureText: !passwordBool,
                                     controller: passwordController,
@@ -158,33 +188,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                     ),
                                     onPressed: loggingBool
                                         ? null
-                                        : () async {
-                                            isLogging.value = true;
-                                            await authProvider
-                                                .login(
-                                              email: emailController.text
-                                                  .trim()
-                                                  .toString(),
-                                              password: passwordController.text
-                                                  .trim()
-                                                  .toString(),
-                                            )
-                                                .then(
-                                              (value) {
-                                                if (authProvider.error) {
-                                                  ScaffoldMessenger.of(context)
-                                                      .showSnackBar(
-                                                    const SnackBar(
-                                                      content: Text("Error"),
-                                                    ),
-                                                  );
-                                                }
-                                                Future.delayed(const Duration(
-                                                        seconds: 1))
-                                                    .then((value) => isLogging
-                                                        .value = false);
-                                              },
-                                            );
+                                        : () {
+                                            login(authProvider);
                                           },
                                     child: Text(!loggingBool
                                         ? "Login"
