@@ -1,3 +1,4 @@
+import 'package:brd_issue_tracker/login/api/check_auth_token.dart';
 import 'package:dio/dio.dart';
 import 'dart:developer' as dev;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -42,6 +43,15 @@ Future<UserModel?> loginCheck() async {
       name != null) {
     dev.log(token, name: "Auth Token");
     dev.log(id, name: "Auth id");
+    final res = await tokenValidationService(token: token);
+    if (res == null || res == false) {
+      prefs.remove("id");
+      prefs.remove("isAdmin");
+      prefs.remove("token");
+      prefs.remove("department");
+      prefs.remove("name");
+      return null;
+    }
     return UserModel(
       id: id,
       isAdmin: isAdmin,
