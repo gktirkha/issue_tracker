@@ -7,10 +7,13 @@ import '../../shared/models/user_model.dart';
 
 class AllUserProvider with ChangeNotifier {
   Map<String, List<UserModel>> _userMap = {};
+  List<UserModel> _userList = [];
   bool _isLoading = true;
   bool _isError = false;
   bool get isLoading => _isLoading;
   bool get isError => _isError;
+  List<UserModel> get userList => _userList;
+
   Map<String, List<UserModel>> get userMap => {..._userMap};
   void setLoading(bool loadingBool) {
     _isLoading = loadingBool;
@@ -28,6 +31,13 @@ class AllUserProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void setUserList(Map<String, List<UserModel>> userMap) {
+    userMap.forEach((key, value) {
+      _userList.addAll(value);
+    });
+    notifyListeners();
+  }
+
   Future<void> getAllUsers(String token) async {
     log("All User Api Called", name: "All User Api");
     final res = await allUsersApi(token);
@@ -39,6 +49,7 @@ class AllUserProvider with ChangeNotifier {
       return;
     }
     setUserMap(res);
+    setUserList(res);
     setLoading(false);
     setError(false);
   }

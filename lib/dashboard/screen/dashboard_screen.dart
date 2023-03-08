@@ -14,6 +14,7 @@ import 'package:provider/provider.dart';
 import '../../navbar/my_navbar.dart';
 import '../../navbar/navbar_data.dart';
 import '../provider/donut_chart_provider.dart';
+import '../widgets/all_users/all_user_home.dart';
 import '../widgets/dialogs/assign_to_dialog.dart';
 import '../widgets/home/dash_board_home.dart';
 import '../widgets/issues_assigned_to_me/issues_assigned_to_me_screen.dart';
@@ -55,7 +56,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
       DashBoardHome(safeSize: safeSize, authToken: widget.authToken),
       AssignedIssueHome(authToken: widget.authToken, safesize: safeSize),
       MyIssueHome(authToken: widget.authToken, safesize: safeSize),
-      AllIssuesHome(authToken: widget.authToken, safesize: safeSize)
+      AllIssuesHome(authToken: widget.authToken, safesize: safeSize),
+      AllUsersHome(authToken: widget.authToken, safesize: safeSize),
     ];
 
     return Scaffold(

@@ -317,6 +317,15 @@ Future<void> refresh(BuildContext context) async {
   Provider.of<AllUserProvider>(context, listen: false).getAllUsers(authToken);
   Provider.of<IssuesAssignedToMeProvider>(context, listen: false)
       .getIssuesAssignedToMe(authToken);
-
   Provider.of<AreaChartProvider>(context, listen: false).getAreaData(authToken);
+}
+
+class CustomDeleteUserButton extends StatelessWidget {
+  const CustomDeleteUserButton({super.key, required this.user});
+  final UserModel user;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(onPressed: () {}, child: Text("Delete"));
+  }
 }

@@ -1,5 +1,3 @@
-import 'package:brd_issue_tracker/dashboard/widgets/dialogs/assign_to_dialog.dart';
-import 'package:brd_issue_tracker/dashboard/widgets/dialogs/edit_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -7,7 +5,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import '../../../login/providers/auth_provider.dart';
 import '../../../shared/util.dart';
 import '../../../shared/util_widgets.dart';
-import '../../../static_data.dart';
+
 import '../../provider/issues_assigned_to_me_provider.dart';
 
 class IssuesAssignedToMe extends StatefulWidget {

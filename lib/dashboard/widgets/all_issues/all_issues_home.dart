@@ -52,7 +52,7 @@ class _AllIssuesHomeState extends State<AllIssuesHome> {
     return Container(
       height: widget.safesize.height * .90,
       width: widget.safesize.width * .90,
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(myPadding),
       decoration: BoxDecoration(
         border: Border.all(),
         borderRadius: const BorderRadius.all(
