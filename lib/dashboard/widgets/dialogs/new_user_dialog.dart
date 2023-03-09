@@ -67,8 +67,8 @@ Future<bool?> showNewUserDialog(BuildContext context) async {
                       if (value == null) {
                         return "please input Name";
                       }
-                      if (value.isEmpty || value.length < 5) {
-                        return "Minimum Length Should Be 5";
+                      if (value.isEmpty || value.length < 4) {
+                        return "Minimum Length Should Be 4";
                       }
                       return null;
                     },

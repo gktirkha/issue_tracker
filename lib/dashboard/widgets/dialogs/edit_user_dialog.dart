@@ -73,8 +73,8 @@ Future<bool?> showEditUserDialog(
                       if (value == null) {
                         return "please input title";
                       }
-                      if (value.isEmpty || value.length < 5) {
-                        return "Minimum Length Should Be 5";
+                      if (value.isEmpty || value.length < 4) {
+                        return "Minimum Length Should Be 4";
                       }
                       return null;
                     },
@@ -120,7 +120,7 @@ Future<bool?> showEditUserDialog(
                         onPressed: () async {
                           await createUser();
                         },
-                        child: const Text("Create"),
+                        child: const Text("Update"),
                       )
                     ],
                   )
