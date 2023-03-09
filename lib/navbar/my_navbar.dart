@@ -56,9 +56,9 @@ class MyNavBar extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Icon(navbarData[index].icon),
+                    navbarData[index].icon,
                     SizedBox(
-                      width: safeSize.width * .03,
+                      width: safeSize.width * .02,
                     ),
                     Flexible(child: Text(navbarData[index].title)),
                   ],

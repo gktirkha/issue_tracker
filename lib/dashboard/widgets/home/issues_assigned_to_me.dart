@@ -38,7 +38,7 @@ class _IssuesAssignedToMeState extends State<IssuesAssignedToMe> {
             : value.isError
                 ? const Text("Error")
                 : value.issuesAssignedToMeList.isEmpty
-                    ? const Text("No Issues")
+                    ? const Text("No Issues Assigned To You")
                     : Column(
                         children: [
                           Align(

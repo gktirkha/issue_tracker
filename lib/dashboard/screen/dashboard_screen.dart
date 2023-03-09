@@ -64,12 +64,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
               MyNavBar(
                 safeSize: safeSize,
                 selectedIndex: _selectIndex,
-                navbarData: loggedInUser.isAdmin
-                    ? [
-                        ...userButtonData,
-                        NavBarData(title: "Admin", icon: Icons.dashboard)
-                      ]
-                    : userButtonData,
+                navbarData: userButtonData(loggedInUser.isAdmin),
                 onClicked: (id) => setState(
                   () {
                     _selectIndex = id;
