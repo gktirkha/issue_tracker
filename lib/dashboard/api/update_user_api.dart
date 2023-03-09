@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:brd_issue_tracker/static_data.dart';
 import 'package:dio/dio.dart';
 
-Future<void> editUserService({
+Future<void> updateUserService({
   required String id,
   required String name,
   required String email,

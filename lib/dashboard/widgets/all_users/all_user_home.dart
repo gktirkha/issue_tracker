@@ -17,6 +17,7 @@ class AllUsersHome extends StatefulWidget {
 }
 
 class _AllUsersHomeState extends State<AllUsersHome> {
+  ValueNotifier<bool> isExpanded = ValueNotifier(false);
   double myPadding = 16;
   @override
   Widget build(BuildContext context) {
@@ -32,151 +33,232 @@ class _AllUsersHomeState extends State<AllUsersHome> {
         ),
       ),
       child: Consumer<AllUserProvider>(
-        builder: (context, allUserProvider, child) => Container(
-          child: allUserProvider.isLoading
-              ? const SpinKitFadingCube(color: Colors.deepOrange)
-              : allUserProvider.isError
-                  ? const Text("Error Occured")
-                  : ListView.separated(
-                      itemBuilder: (context, index) => Container(
-                        color: const Color.fromARGB(255, 244, 246, 247),
-                        padding: EdgeInsets.all(myPadding),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
+        builder: (context, allUserProvider, child) => Stack(
+          children: [
+            Container(
+              child: allUserProvider.isLoading
+                  ? const SpinKitFadingCube(color: Colors.deepOrange)
+                  : allUserProvider.isError
+                      ? const Text("Error Occured")
+                      : ListView.separated(
+                          itemBuilder: (context, index) => Container(
+                            color: const Color.fromARGB(255, 244, 246, 247),
+                            padding: EdgeInsets.all(myPadding),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                SizedBox(
-                                  width: widget.safesize.width * .12,
-                                  child: Text(
-                                    allUserProvider.userList[index].name,
-                                    style:
-                                        Theme.of(context).textTheme.titleMedium,
-                                  ),
-                                ),
-                                const Spacer(),
-                                if (allUserProvider.userList[index].id == myId)
-                                  const YouBox(),
-                                hSizedBoxMedium(),
-                                if (allUserProvider.userList[index].isAdmin)
-                                  AdminBox(
-                                    isAdmin:
-                                        allUserProvider.userList[index].isAdmin,
-                                  ),
-                                SizedBox(width: widget.safesize.width * .03)
-                              ],
-                            ),
-                            vSizedBoxSmall(),
-                            Row(
-                              children: [
-                                Column(
+                                Row(
                                   children: [
                                     SizedBox(
-                                      width: widget.safesize.width * .2,
-                                      child: Text.rich(
-                                        TextSpan(
-                                          children: [
-                                            const TextSpan(
-                                              text: "Department : ",
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                            TextSpan(
-                                              text: allUserProvider
-                                                  .userList[index].department,
-                                            ),
-                                          ],
-                                        ),
+                                      width: widget.safesize.width * .12,
+                                      child: Text(
+                                        allUserProvider.userList[index].name,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleMedium,
                                       ),
                                     ),
-                                    vSizedBoxSmall(),
-                                    SizedBox(
-                                      width: widget.safesize.width * .2,
-                                      child: Text.rich(
-                                        TextSpan(
-                                          children: [
-                                            const TextSpan(
-                                              text: "Created At : ",
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold),
-                                            ),
+                                    const Spacer(),
+                                    if (allUserProvider.userList[index].id ==
+                                        myId)
+                                      const YouBox(),
+                                    hSizedBoxMedium(),
+                                    if (allUserProvider.userList[index].isAdmin)
+                                      AdminBox(
+                                        isAdmin: allUserProvider
+                                            .userList[index].isAdmin,
+                                      ),
+                                    SizedBox(width: widget.safesize.width * .03)
+                                  ],
+                                ),
+                                vSizedBoxSmall(),
+                                Row(
+                                  children: [
+                                    Column(
+                                      children: [
+                                        SizedBox(
+                                          width: widget.safesize.width * .2,
+                                          child: Text.rich(
                                             TextSpan(
-                                              text: DateFormat("dd/MM/yyyy")
-                                                  .format(
-                                                DateTime.parse(
-                                                  allUserProvider
-                                                      .userList[index]
-                                                      .createdAt!,
+                                              children: [
+                                                const TextSpan(
+                                                  text: "Department : ",
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold),
                                                 ),
-                                              ),
+                                                TextSpan(
+                                                  text: allUserProvider
+                                                      .userList[index]
+                                                      .department,
+                                                ),
+                                              ],
                                             ),
-                                          ],
+                                          ),
                                         ),
-                                      ),
+                                        vSizedBoxSmall(),
+                                        SizedBox(
+                                          width: widget.safesize.width * .2,
+                                          child: Text.rich(
+                                            TextSpan(
+                                              children: [
+                                                const TextSpan(
+                                                  text: "Created At : ",
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                                TextSpan(
+                                                  text: DateFormat("dd/MM/yyyy")
+                                                      .format(
+                                                    DateTime.parse(
+                                                      allUserProvider
+                                                          .userList[index]
+                                                          .createdAt!,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
+                                    SizedBox(
+                                        width: widget.safesize.width * .01),
+                                    Column(
+                                      children: [
+                                        SizedBox(
+                                          width: widget.safesize.width * .3,
+                                          child: Text.rich(
+                                            TextSpan(
+                                              children: [
+                                                const TextSpan(
+                                                  text: "Email : ",
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                                TextSpan(
+                                                  text: allUserProvider
+                                                      .userList[index].email,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                        vSizedBoxSmall(),
+                                        SizedBox(
+                                          width: widget.safesize.width * .3,
+                                          child: Text.rich(
+                                            TextSpan(
+                                              children: [
+                                                const TextSpan(
+                                                  text: "Assigned Cases : ",
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                                TextSpan(
+                                                  text: allUserProvider
+                                                      .userList[index]
+                                                      .assignCount!
+                                                      .toString(),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    const Spacer(),
+                                    if (allUserProvider.userList[index].id !=
+                                        myId)
+                                      CustomEditUserButton(
+                                        user: allUserProvider.userList[index],
+                                      ),
+                                    if (!allUserProvider
+                                        .userList[index].isAdmin)
+                                      CustomDeleteUserButton(
+                                        user: allUserProvider.userList[index],
+                                      ),
+                                    SizedBox(width: widget.safesize.width * .03)
                                   ],
                                 ),
-                                SizedBox(width: widget.safesize.width * .01),
-                                Column(
-                                  children: [
-                                    SizedBox(
-                                      width: widget.safesize.width * .3,
-                                      child: Text.rich(
-                                        TextSpan(
-                                          children: [
-                                            const TextSpan(
-                                              text: "Email : ",
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                            TextSpan(
-                                              text: allUserProvider
-                                                  .userList[index].email,
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    vSizedBoxSmall(),
-                                    SizedBox(
-                                      width: widget.safesize.width * .3,
-                                      child: Text.rich(
-                                        TextSpan(
-                                          children: [
-                                            const TextSpan(
-                                              text: "Assigned Cases : ",
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                            TextSpan(
-                                              text: allUserProvider
-                                                  .userList[index].assignCount!
-                                                  .toString(),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const Spacer(),
-                                if (allUserProvider.userList[index].id != myId)
-                                  CustomEditUserButton(
-                                    user: allUserProvider.userList[index],
-                                  ),
-                                if (!allUserProvider.userList[index].isAdmin)
-                                  CustomDeleteUserButton(
-                                    user: allUserProvider.userList[index],
-                                  ),
-                                SizedBox(width: widget.safesize.width * .03)
                               ],
                             ),
-                          ],
+                          ),
+                          separatorBuilder: (context, index) =>
+                              vSizedBoxMedium(),
+                          itemCount: allUserProvider.userList.length,
                         ),
+            ),
+            ValueListenableBuilder(
+              valueListenable: isExpanded,
+              builder: (context, value, child) {
+                return Align(
+                  alignment: Alignment.topRight,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      FloatingActionButton(
+                        tooltip: "sort",
+                        onPressed: () {
+                          isExpanded.value = !value;
+                        },
+                        child: const Icon(Icons.sort),
                       ),
-                      separatorBuilder: (context, index) => vSizedBoxMedium(),
-                      itemCount: allUserProvider.userList.length,
-                    ),
+                      if (value) const SizedBox(height: 10),
+                      if (value)
+                        FloatingActionButton(
+                          tooltip: "Sort By Name",
+                          onPressed: () {
+                            allUserProvider.sortByName();
+                          },
+                          child: const Icon(Icons.abc),
+                        ),
+                      if (value) const SizedBox(height: 10),
+                      if (value)
+                        FloatingActionButton(
+                          tooltip: "Sort By Department",
+                          onPressed: () {
+                            allUserProvider.sortByDepartment();
+                          },
+                          child: const Icon(Icons.house),
+                        ),
+                      if (value) const SizedBox(height: 10),
+                      if (value)
+                        FloatingActionButton(
+                          tooltip: "Sort By Creation Date",
+                          onPressed: () {
+                            allUserProvider.sortByCreationDate();
+                          },
+                          child: const Icon(Icons.calendar_month),
+                        ),
+                      if (value) const SizedBox(height: 10),
+                      if (value)
+                        FloatingActionButton(
+                          tooltip: "Sort By Assign Count",
+                          onPressed: () {
+                            allUserProvider.sortByAssignCount();
+                          },
+                          child: const Icon(Icons.numbers),
+                        ),
+                      if (value) const SizedBox(height: 10),
+                      if (value)
+                        FloatingActionButton(
+                          tooltip: "Sort By Admin Status",
+                          onPressed: () {
+                            allUserProvider.sortByAdminStatus();
+                          },
+                          child: const Icon(Icons.person),
+                        ),
+                    ],
+                  ),
+                );
+              },
+            )
+          ],
         ),
       ),
     );

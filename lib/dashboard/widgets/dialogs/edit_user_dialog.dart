@@ -1,4 +1,4 @@
-import 'package:brd_issue_tracker/dashboard/api/edit_user_api.dart';
+import 'package:brd_issue_tracker/dashboard/api/update_user_api.dart';
 import 'package:brd_issue_tracker/login/providers/auth_provider.dart';
 import 'package:brd_issue_tracker/shared/models/user_model.dart';
 
@@ -28,7 +28,7 @@ Future<bool?> showEditUserDialog(
       return;
     }
 
-    await editUserService(
+    await updateUserService(
       name: nameController.text,
       email: emailController.text,
       department: selectedDepartment.value,
