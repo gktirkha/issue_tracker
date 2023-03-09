@@ -8,7 +8,6 @@ import 'package:provider/provider.dart';
 
 Future<bool?> showNewUserDialog(BuildContext context) async {
   ValueNotifier<String> selectedDepartment = ValueNotifier(departmentList[0]);
-  ValueNotifier<int> passwordlength = ValueNotifier(0);
   ValueNotifier<bool> isPasswordVisible = ValueNotifier(false);
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
@@ -16,6 +15,24 @@ Future<bool?> showNewUserDialog(BuildContext context) async {
   MediaQueryData mediaQueryData = MediaQuery.of(context);
   String token =
       Provider.of<AuthProvider>(context, listen: false).loggedInUser!.token!;
+  final formKey = GlobalKey<FormState>();
+
+  Future<void> createUser() async {
+    if (!formKey.currentState!.validate()) {
+      return;
+    }
+
+    await createUserService(
+            name: nameController.text,
+            email: emailController.text,
+            password: passwordController.text,
+            department: selectedDepartment.value,
+            token: token)
+        .then((value) {
+      refresh(context);
+      Navigator.pop(context);
+    });
+  }
 
   return showGeneralDialog<bool>(
     context: context,
@@ -41,18 +58,44 @@ Future<bool?> showNewUserDialog(BuildContext context) async {
                   "Create User",
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
-                TextField(
+                TextFormField(
                   controller: nameController,
-                  decoration: const InputDecoration(label: Text("Name")),
+                  decoration: const InputDecoration(labelText: "Title"),
+                  validator: (value) {
+                    if (value == null) {
+                      return "please input title";
+                    }
+                    if (value.isEmpty || value.length < 5) {
+                      return "Minimum Length Shoul Be 5";
+                    }
+                    return null;
+                  },
                 ),
-                TextField(
+                TextFormField(
                   controller: emailController,
-                  decoration: const InputDecoration(label: Text("email")),
+                  decoration: const InputDecoration(labelText: "Email"),
+                  validator: (value) {
+                    if (value == null) {
+                      return "please input title";
+                    }
+                    if (value.isEmpty || value.length < 5) {
+                      return "Minimum Length Shoul Be 5";
+                    }
+                    return null;
+                  },
                 ),
                 ValueListenableBuilder(
                   valueListenable: isPasswordVisible,
-                  builder: (context, visibleBool, child) => TextField(
-                    onChanged: (value) => passwordlength.value = value.length,
+                  builder: (context, visibleBool, child) => TextFormField(
+                    validator: (value) {
+                      if (value == null) {
+                        return "please input title";
+                      }
+                      if (value.isEmpty || value.length < 5) {
+                        return "Minimum Length Shoul Be 5";
+                      }
+                      return null;
+                    },
                     obscureText: !visibleBool,
                     controller: passwordController,
                     decoration: InputDecoration(
@@ -68,7 +111,6 @@ Future<bool?> showNewUserDialog(BuildContext context) async {
                               onTap: () {
                                 passwordController.text =
                                     generateRandomString(9);
-                                passwordlength.value = 9;
                               },
                               child: const Icon(Icons.password),
                             ),
@@ -112,31 +154,16 @@ Future<bool?> showNewUserDialog(BuildContext context) async {
                   ),
                 ),
                 vSizedBoxLarge(),
-                ValueListenableBuilder(
-                  valueListenable: passwordlength,
-                  builder: (context, passLen, child) => Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      TextButton(
-                        onPressed: passLen < 8
-                            ? null
-                            : () async {
-                                passwordlength.value = 0;
-                                await createUserService(
-                                        name: nameController.text,
-                                        email: emailController.text,
-                                        password: passwordController.text,
-                                        department: selectedDepartment.value,
-                                        token: token)
-                                    .then((value) {
-                                  refresh(context);
-                                  Navigator.pop(context);
-                                });
-                              },
-                        child: const Text("Create"),
-                      )
-                    ],
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    TextButton(
+                      onPressed: () async {
+                        await createUser();
+                      },
+                      child: const Text("Create"),
+                    )
+                  ],
                 )
               ],
             ),

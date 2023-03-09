@@ -1,5 +1,6 @@
-import 'package:brd_issue_tracker/dashboard/api/create_issue_api.dart';
+import 'package:brd_issue_tracker/dashboard/api/update_issue_api.dart';
 import 'package:brd_issue_tracker/dashboard/widgets/dialogs/assign_to_dialog.dart';
+import 'package:brd_issue_tracker/shared/models/issues_model.dart';
 import 'package:brd_issue_tracker/shared/util_widgets.dart';
 import 'package:brd_issue_tracker/static_data.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +8,7 @@ import 'package:provider/provider.dart';
 
 import '../../../login/providers/auth_provider.dart';
 
-Future<bool?> showCreateDialog(BuildContext context) async {
+Future<bool?> showEditDialog(BuildContext context, Issue selectedIssue) async {
   return showGeneralDialog<bool>(
     context: context,
     barrierLabel: "Barrier",
@@ -17,31 +18,37 @@ Future<bool?> showCreateDialog(BuildContext context) async {
     pageBuilder: (_, __, ___) {
       TextEditingController titleController = TextEditingController();
       TextEditingController descriptionController = TextEditingController();
-      ValueNotifier<String> createdPriorityValue = ValueNotifier(LOW_PRIORITY);
+      titleController.text = selectedIssue.title;
+      descriptionController.text = selectedIssue.description;
+      ValueNotifier<String> selectedPriorityValue =
+          ValueNotifier(selectedIssue.priority);
       Size size = MediaQuery.of(context).size;
-      ValueNotifier<String> assignedTo = ValueNotifier("none");
+      String myId =
+          Provider.of<AuthProvider>(context, listen: false).loggedInUser!.id;
+      bool enableEditting = myId == selectedIssue.createdById;
+      ValueNotifier<String> issueNotify =
+          ValueNotifier(selectedIssue.assignedTo ?? "none");
       ValueNotifier<bool> isLoading = ValueNotifier(false);
       final String token =
           Provider.of<AuthProvider>(context).loggedInUser!.token!;
-      String? assignToId;
+      final bool isCompleted = selectedIssue.status == COMPLETED;
       final formKey = GlobalKey<FormState>();
-      Future<void> _createIssue() async {
+
+      Future<void> updateIssue() async {
+        isLoading.value = true;
         if (!formKey.currentState!.validate()) {
           return;
         }
-
-        await createIssueService(
-          token: token,
-          title: titleController.text,
+        await updateIssueService(
           description: descriptionController.text,
-          priority: createdPriorityValue.value,
-          assignToId: assignToId,
-        ).then(
-          (value) {
-            refresh(context);
-            Navigator.pop(context);
-          },
-        );
+          id: selectedIssue.id,
+          title: titleController.text,
+          priority: selectedPriorityValue.value,
+          token: token,
+          assignToUser: selectedIssue.assignedToId,
+        ).then((value) => refresh(context)).then(
+              (value) => Navigator.pop(context),
+            );
       }
 
       return Center(
@@ -63,11 +70,19 @@ Future<bool?> showCreateDialog(BuildContext context) async {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Create Issue",
+                    "Update Issue",
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
+                  if (!enableEditting)
+                    const Text("The Issue Is Not Created By You"),
+                  if (isCompleted)
+                    const Text(
+                      "Can not edit completed task",
+                      style: TextStyle(color: Colors.red),
+                    ),
                   TextFormField(
                     controller: titleController,
+                    enabled: enableEditting,
                     decoration: const InputDecoration(labelText: "Title"),
                     validator: (value) {
                       if (value == null) {
@@ -79,21 +94,12 @@ Future<bool?> showCreateDialog(BuildContext context) async {
                       return null;
                     },
                   ),
-                  TextFormField(
+                  TextField(
                     controller: descriptionController,
-                    decoration: const InputDecoration(labelText: "Description"),
-                    validator: (value) {
-                      if (value == null) {
-                        return "please input description";
-                      }
-                      if (value.isEmpty || value.length < 5) {
-                        return "Minimum Length Shoul Be 5";
-                      }
-                      return null;
-                    },
+                    enabled: enableEditting && !isCompleted,
                   ),
                   ValueListenableBuilder(
-                    valueListenable: createdPriorityValue,
+                    valueListenable: selectedPriorityValue,
                     builder: (context, dropValue, child) => SizedBox(
                       width: MediaQuery.of(context).size.width * .2,
                       child: DropdownButton(
@@ -106,32 +112,36 @@ Future<bool?> showCreateDialog(BuildContext context) async {
                                         child: Text(e),
                                       ))
                               .toList(),
-                          onChanged: (String? value) {
-                            createdPriorityValue.value =
-                                value ?? createdPriorityValue.value;
-                          }),
+                          onChanged: enableEditting && !isCompleted
+                              ? (String? value) {
+                                  selectedPriorityValue.value =
+                                      value ?? selectedPriorityValue.value;
+                                }
+                              : null),
                     ),
                   ),
                   ValueListenableBuilder(
-                    valueListenable: assignedTo,
+                    valueListenable: issueNotify,
                     builder: (context, issue, child) => Row(
                       children: [
                         Text("Assigned To : $issue"),
                         TextButton(
-                          onPressed: () async {
-                            try {
-                              await showAssignDialog(context).then(
-                                (value) {
-                                  if (value != null &&
-                                      value["name"] != null &&
-                                      value["id"] != null) {
-                                    assignedTo.value = value["name"];
-                                    assignToId = value["id"];
-                                  }
-                                },
-                              );
-                            } finally {}
-                          },
+                          onPressed: !isCompleted
+                              ? () async {
+                                  await showAssignDialog(context).then(
+                                    (selVal) {
+                                      if (selVal != null) {
+                                        selectedIssue.assignedToId =
+                                            selVal["id"];
+                                        selectedIssue.assignedTo =
+                                            selVal["name"];
+                                        issueNotify.value =
+                                            selectedIssue.assignedTo ?? "none";
+                                      }
+                                    },
+                                  );
+                                }
+                              : null,
                           child: const Text("Change"),
                         ),
                       ],
@@ -144,14 +154,18 @@ Future<bool?> showCreateDialog(BuildContext context) async {
                       children: [
                         const Spacer(),
                         TextButton(
-                            onPressed: () async {
-                              await _createIssue();
-                            },
+                            onPressed: value
+                                ? null
+                                : () async {
+                                    await updateIssue();
+                                  },
                             child: const Text("Save")),
                         TextButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
+                            onPressed: !isCompleted
+                                ? () {
+                                    Navigator.pop(context);
+                                  }
+                                : null,
                             child: const Text("Discard"))
                       ],
                     ),

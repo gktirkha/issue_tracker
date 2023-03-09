@@ -2,7 +2,7 @@ import 'package:brd_issue_tracker/dashboard/api/assign_issue_api.dart';
 
 import 'package:brd_issue_tracker/dashboard/api/update_status_api.dart';
 import 'package:brd_issue_tracker/dashboard/widgets/dialogs/delete_issue_dialog.dart';
-import 'package:brd_issue_tracker/dashboard/widgets/dialogs/edit_dialog.dart';
+import 'package:brd_issue_tracker/dashboard/widgets/dialogs/edit_issue_dialog.dart';
 import 'package:brd_issue_tracker/dashboard/widgets/dialogs/show_delete_user_dialog.dart';
 import 'package:brd_issue_tracker/dashboard/widgets/dialogs/show_description_dialog.dart';
 import 'package:brd_issue_tracker/login/api/check_auth_token.dart';
