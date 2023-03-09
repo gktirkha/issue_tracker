@@ -160,9 +160,14 @@ class _AllUsersHomeState extends State<AllUsersHome> {
                                   ],
                                 ),
                                 const Spacer(),
+                                if (allUserProvider.userList[index].id != myId)
+                                  CustomEditUserButton(
+                                    user: allUserProvider.userList[index],
+                                  ),
                                 if (!allUserProvider.userList[index].isAdmin)
                                   CustomDeleteUserButton(
-                                      user: allUserProvider.userList[index]),
+                                    user: allUserProvider.userList[index],
+                                  ),
                                 SizedBox(width: widget.safesize.width * .03)
                               ],
                             ),

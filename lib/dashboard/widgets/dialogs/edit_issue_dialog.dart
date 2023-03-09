@@ -89,14 +89,24 @@ Future<bool?> showEditDialog(BuildContext context, Issue selectedIssue) async {
                         return "please input title";
                       }
                       if (value.isEmpty || value.length < 5) {
-                        return "Minimum Length Shoul Be 5";
+                        return "Minimum Length Should Be 5";
                       }
                       return null;
                     },
                   ),
-                  TextField(
+                  TextFormField(
                     controller: descriptionController,
                     enabled: enableEditting && !isCompleted,
+                    decoration: const InputDecoration(labelText: "Description"),
+                    validator: (value) {
+                      if (value == null) {
+                        return "please input title";
+                      }
+                      if (value.isEmpty || value.length < 5) {
+                        return "Minimum Length Should Be 5";
+                      }
+                      return null;
+                    },
                   ),
                   ValueListenableBuilder(
                     valueListenable: selectedPriorityValue,

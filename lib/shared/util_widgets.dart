@@ -3,6 +3,7 @@ import 'package:brd_issue_tracker/dashboard/api/assign_issue_api.dart';
 import 'package:brd_issue_tracker/dashboard/api/update_status_api.dart';
 import 'package:brd_issue_tracker/dashboard/widgets/dialogs/delete_issue_dialog.dart';
 import 'package:brd_issue_tracker/dashboard/widgets/dialogs/edit_issue_dialog.dart';
+import 'package:brd_issue_tracker/dashboard/widgets/dialogs/edit_user_dialog.dart';
 import 'package:brd_issue_tracker/dashboard/widgets/dialogs/show_delete_user_dialog.dart';
 import 'package:brd_issue_tracker/dashboard/widgets/dialogs/show_description_dialog.dart';
 import 'package:brd_issue_tracker/login/api/check_auth_token.dart';
@@ -383,6 +384,21 @@ class YouBox extends StatelessWidget {
           style: TextStyle(color: Colors.white),
         ),
       ),
+    );
+  }
+}
+
+class CustomEditUserButton extends StatelessWidget {
+  const CustomEditUserButton({super.key, required this.user});
+  final UserModel user;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: () async {
+        await showEditUserDialog(context, user);
+      },
+      child: const Text("edit"),
     );
   }
 }

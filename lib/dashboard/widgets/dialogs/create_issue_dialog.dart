@@ -25,7 +25,7 @@ Future<bool?> showCreateDialog(BuildContext context) async {
           Provider.of<AuthProvider>(context).loggedInUser!.token!;
       String? assignToId;
       final formKey = GlobalKey<FormState>();
-      Future<void> _createIssue() async {
+      Future<void> createIssue() async {
         if (!formKey.currentState!.validate()) {
           return;
         }
@@ -74,7 +74,7 @@ Future<bool?> showCreateDialog(BuildContext context) async {
                         return "please input title";
                       }
                       if (value.isEmpty || value.length < 5) {
-                        return "Minimum Length Shoul Be 5";
+                        return "Minimum Length Should Be 5";
                       }
                       return null;
                     },
@@ -87,7 +87,7 @@ Future<bool?> showCreateDialog(BuildContext context) async {
                         return "please input description";
                       }
                       if (value.isEmpty || value.length < 5) {
-                        return "Minimum Length Shoul Be 5";
+                        return "Minimum Length Should Be 5";
                       }
                       return null;
                     },
@@ -145,7 +145,7 @@ Future<bool?> showCreateDialog(BuildContext context) async {
                         const Spacer(),
                         TextButton(
                             onPressed: () async {
-                              await _createIssue();
+                              await createIssue();
                             },
                             child: const Text("Save")),
                         TextButton(
