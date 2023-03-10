@@ -195,7 +195,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     ),
                                     onPressed: loggingBool
                                         ? null
-                                        : () {
+                                        : () async {
                                             login(authProvider);
                                           },
                                     child: Text(!loggingBool
