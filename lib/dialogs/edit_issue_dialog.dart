@@ -46,9 +46,10 @@ Future<bool?> showEditDialog(BuildContext context, Issue selectedIssue) async {
           priority: selectedPriorityValue.value,
           token: token,
           assignToUser: selectedIssue.assignedToId,
-        ).then((value) => refresh(context)).then(
-              (value) => Navigator.pop(context),
-            );
+        ).then((value) {
+          refresh(context);
+          Navigator.pop(context);
+        });
       }
 
       return Center(

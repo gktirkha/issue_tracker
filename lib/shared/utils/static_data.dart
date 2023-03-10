@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-String host = "http://13.231.115.253:4000/api/";
+// String host = "http://13.231.115.253:4000/api/";
+String host = "http://localhost:4000/api/";
 
 String get HIGH_PRIORITY => "HIGH";
 String get LOW_PRIORITY => "LOW";
@@ -12,6 +13,7 @@ Color priorityColor(String priority) {
   Color color = Colors.green;
   switch (priority) {
     case "HIGH":
+      // color = Colors.red;
       color = Colors.red;
       break;
     case "MEDIUM":
