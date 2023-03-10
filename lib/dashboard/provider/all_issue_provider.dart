@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'dart:developer' as dev;
 
 import '../../shared/models/issues_model.dart';
-import '../../shared/util.dart';
-import '../../static_data.dart';
+import '../../shared/utils/util_methods.dart';
+import '../../shared/utils/static_data.dart';
 import '../api/all_issues_api.dart';
 
 class AllIssuesProvider with ChangeNotifier {

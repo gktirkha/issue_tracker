@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 
-import '../../../shared/util.dart';
-import '../../../shared/util_widgets.dart';
-import '../../../static_data.dart';
+import '../../../shared/utils/util_methods.dart';
+import '../../../shared/utils/util_widgets.dart';
+import '../../../shared/utils/static_data.dart';
 
 class AssignedIssueHome extends StatefulWidget {
   const AssignedIssueHome(

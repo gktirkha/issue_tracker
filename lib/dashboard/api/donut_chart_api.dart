@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'dart:developer' as dev;
-import '../../static_data.dart';
+import '../../shared/utils/static_data.dart';
 
 Future<Map<String, dynamic>?> donutChartService(String authToken) async {
   Map<String, dynamic> _donutChartItemsMap = {};

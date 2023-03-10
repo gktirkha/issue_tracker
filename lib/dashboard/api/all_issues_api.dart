@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 
 import 'dart:developer' as dev;
 import '../../shared/models/issues_model.dart';
-import '../../static_data.dart';
+import '../../shared/utils/static_data.dart';
 
 Future<List<Issue>?> allIssueApiCallService(String authToken) async {
   List<Issue> _allIssueList = [];

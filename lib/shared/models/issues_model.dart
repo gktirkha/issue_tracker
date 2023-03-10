@@ -1,4 +1,4 @@
-import '../../static_data.dart';
+import '../utils/static_data.dart';
 
 class Issue {
   String id;

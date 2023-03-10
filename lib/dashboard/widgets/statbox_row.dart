@@ -1,12 +1,12 @@
 import 'package:brd_issue_tracker/dashboard/provider/issues_assigned_to_me_provider.dart';
-import 'package:brd_issue_tracker/dashboard/widgets/dialogs/create_issue_dialog.dart';
-import 'package:brd_issue_tracker/dashboard/widgets/dialogs/new_user_dialog.dart';
+import 'package:brd_issue_tracker/dialogs/create_issue_dialog.dart';
+import 'package:brd_issue_tracker/dialogs/new_user_dialog.dart';
 import 'package:brd_issue_tracker/login/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 
-import '../../shared/util_widgets.dart';
+import '../../shared/utils/util_widgets.dart';
 import '../provider/donut_chart_provider.dart';
 
 class StatBoxRow extends StatelessWidget {

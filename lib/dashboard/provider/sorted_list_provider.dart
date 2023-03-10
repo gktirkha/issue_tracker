@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../shared/models/issues_model.dart';
-import '../../shared/util.dart';
-import '../../static_data.dart';
+import '../../shared/utils/util_methods.dart';
+import '../../shared/utils/static_data.dart';
 
 class SortedListProvider with ChangeNotifier {
   List<Issue> _sortedList = [];

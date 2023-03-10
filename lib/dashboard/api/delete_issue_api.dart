@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 
-import '../../static_data.dart';
+import '../../shared/utils/static_data.dart';
 
 Future<void> deleteIssueService(
     {required String issueId, required String authToken}) async {

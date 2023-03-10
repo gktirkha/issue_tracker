@@ -1,6 +1,6 @@
 import 'package:brd_issue_tracker/dashboard/provider/all_user_provider.dart';
 import 'package:brd_issue_tracker/login/providers/auth_provider.dart';
-import 'package:brd_issue_tracker/shared/util_widgets.dart';
+import 'package:brd_issue_tracker/shared/utils/util_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';

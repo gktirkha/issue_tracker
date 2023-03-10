@@ -2,7 +2,7 @@ import 'package:brd_issue_tracker/dashboard/widgets/all_issues/all_issues_home.d
 import 'package:brd_issue_tracker/dashboard/widgets/created_by_me/created_by_me_home.dart';
 import 'package:brd_issue_tracker/login/providers/auth_provider.dart';
 import 'package:brd_issue_tracker/shared/models/user_model.dart';
-import 'package:brd_issue_tracker/shared/util_widgets.dart';
+import 'package:brd_issue_tracker/shared/utils/util_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../navbar/my_navbar.dart';

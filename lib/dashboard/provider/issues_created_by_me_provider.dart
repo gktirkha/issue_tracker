@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'dart:developer' as dev;
 
 import '../../shared/models/issues_model.dart';
-import '../../shared/util.dart';
-import '../../static_data.dart';
+import '../../shared/utils/util_methods.dart';
+import '../../shared/utils/static_data.dart';
 import '../api/issues_created_by_me_api.dart';
 
 class IssuesCreatedByMeProvider with ChangeNotifier {

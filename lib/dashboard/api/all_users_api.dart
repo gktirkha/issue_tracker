@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:brd_issue_tracker/shared/models/user_model.dart';
-import 'package:brd_issue_tracker/static_data.dart';
+import 'package:brd_issue_tracker/shared/utils/static_data.dart';
 import 'package:dio/dio.dart';
 
 Future<Map<String, List<UserModel>>?> allUsersApi(String token) async {

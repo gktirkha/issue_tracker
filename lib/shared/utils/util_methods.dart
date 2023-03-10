@@ -1,5 +1,5 @@
-import '../static_data.dart';
-import 'models/issues_model.dart';
+import 'static_data.dart';
+import '../models/issues_model.dart';
 import 'dart:math';
 
 List<Issue> sortByCreationDate(List<Issue> originalList, {bool dec = true}) {

@@ -1,4 +1,4 @@
-import 'package:brd_issue_tracker/static_data.dart';
+import 'package:brd_issue_tracker/shared/utils/static_data.dart';
 import 'package:dio/dio.dart';
 
 Future<bool?> tokenValidationService({required String token}) async {

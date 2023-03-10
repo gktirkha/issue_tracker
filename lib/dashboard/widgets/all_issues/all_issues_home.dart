@@ -1,12 +1,12 @@
 import 'package:brd_issue_tracker/dashboard/provider/all_issue_provider.dart';
-import 'package:brd_issue_tracker/static_data.dart';
+import 'package:brd_issue_tracker/shared/utils/static_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 
 import '../../../login/providers/auth_provider.dart';
-import '../../../shared/util.dart';
-import '../../../shared/util_widgets.dart';
+import '../../../shared/utils/util_methods.dart';
+import '../../../shared/utils/util_widgets.dart';
 
 class AllIssuesHome extends StatefulWidget {
   const AllIssuesHome(

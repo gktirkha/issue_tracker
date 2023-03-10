@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'dart:developer' as dev;
 
 import '../../shared/models/issues_model.dart';
-import '../../shared/util.dart';
-import '../../static_data.dart';
+import '../../shared/utils/util_methods.dart';
+import '../../shared/utils/static_data.dart';
 import '../api/issue_assigned_to_me_api.dart';
 
 class IssuesAssignedToMeProvider with ChangeNotifier {
@@ -49,33 +49,33 @@ class IssuesAssignedToMeProvider with ChangeNotifier {
 
   void sortIssuesByCreationDate() {
     sortedStatusMap[CREATION_DATE] = !sortedStatusMap[CREATION_DATE]!;
-    sortByCreationDate(issuesAssignedToMeList,
+    sortByCreationDate(_issuesAssignedToMeList,
         dec: sortedStatusMap[CREATION_DATE]!);
     notifyListeners();
   }
 
   void sortIssuesByUpdateDate() {
     sortedStatusMap[UPDATE_DATE] = !sortedStatusMap[UPDATE_DATE]!;
-    sortByUpdatedDate(issuesAssignedToMeList,
+    sortByUpdatedDate(_issuesAssignedToMeList,
         dec: sortedStatusMap[UPDATE_DATE]!);
     notifyListeners();
   }
 
   void sortIssuesByPriority() {
     sortedStatusMap[PRIORITY] = !sortedStatusMap[PRIORITY]!;
-    sortByPriority(issuesAssignedToMeList, dec: sortedStatusMap[PRIORITY]!);
+    sortByPriority(_issuesAssignedToMeList, dec: sortedStatusMap[PRIORITY]!);
     notifyListeners();
   }
 
   void sortIssuesByStatus() {
     sortedStatusMap[STATUS] = !sortedStatusMap[STATUS]!;
-    sortByStatus(issuesAssignedToMeList, dec: sortedStatusMap[STATUS]!);
+    sortByStatus(_issuesAssignedToMeList, dec: sortedStatusMap[STATUS]!);
     notifyListeners();
   }
 
   void sortIssuesByOwner() {
     sortedStatusMap[CREATED_BY] = !sortedStatusMap[CREATED_BY]!;
-    sortByCreatedBy(issuesAssignedToMeList, dec: sortedStatusMap[CREATED_BY]!);
+    sortByCreatedBy(_issuesAssignedToMeList, dec: sortedStatusMap[CREATED_BY]!);
     notifyListeners();
   }
 }

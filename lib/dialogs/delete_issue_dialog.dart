@@ -1,7 +1,7 @@
 import 'package:brd_issue_tracker/dashboard/api/delete_issue_api.dart';
 import 'package:brd_issue_tracker/shared/models/issues_model.dart';
 import 'package:flutter/material.dart';
-import '../../../shared/util_widgets.dart';
+import '../shared/utils/util_widgets.dart';
 
 Future<bool?> showDeleteIssueDialog(
     BuildContext context, Issue issue, String token) async {

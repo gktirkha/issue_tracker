@@ -1,5 +1,5 @@
 import 'package:brd_issue_tracker/shared/models/issues_model.dart';
-import 'package:brd_issue_tracker/shared/util_widgets.dart';
+import 'package:brd_issue_tracker/shared/utils/util_widgets.dart';
 
 import 'package:flutter/material.dart';
 

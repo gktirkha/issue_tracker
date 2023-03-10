@@ -1,40 +1,34 @@
-import 'package:brd_issue_tracker/dashboard/api/update_user_api.dart';
+import 'package:brd_issue_tracker/dashboard/api/create_user_api.dart';
 import 'package:brd_issue_tracker/login/providers/auth_provider.dart';
-import 'package:brd_issue_tracker/shared/models/user_model.dart';
-
-import 'package:brd_issue_tracker/shared/util_widgets.dart';
-import 'package:brd_issue_tracker/static_data.dart';
+import 'package:brd_issue_tracker/shared/utils/util_methods.dart';
+import 'package:brd_issue_tracker/shared/utils/util_widgets.dart';
+import 'package:brd_issue_tracker/shared/utils/static_data.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-Future<bool?> showEditUserDialog(
-    BuildContext context, UserModel userModel) async {
-  ValueNotifier<String> selectedDepartment =
-      ValueNotifier(userModel.department);
-
+Future<bool?> showNewUserDialog(BuildContext context) async {
+  ValueNotifier<String> selectedDepartment = ValueNotifier(departmentList[0]);
+  ValueNotifier<bool> isPasswordVisible = ValueNotifier(false);
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
-
+  TextEditingController passwordController = TextEditingController();
   MediaQueryData mediaQueryData = MediaQuery.of(context);
   String token =
       Provider.of<AuthProvider>(context, listen: false).loggedInUser!.token!;
   final formKey = GlobalKey<FormState>();
-
-  nameController.text = userModel.name;
-  emailController.text = userModel.email;
 
   Future<void> createUser() async {
     if (!formKey.currentState!.validate()) {
       return;
     }
 
-    await updateUserService(
-      name: nameController.text,
-      email: emailController.text,
-      department: selectedDepartment.value,
-      id: userModel.id,
-      token: token,
-    ).then((value) {
+    await createUserService(
+            name: nameController.text,
+            email: emailController.text,
+            password: passwordController.text,
+            department: selectedDepartment.value,
+            token: token)
+        .then((value) {
       refresh(context);
       Navigator.pop(context);
     });
@@ -63,15 +57,15 @@ Future<bool?> showEditUserDialog(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    "Edit User",
+                    "Create User",
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                   TextFormField(
                     controller: nameController,
-                    decoration: const InputDecoration(labelText: "Title"),
+                    decoration: const InputDecoration(labelText: "Name"),
                     validator: (value) {
                       if (value == null) {
-                        return "please input title";
+                        return "please input Name";
                       }
                       if (value.isEmpty || value.length < 4) {
                         return "Minimum Length Should Be 4";
@@ -84,13 +78,61 @@ Future<bool?> showEditUserDialog(
                     decoration: const InputDecoration(labelText: "Email"),
                     validator: (value) {
                       if (value == null) {
-                        return "please input title";
+                        return "please input Email";
                       }
                       if (value.isEmpty || value.length < 8) {
                         return "Minimum Length Should Be 8";
                       }
                       return null;
                     },
+                  ),
+                  ValueListenableBuilder(
+                    valueListenable: isPasswordVisible,
+                    builder: (context, visibleBool, child) => TextFormField(
+                      validator: (value) {
+                        if (value == null) {
+                          return "please input title";
+                        }
+                        if (value.isEmpty || value.length < 8) {
+                          return "Minimum Length Should Be 8";
+                        }
+                        return null;
+                      },
+                      obscureText: !visibleBool,
+                      controller: passwordController,
+                      decoration: InputDecoration(
+                        label: const Text("password"),
+                        suffix: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Tooltip(
+                              message: "Genrate Random",
+                              child: InkWell(
+                                splashColor: Colors.deepOrange,
+                                onTap: () {
+                                  passwordController.text =
+                                      generateRandomString(9);
+                                },
+                                child: const Icon(Icons.password),
+                              ),
+                            ),
+                            hSizedBoxMedium(),
+                            Tooltip(
+                              message: "Password Visibility",
+                              child: InkWell(
+                                splashColor: Colors.deepOrange,
+                                onTap: () {
+                                  isPasswordVisible.value = !visibleBool;
+                                },
+                                child: Icon(!visibleBool
+                                    ? Icons.visibility_off_outlined
+                                    : Icons.visibility_outlined),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
                   vSizedBoxMedium(),
                   ValueListenableBuilder(
@@ -120,7 +162,7 @@ Future<bool?> showEditUserDialog(
                         onPressed: () async {
                           await createUser();
                         },
-                        child: const Text("Update"),
+                        child: const Text("Create"),
                       )
                     ],
                   )

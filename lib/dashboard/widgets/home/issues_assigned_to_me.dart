@@ -3,8 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import '../../../login/providers/auth_provider.dart';
-import '../../../shared/util.dart';
-import '../../../shared/util_widgets.dart';
+import '../../../shared/utils/util_methods.dart';
+import '../../../shared/utils/util_widgets.dart';
 
 import '../../provider/issues_assigned_to_me_provider.dart';
 

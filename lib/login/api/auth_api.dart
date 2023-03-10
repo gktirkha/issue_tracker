@@ -3,7 +3,7 @@ import 'package:dio/dio.dart';
 import 'dart:developer' as dev;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../shared/models/user_model.dart';
-import '../../static_data.dart';
+import '../../shared/utils/static_data.dart';
 
 Future<UserModel?> loginService(String email, String password) async {
   UserModel? userModel;

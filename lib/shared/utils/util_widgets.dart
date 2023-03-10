@@ -1,26 +1,26 @@
 import 'package:brd_issue_tracker/dashboard/api/assign_issue_api.dart';
 
 import 'package:brd_issue_tracker/dashboard/api/update_status_api.dart';
-import 'package:brd_issue_tracker/dashboard/widgets/dialogs/delete_issue_dialog.dart';
-import 'package:brd_issue_tracker/dashboard/widgets/dialogs/edit_issue_dialog.dart';
-import 'package:brd_issue_tracker/dashboard/widgets/dialogs/edit_user_dialog.dart';
-import 'package:brd_issue_tracker/dashboard/widgets/dialogs/show_delete_user_dialog.dart';
-import 'package:brd_issue_tracker/dashboard/widgets/dialogs/show_description_dialog.dart';
+import 'package:brd_issue_tracker/dialogs/delete_issue_dialog.dart';
+import 'package:brd_issue_tracker/dialogs/edit_issue_dialog.dart';
+import 'package:brd_issue_tracker/dialogs/edit_user_dialog.dart';
+import 'package:brd_issue_tracker/dialogs/show_delete_user_dialog.dart';
+import 'package:brd_issue_tracker/dialogs/show_description_dialog.dart';
 import 'package:brd_issue_tracker/login/api/check_auth_token.dart';
 import 'package:brd_issue_tracker/login/providers/auth_provider.dart';
 import 'package:brd_issue_tracker/shared/models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../dashboard/provider/all_issue_provider.dart';
-import '../dashboard/provider/all_user_provider.dart';
-import '../dashboard/provider/area_chart_provider.dart';
-import '../dashboard/provider/donut_chart_provider.dart';
-import '../dashboard/provider/issues_assigned_to_me_provider.dart';
-import '../dashboard/provider/issues_created_by_me_provider.dart';
-import '../dashboard/widgets/dialogs/assign_to_dialog.dart';
-import '../static_data.dart';
-import 'models/issues_model.dart';
+import '../../dashboard/provider/all_issue_provider.dart';
+import '../../dashboard/provider/all_user_provider.dart';
+import '../../dashboard/provider/area_chart_provider.dart';
+import '../../dashboard/provider/donut_chart_provider.dart';
+import '../../dashboard/provider/issues_assigned_to_me_provider.dart';
+import '../../dashboard/provider/issues_created_by_me_provider.dart';
+import '../../dialogs/assign_to_dialog.dart';
+import 'static_data.dart';
+import '../models/issues_model.dart';
 
 Widget vSizedBoxSmall() {
   return const SizedBox(
