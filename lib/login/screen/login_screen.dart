@@ -1,10 +1,11 @@
+import 'package:brd_issue_tracker/dialogs/erro_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/auth_provider.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
-  static String appRoute = "/login";
+  const LoginScreen({super.key, required this.showerror});
+  final bool showerror;
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
@@ -34,6 +35,12 @@ class _LoginScreenState extends State<LoginScreen> {
         email: emailController.text.trim().toString(),
         password: passwordController.text.trim().toString(),
       );
+    }
+
+    if (widget.showerror) {
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        showErrorDialog(context);
+      });
     }
 
     return Scaffold(

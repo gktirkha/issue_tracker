@@ -47,7 +47,6 @@ class AuthProvider with ChangeNotifier {
         _loggedInUser = res;
       } else {
         _isLoggedIn = false;
-        _error = true;
         notifyListeners();
       }
     } catch (e) {
@@ -70,7 +69,8 @@ class AuthProvider with ChangeNotifier {
         _isLoading = false;
         _isLoggedIn = true;
         _loggedInUser = res;
-        notifyListeners();
+      } else {
+        _error = true;
       }
     } catch (e) {
       dev.log(e.toString(), name: "Auth Provider Exception in Login");

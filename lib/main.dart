@@ -83,10 +83,14 @@ class _HomeScreenState extends State<HomeScreen> {
             return value.isLoading
                 ? const SpinKitCubeGrid(color: Colors.deepOrange)
                 : value.error
-                    ? const LoginScreen()
+                    ? const LoginScreen(
+                        showerror: true,
+                      )
                     : value.isLoggedIn
                         ? DashBoardScreen(authToken: value.loggedInUser!.token!)
-                        : const LoginScreen();
+                        : const LoginScreen(
+                            showerror: false,
+                          );
           },
         );
       },
