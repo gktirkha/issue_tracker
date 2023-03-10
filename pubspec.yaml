@@ -8,6 +8,8 @@ environment:
 
 dependencies:
   dio: ^5.0.1
+  firebase_core: ^2.7.1
+  firebase_crashlytics: ^3.0.16
   flutter:
     sdk: flutter
   flutter_spinkit: ^5.1.0

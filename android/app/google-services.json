@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "592080882001",
+    "project_id": "issue-tracker-d6afe",
+    "storage_bucket": "issue-tracker-d6afe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:592080882001:android:b75dc1ae7f5e4ae2e1eb70",
+        "android_client_info": {
+          "package_name": "com.example.brd_issue_tracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "592080882001-6ik3pucoi0705u0kfp8lkt1tp663te2e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAtKCYm9FvG10koFnuPsLDtCHaYW9q85dY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "592080882001-6ik3pucoi0705u0kfp8lkt1tp663te2e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
