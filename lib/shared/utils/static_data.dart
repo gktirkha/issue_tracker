@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 // String host = "http://13.231.115.253:4000/api/";
-String host = "http://localhost:4000/api/";
+// String host = "http://localhost:4000/api/";
+String host = "http://52.193.144.17:4000/api/";
 
 String get HIGH_PRIORITY => "HIGH";
 String get LOW_PRIORITY => "LOW";

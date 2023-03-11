@@ -31,10 +31,7 @@ class DefaultFirebaseOptions {
           'you can reconfigure this by running the FlutterFire CLI again.',
         );
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -54,11 +51,21 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions web = FirebaseOptions(
     apiKey: 'AIzaSyChHsXNtOx0SVb4L0nPugOms4R7Xb-rT7w',
-    appId: '1:592080882001:web:c1c2f0b2a2427330e1eb70',
+    appId: '1:592080882001:web:87c03a75ef7ce8c8e1eb70',
     messagingSenderId: '592080882001',
     projectId: 'issue-tracker-d6afe',
     authDomain: 'issue-tracker-d6afe.firebaseapp.com',
     storageBucket: 'issue-tracker-d6afe.appspot.com',
-    measurementId: 'G-6ZCV6QZJF4',
+    measurementId: 'G-X0F5MS7SFW',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyDbxA1oUkQK4UFsjZXzcKlvcoiCom6E6CI',
+    appId: '1:592080882001:ios:5ae9a2c426dd5be7e1eb70',
+    messagingSenderId: '592080882001',
+    projectId: 'issue-tracker-d6afe',
+    storageBucket: 'issue-tracker-d6afe.appspot.com',
+    iosClientId: '592080882001-u10lu2f2i6lk3u81ib0bhlma31tgorbh.apps.googleusercontent.com',
+    iosBundleId: 'com.example.brdIssueTracker',
   );
 }
