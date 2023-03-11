@@ -6,10 +6,8 @@ Future<Map<String, dynamic>?> donutChartService(String authToken) async {
   Map<String, dynamic> _donutChartItemsMap = {};
   dev.log("DonutChartApi called", name: "Donut Chart API");
   try {
-    final res = await Dio().get(
-      "$host/statusFilterCount",
-      data: {"token": authToken},
-    );
+    final res = await Dio().get("$host/statusFilterCount",
+        options: Options(headers: {"Authorization": authToken}));
     final Map donutChartMap = res.data["data"];
     dev.log(res.statusCode.toString(), name: "donut resCode");
     if (res.statusCode != 201) throw Exception("Invalid Status Code");

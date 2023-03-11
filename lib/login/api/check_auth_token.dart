@@ -3,12 +3,8 @@ import 'package:dio/dio.dart';
 
 Future<bool?> tokenValidationService({required String token}) async {
   try {
-    final res = await Dio().get(
-      "$host/isTokenValid",
-      data: {
-        "token": token,
-      },
-    );
+    final res = await Dio().get("$host/isTokenValid",
+        options: Options(headers: {"Authorization": token}));
     if (res.statusCode != 200) {
       throw Exception("Invalid Code");
     }

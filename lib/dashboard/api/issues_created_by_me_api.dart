@@ -8,10 +8,8 @@ Future<List<Issue>?> issuesCreatedByMeService(String authToken) async {
   List<Issue> _myIssueList = [];
   try {
     dev.log("myIssueApiCall called", name: "My Issues API");
-    final res = await Dio().get(
-      "$host/userIssues",
-      data: {"token": authToken},
-    );
+    final res = await Dio().get("$host/userIssues",
+        options: Options(headers: {"Authorization": authToken}));
     dev.log(res.statusCode.toString(), name: "My Issue resCode");
     if (res.statusCode != 201) throw Exception("Invalid Status Code");
     if (res.data["success"] != true) throw Exception("Invalid Status Code");

@@ -55,6 +55,7 @@ class AuthProvider with ChangeNotifier {
     } finally {
       _isLoading = false;
       notifyListeners();
+      dev.log("check ended");
     }
   }
 

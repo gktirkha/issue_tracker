@@ -89,7 +89,7 @@ Future<void> logoutService() async {
       );
     }
   } catch (e) {
-    dev.log("Logout Exception", name: "Login Service");
+    dev.log(e.toString(), name: "Login Service");
   } finally {
     prefs.remove("id");
     prefs.remove("isAdmin");
