@@ -119,69 +119,73 @@ class _LoginScreenState extends State<LoginScreen> {
                             ],
                           ),
                           const Spacer(),
-                          Form(
-                            key: formKey,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                TextFormField(
-                                    validator: (value) {
-                                      if (value == null) {
-                                        return "Please Enter Password";
-                                      }
-                                      if (value.length < 8) {
-                                        return "Please Enter Password";
-                                      }
-                                      return null;
-                                    },
-                                    keyboardType: TextInputType.emailAddress,
-                                    enabled: !loggingBool,
-                                    controller: emailController,
-                                    decoration: loginInputDecoration(context,
-                                        hint: "Enter Your Email",
-                                        label: "Email",
-                                        iconData: Icons.email)),
-                                const SizedBox(height: 20),
-                                ValueListenableBuilder(
-                                  valueListenable: isPasswordVisible,
-                                  builder: (context, passwordBool, child) =>
-                                      TextFormField(
-                                    validator: (value) {
-                                      if (value == null) {
-                                        return "Please Enter Password";
-                                      }
-                                      if (value.length < 8) {
-                                        return "Please Enter Password";
-                                      }
-                                      return null;
-                                    },
-                                    enabled: !loggingBool,
-                                    obscureText: !passwordBool,
-                                    controller: passwordController,
-                                    decoration: loginInputDecoration(context,
-                                            hint: "Enter Your Password",
-                                            label: "Password",
-                                            iconData: Icons.key)
-                                        .copyWith(
-                                      suffixIcon: InkWell(
-                                        onTap: () {
-                                          isPasswordVisible.value =
-                                              !passwordBool;
-                                        },
-                                        child: Icon(
-                                          passwordBool
-                                              ? Icons.visibility_outlined
-                                              : Icons.visibility_off_outlined,
+                          Consumer<AuthProvider>(
+                            builder: (context, authProvider, child) => Form(
+                              key: formKey,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  TextFormField(
+                                      validator: (value) {
+                                        if (value == null) {
+                                          return "Please Enter Email";
+                                        }
+                                        if (value.length < 8) {
+                                          return "Minimum length should be 8";
+                                        }
+                                        return null;
+                                      },
+                                      textInputAction: TextInputAction.next,
+                                      keyboardType: TextInputType.emailAddress,
+                                      enabled: !loggingBool,
+                                      controller: emailController,
+                                      decoration: loginInputDecoration(context,
+                                          hint: "Enter Your Email",
+                                          label: "Email",
+                                          iconData: Icons.email)),
+                                  const SizedBox(height: 20),
+                                  ValueListenableBuilder(
+                                    valueListenable: isPasswordVisible,
+                                    builder: (context, passwordBool, child) =>
+                                        TextFormField(
+                                      textInputAction: TextInputAction.done,
+                                      onFieldSubmitted: (value) {
+                                        login(authProvider);
+                                      },
+                                      validator: (value) {
+                                        if (value == null) {
+                                          return "Please Enter Password";
+                                        }
+                                        if (value.length < 8) {
+                                          return "Please Enter Password";
+                                        }
+                                        return null;
+                                      },
+                                      enabled: !loggingBool,
+                                      obscureText: !passwordBool,
+                                      controller: passwordController,
+                                      decoration: loginInputDecoration(context,
+                                              hint: "Enter Your Password",
+                                              label: "Password",
+                                              iconData: Icons.key)
+                                          .copyWith(
+                                        suffixIcon: InkWell(
+                                          onTap: () {
+                                            isPasswordVisible.value =
+                                                !passwordBool;
+                                          },
+                                          child: Icon(
+                                            passwordBool
+                                                ? Icons.visibility_outlined
+                                                : Icons.visibility_off_outlined,
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                ),
-                                SizedBox(height: safeSize.height * .15),
-                                Consumer<AuthProvider>(
-                                  builder: (context, authProvider, child) =>
-                                      OutlinedButton(
+                                  SizedBox(height: safeSize.height * .15),
+                                  OutlinedButton(
                                     style: OutlinedButton.styleFrom(
                                       minimumSize: Size(
                                           mediaQueryData.size.width * .30,
@@ -202,8 +206,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                         ? "Login"
                                         : "Logging in ..."),
                                   ),
-                                )
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                           const Spacer()

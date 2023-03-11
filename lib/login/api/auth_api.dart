@@ -82,7 +82,7 @@ Future<void> logoutService() async {
   try {
     if (token != null) {
       await Dio().post(
-        "$host/api/logout",
+        "$host/logout",
         data: {
           "token": token,
         },

@@ -152,7 +152,8 @@ class CustomDeleteButton extends StatelessWidget {
               ? null
               : () async {
                   loadingBool.value = true;
-                  await showDeleteIssueDialog(context, issue, token);
+                  await showDeleteIssueDialog(context, issue, token)
+                      .then((value) => loadingBool.value = false);
                 },
           child: const Text("Delete"),
         );
