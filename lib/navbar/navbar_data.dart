@@ -14,7 +14,7 @@ class NavBarData {
 
 List<NavBarData> userButtonData(bool isAdmin) => [
       NavBarData(
-        title: "Dash Board",
+        title: "DashBoard",
         icon: Image.asset(
           "assets/icons/dashboard.png",
           color: iconColor,
