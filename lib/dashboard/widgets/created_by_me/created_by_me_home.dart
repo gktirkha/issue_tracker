@@ -98,6 +98,7 @@ class _MyIssueHomeState extends State<MyIssueHome> {
                                                   ],
                                                 ),
                                               ),
+                                              vSizedBoxExSmall(),
                                               Text.rich(
                                                 TextSpan(
                                                   children: [
@@ -146,6 +147,7 @@ class _MyIssueHomeState extends State<MyIssueHome> {
                                                 ),
                                               ),
                                             ),
+                                            vSizedBoxExSmall(),
                                             Text.rich(
                                               TextSpan(
                                                 children: [

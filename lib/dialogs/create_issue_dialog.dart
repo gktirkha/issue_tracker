@@ -29,7 +29,7 @@ Future<bool?> showCreateDialog(BuildContext context) async {
         if (!formKey.currentState!.validate()) {
           return;
         }
-
+        isLoading.value = true;
         await createIssueService(
           token: token,
           title: titleController.text,
@@ -38,8 +38,15 @@ Future<bool?> showCreateDialog(BuildContext context) async {
           assignToId: assignToId,
         ).then(
           (value) {
-            refresh(context);
-            Navigator.pop(context);
+            if (value == true) {
+              refresh(context);
+              Navigator.pop(context);
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text("Issue Created Sucesfully"),
+                ),
+              );
+            }
           },
         );
       }
@@ -144,9 +151,11 @@ Future<bool?> showCreateDialog(BuildContext context) async {
                       children: [
                         const Spacer(),
                         TextButton(
-                            onPressed: () async {
-                              await createIssue();
-                            },
+                            onPressed: value
+                                ? null
+                                : () async {
+                                    await createIssue();
+                                  },
                             child: const Text("Save")),
                         TextButton(
                             onPressed: () {

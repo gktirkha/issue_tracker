@@ -43,8 +43,17 @@ Future<bool?> showDeleteIssueDialog(
                                         issueId: issue.id, authToken: token)
                                     .then(
                                   (value) {
-                                    refresh(context);
-                                    Navigator.pop(context);
+                                    if (value == true) {
+                                      refresh(context);
+                                      Navigator.pop(context);
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        const SnackBar(
+                                          content:
+                                              Text("Issue Deleted Sucesfully"),
+                                        ),
+                                      );
+                                    }
                                   },
                                 );
                               },

@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:brd_issue_tracker/shared/utils/static_data.dart';
 import 'package:dio/dio.dart';
 
-Future<void> updateIssueService({
+Future<bool?> updateIssueService({
   required String title,
   required String description,
   required String id,
@@ -24,7 +24,9 @@ Future<void> updateIssueService({
         headers: {"Authorization": token},
       ),
     );
+    return true;
   } catch (e) {
     log(e.toString(), name: "Update Exception");
+    return false;
   }
 }

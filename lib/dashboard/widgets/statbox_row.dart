@@ -113,7 +113,7 @@ class StatBoxRow extends StatelessWidget {
                     ]
                   : (value.isError || value2.isError)
                       ? [
-                          const Text("Error Occured, Prease Refresh"),
+                          const Text("Error Occured, Please Refresh"),
                         ]
                       : [
                           statBox(

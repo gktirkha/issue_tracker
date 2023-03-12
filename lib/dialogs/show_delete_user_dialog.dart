@@ -44,8 +44,17 @@ Future<bool?> showDeleteUserDialog(
                                         id: userModel.id, token: token)
                                     .then(
                                   (value) {
-                                    refresh(context);
-                                    Navigator.pop(context);
+                                    if (value == true) {
+                                      refresh(context);
+                                      Navigator.pop(context);
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        const SnackBar(
+                                          content:
+                                              Text("User Deleted Sucesfully"),
+                                        ),
+                                      );
+                                    }
                                   },
                                 );
                               },

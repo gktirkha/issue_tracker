@@ -19,6 +19,7 @@ Future<bool?> showEditUserDialog(
   String token =
       Provider.of<AuthProvider>(context, listen: false).loggedInUser!.token!;
   final formKey = GlobalKey<FormState>();
+  ValueNotifier<bool> isEnable = ValueNotifier(true);
 
   nameController.text = userModel.name;
   emailController.text = userModel.email;
@@ -27,7 +28,7 @@ Future<bool?> showEditUserDialog(
     if (!formKey.currentState!.validate()) {
       return;
     }
-
+    isEnable.value = false;
     await updateUserService(
       name: nameController.text,
       email: emailController.text,
@@ -35,8 +36,15 @@ Future<bool?> showEditUserDialog(
       id: userModel.id,
       token: token,
     ).then((value) {
-      refresh(context);
-      Navigator.pop(context);
+      if (value == true) {
+        refresh(context);
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("User Editted Sucesfully"),
+          ),
+        );
+        Navigator.pop(context);
+      }
     });
   }
 
@@ -68,7 +76,7 @@ Future<bool?> showEditUserDialog(
                   ),
                   TextFormField(
                     controller: nameController,
-                    decoration: const InputDecoration(labelText: "Title"),
+                    decoration: const InputDecoration(labelText: "Namw"),
                     validator: (value) {
                       if (value == null) {
                         return "please input title";
@@ -116,11 +124,16 @@ Future<bool?> showEditUserDialog(
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      TextButton(
-                        onPressed: () async {
-                          await createUser();
-                        },
-                        child: const Text("Update"),
+                      ValueListenableBuilder(
+                        valueListenable: isEnable,
+                        builder: (context, value, child) => TextButton(
+                          onPressed: !value
+                              ? null
+                              : () async {
+                                  await createUser();
+                                },
+                          child: const Text("Update"),
+                        ),
                       )
                     ],
                   )

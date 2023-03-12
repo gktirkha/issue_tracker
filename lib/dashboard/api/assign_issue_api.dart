@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:brd_issue_tracker/shared/utils/static_data.dart';
 import 'package:dio/dio.dart';
 
-Future<void> assignIssue(
+Future<bool?> assignIssue(
     {required String issueID,
     required String userID,
     required String authToken}) async {
@@ -20,7 +20,9 @@ Future<void> assignIssue(
         },
       ),
     );
+    return true;
   } catch (e) {
     log(e.toString(), name: "Assign To Other API");
+    return false;
   }
 }

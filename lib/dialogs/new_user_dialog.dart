@@ -16,12 +16,13 @@ Future<bool?> showNewUserDialog(BuildContext context) async {
   String token =
       Provider.of<AuthProvider>(context, listen: false).loggedInUser!.token!;
   final formKey = GlobalKey<FormState>();
+  ValueNotifier<bool> isEnable = ValueNotifier(true);
 
   Future<void> createUser() async {
     if (!formKey.currentState!.validate()) {
       return;
     }
-
+    isEnable.value = false;
     await createUserService(
             name: nameController.text,
             email: emailController.text,
@@ -29,8 +30,15 @@ Future<bool?> showNewUserDialog(BuildContext context) async {
             department: selectedDepartment.value,
             token: token)
         .then((value) {
-      refresh(context);
-      Navigator.pop(context);
+      if (value == true) {
+        refresh(context);
+        Navigator.pop(context);
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("User Created Sucesfully"),
+          ),
+        );
+      }
     });
   }
 
@@ -158,11 +166,16 @@ Future<bool?> showNewUserDialog(BuildContext context) async {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      TextButton(
-                        onPressed: () async {
-                          await createUser();
-                        },
-                        child: const Text("Create"),
+                      ValueListenableBuilder(
+                        valueListenable: isEnable,
+                        builder: (context, value, child) => TextButton(
+                          onPressed: !value
+                              ? null
+                              : () async {
+                                  await createUser();
+                                },
+                          child: const Text("Create"),
+                        ),
                       )
                     ],
                   )

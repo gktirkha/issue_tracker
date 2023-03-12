@@ -58,6 +58,10 @@ Widget hSizedBoxLarge() {
   );
 }
 
+Widget vSizedBoxExSmall() {
+  return const SizedBox(height: 6);
+}
+
 class PriorityBox extends StatelessWidget {
   const PriorityBox({
     super.key,
@@ -181,18 +185,27 @@ class CustomAssignToOtherButton extends StatelessWidget {
                   loadingBool.value = true;
                   try {
                     await showAssignDialog(context).then(
-                      (value) async {
-                        if (value["id"] != null) {
+                      (selValue) async {
+                        if (selValue["id"] != null) {
                           await assignIssue(
                             authToken: token,
                             issueID: issue.id,
-                            userID: value["id"],
-                          );
+                            userID: selValue["id"],
+                          ).then((value) {
+                            if (value == true) {
+                              refresh(context);
+
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                      "Issue Assigned To ${selValue["name"]}"),
+                                ),
+                              );
+                            }
+                          });
                         }
                       },
-                    ).then((value) {
-                      refresh(context);
-                    });
+                    );
                   } finally {
                     loadingBool.value = false;
                   }
@@ -225,7 +238,16 @@ class CustomUpdateStatusButton extends StatelessWidget {
           ),
           onSelected: (value) async {
             await updateStatusService(issue.id, value, token).then(
-              (value) => refresh(context),
+              (value) {
+                if (value == true) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("Issue Status Sucessfuly Updated"),
+                    ),
+                  );
+                  refresh(context);
+                }
+              },
             );
           },
           itemBuilder: (context) => [
@@ -287,7 +309,14 @@ class CustomAssignToMeButton extends StatelessWidget {
                             issueID: issue.id,
                             userID: user.id,
                             authToken: user.token!)
-                        .then((value) => refresh(context));
+                        .then((value) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text("Issue Assigned To You"),
+                        ),
+                      );
+                      refresh(context);
+                    });
                   } finally {
                     loadingBool.value = false;
                   }

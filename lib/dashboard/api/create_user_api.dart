@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:brd_issue_tracker/shared/utils/static_data.dart';
 import 'package:dio/dio.dart';
 
-Future<void> createUserService({
+Future<bool?> createUserService({
   required String name,
   required String email,
   required String password,
@@ -21,7 +21,9 @@ Future<void> createUserService({
           "password": password,
           "department": department,
         });
+    return true;
   } catch (e) {
     log(e.toString(), name: "Create User Exception");
+    return false;
   }
 }

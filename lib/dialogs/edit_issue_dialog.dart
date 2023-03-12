@@ -39,6 +39,7 @@ Future<bool?> showEditDialog(BuildContext context, Issue selectedIssue) async {
         if (!formKey.currentState!.validate()) {
           return;
         }
+        isLoading.value = true;
         await updateIssueService(
           description: descriptionController.text,
           id: selectedIssue.id,
@@ -47,8 +48,15 @@ Future<bool?> showEditDialog(BuildContext context, Issue selectedIssue) async {
           token: token,
           assignToUser: selectedIssue.assignedToId,
         ).then((value) {
-          refresh(context);
-          Navigator.pop(context);
+          if (value == true) {
+            refresh(context);
+            Navigator.pop(context);
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text("Issue Updated Sucesfully"),
+              ),
+            );
+          }
         });
       }
 

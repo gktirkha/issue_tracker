@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:brd_issue_tracker/shared/utils/static_data.dart';
 import 'package:dio/dio.dart';
 
-Future<void> updateUserService({
+Future<bool?> updateUserService({
   required String id,
   required String name,
   required String email,
@@ -24,7 +24,9 @@ Future<void> updateUserService({
         },
       ),
     );
+    return true;
   } catch (e) {
     log(e.toString(), name: "Update User Exception");
+    return false;
   }
 }

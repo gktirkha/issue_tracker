@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:brd_issue_tracker/shared/utils/static_data.dart';
 import 'package:dio/dio.dart';
 
-Future<void> createIssueService({
+Future<bool?> createIssueService({
   required String token,
   required String title,
   required String description,
@@ -25,7 +25,9 @@ Future<void> createIssueService({
         },
       ),
     );
+    return true;
   } catch (e) {
     log(e.toString(), name: "Create Error");
+    return false;
   }
 }

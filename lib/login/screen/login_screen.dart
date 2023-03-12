@@ -1,4 +1,4 @@
-import 'package:brd_issue_tracker/dialogs/erro_dialog.dart';
+import 'package:brd_issue_tracker/dialogs/error_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/auth_provider.dart';

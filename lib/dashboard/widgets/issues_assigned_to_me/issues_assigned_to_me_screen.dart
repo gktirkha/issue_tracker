@@ -104,6 +104,7 @@ class _AssignedIssueHomeState extends State<AssignedIssueHome> {
                                                     ],
                                                   ),
                                                 ),
+                                                vSizedBoxExSmall(),
                                                 Text.rich(
                                                   TextSpan(
                                                     children: [
@@ -150,6 +151,7 @@ class _AssignedIssueHomeState extends State<AssignedIssueHome> {
                                                   ],
                                                 ),
                                               ),
+                                              vSizedBoxExSmall(),
                                               Text.rich(
                                                 TextSpan(
                                                   children: [
