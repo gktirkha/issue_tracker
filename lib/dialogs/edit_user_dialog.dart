@@ -76,10 +76,10 @@ Future<bool?> showEditUserDialog(
                   ),
                   TextFormField(
                     controller: nameController,
-                    decoration: const InputDecoration(labelText: "Namw"),
+                    decoration: const InputDecoration(labelText: "Name"),
                     validator: (value) {
                       if (value == null) {
-                        return "please input title";
+                        return "please input Name";
                       }
                       if (value.isEmpty || value.length < 4) {
                         return "Minimum Length Should Be 4";
