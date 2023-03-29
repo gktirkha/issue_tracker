@@ -1,10 +1,9 @@
-import 'package:flutter/material.dart';
 import 'dart:developer' as dev;
-
-import '../../shared/models/issues_model.dart';
-import '../../shared/utils/util_methods.dart';
+import 'package:flutter/material.dart';
 import '../../shared/utils/static_data.dart';
+import '../../shared/utils/util_methods.dart';
 import '../api/issue_assigned_to_me_api.dart';
+import '../../shared/models/issues_model.dart';
 
 class IssuesAssignedToMeProvider with ChangeNotifier {
   bool _isLoading = true;

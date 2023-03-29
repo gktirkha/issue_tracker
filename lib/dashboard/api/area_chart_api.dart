@@ -1,7 +1,6 @@
 import 'dart:developer';
-
-import 'package:brd_issue_tracker/shared/utils/static_data.dart';
 import 'package:dio/dio.dart';
+import '../../shared/utils/static_data.dart';
 
 Future<Map<String, int>?> areaChart(String token) async {
   Map<String, int> barChartMap = {};

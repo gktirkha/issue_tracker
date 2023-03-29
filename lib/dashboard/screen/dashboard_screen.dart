@@ -1,18 +1,16 @@
-import 'package:brd_issue_tracker/dashboard/widgets/all_issues/all_issues_home.dart';
-import 'package:brd_issue_tracker/dashboard/widgets/created_by_me/created_by_me_home.dart';
-import 'package:brd_issue_tracker/login/providers/auth_provider.dart';
-import 'package:brd_issue_tracker/shared/models/user_model.dart';
-import 'package:brd_issue_tracker/shared/utils/util_widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import '../../navbar/my_navbar.dart';
-import '../../navbar/navbar_data.dart';
-
-import '../widgets/all_users/all_user_home.dart';
-
-import '../widgets/home/dash_board_home.dart';
-import '../widgets/issues_assigned_to_me/issues_assigned_to_me_screen.dart';
 import '../widgets/statbox_row.dart';
+import 'package:flutter/material.dart';
+import '../../navbar/navbar_data.dart';
+import 'package:provider/provider.dart';
+import '../../shared/models/user_model.dart';
+import '../../shared/utils/util_widgets.dart';
+import '../widgets/home/dash_board_home.dart';
+import '../widgets/all_users/all_user_home.dart';
+import '../../login/providers/auth_provider.dart';
+import '../widgets/all_issues/all_issues_home.dart';
+import '../widgets/created_by_me/created_by_me_home.dart';
+import '../widgets/issues_assigned_to_me/issues_assigned_to_me_screen.dart';
 
 class DashBoardScreen extends StatefulWidget {
   const DashBoardScreen({super.key, required this.authToken});

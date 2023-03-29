@@ -1,5 +1,5 @@
 import 'dart:developer';
-import 'package:brd_issue_tracker/dashboard/api/all_users_api.dart';
+import '../api/all_users_api.dart';
 import 'package:flutter/material.dart';
 import '../../shared/models/user_model.dart';
 

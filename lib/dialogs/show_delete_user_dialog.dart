@@ -1,8 +1,7 @@
-import 'package:brd_issue_tracker/dashboard/api/delete_user_api.dart';
-
-import 'package:brd_issue_tracker/shared/models/user_model.dart';
 import 'package:flutter/material.dart';
+import '../shared/models/user_model.dart';
 import '../shared/utils/util_widgets.dart';
+import '../dashboard/api/delete_user_api.dart';
 
 Future<bool?> showDeleteUserDialog(
     BuildContext context, UserModel userModel, String token) async {

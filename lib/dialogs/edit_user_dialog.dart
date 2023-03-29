@@ -1,11 +1,10 @@
-import 'package:brd_issue_tracker/dashboard/api/update_user_api.dart';
-import 'package:brd_issue_tracker/login/providers/auth_provider.dart';
-import 'package:brd_issue_tracker/shared/models/user_model.dart';
-
-import 'package:brd_issue_tracker/shared/utils/util_widgets.dart';
-import 'package:brd_issue_tracker/shared/utils/static_data.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../shared/models/user_model.dart';
+import '../shared/utils/static_data.dart';
+import '../shared/utils/util_widgets.dart';
+import '../dashboard/api/update_user_api.dart';
+import '../login/providers/auth_provider.dart';
 
 Future<bool?> showEditUserDialog(
     BuildContext context, UserModel userModel) async {

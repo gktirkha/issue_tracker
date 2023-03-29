@@ -1,12 +1,11 @@
-import 'package:brd_issue_tracker/dashboard/api/update_issue_api.dart';
-import 'package:brd_issue_tracker/dialogs/assign_to_dialog.dart';
-import 'package:brd_issue_tracker/shared/models/issues_model.dart';
-import 'package:brd_issue_tracker/shared/utils/util_widgets.dart';
-import 'package:brd_issue_tracker/shared/utils/static_data.dart';
+import 'assign_to_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
+import '../shared/utils/static_data.dart';
+import '../shared/utils/util_widgets.dart';
+import '../shared/models/issues_model.dart';
 import '../login/providers/auth_provider.dart';
+import '../dashboard/api/update_issue_api.dart';
 
 Future<bool?> showEditDialog(BuildContext context, Issue selectedIssue) async {
   return showGeneralDialog<bool>(

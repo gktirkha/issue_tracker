@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-
-import '../../../login/providers/auth_provider.dart';
 import '../../../shared/utils/util_methods.dart';
 import '../../../shared/utils/util_widgets.dart';
-
+import '../../../login/providers/auth_provider.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import '../../provider/issues_assigned_to_me_provider.dart';
 
 class IssuesAssignedToMe extends StatefulWidget {

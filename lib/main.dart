@@ -1,20 +1,20 @@
-import 'package:brd_issue_tracker/dashboard/provider/all_issue_provider.dart';
-import 'package:brd_issue_tracker/dashboard/provider/all_user_provider.dart';
-import 'package:brd_issue_tracker/dashboard/provider/area_chart_provider.dart';
-import 'package:brd_issue_tracker/dashboard/provider/donut_chart_provider.dart';
-import 'package:brd_issue_tracker/dashboard/provider/issues_assigned_to_me_provider.dart';
-import 'package:brd_issue_tracker/dashboard/provider/issues_created_by_me_provider.dart';
-import 'package:brd_issue_tracker/dashboard/provider/sorted_list_provider.dart';
-import 'package:brd_issue_tracker/dashboard/screen/dashboard_screen.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:provider/provider.dart';
 import 'firebase_options.dart';
-import 'login/providers/auth_provider.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'login/screen/login_screen.dart';
+import 'package:flutter/foundation.dart';
+import 'login/providers/auth_provider.dart';
+import 'dashboard/screen/dashboard_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'dashboard/provider/all_user_provider.dart';
+import 'dashboard/provider/all_issue_provider.dart';
+import 'dashboard/provider/area_chart_provider.dart';
+import 'dashboard/provider/donut_chart_provider.dart';
+import 'dashboard/provider/sorted_list_provider.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'dashboard/provider/issues_created_by_me_provider.dart';
+import 'dashboard/provider/issues_assigned_to_me_provider.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

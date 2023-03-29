@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-
 import 'package:provider/provider.dart';
+import '../../provider/area_chart_provider.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-import '../../provider/area_chart_provider.dart';
+
 
 class AreaChart extends StatefulWidget {
   const AreaChart({super.key, required this.authToken});

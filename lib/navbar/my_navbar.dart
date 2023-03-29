@@ -1,7 +1,7 @@
+import 'navbar_data.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../login/providers/auth_provider.dart';
-import 'navbar_data.dart';
 
 typedef IntCallback = void Function(int id);
 

@@ -1,9 +1,9 @@
-import 'package:brd_issue_tracker/login/api/check_auth_token.dart';
 import 'package:dio/dio.dart';
+import 'check_auth_token.dart';
 import 'dart:developer' as dev;
-import 'package:shared_preferences/shared_preferences.dart';
 import '../../shared/models/user_model.dart';
 import '../../shared/utils/static_data.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 Future<UserModel?> loginService(String email, String password) async {
   UserModel? userModel;

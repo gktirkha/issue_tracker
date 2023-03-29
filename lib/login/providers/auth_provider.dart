@@ -1,7 +1,7 @@
-import 'package:brd_issue_tracker/shared/models/user_model.dart';
-import 'package:flutter/material.dart';
-import 'dart:developer' as dev;
 import '../api/auth_api.dart';
+import 'dart:developer' as dev;
+import 'package:flutter/material.dart';
+import '../../shared/models/user_model.dart';
 
 class AuthProvider with ChangeNotifier {
   bool _isLoggedIn = false;

@@ -1,6 +1,6 @@
-import 'package:brd_issue_tracker/dashboard/api/area_chart_api.dart';
-import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import '../api/area_chart_api.dart';
+import 'package:flutter/material.dart';
 
 class AreaChartProvider with ChangeNotifier {
   bool _isLoading = true;

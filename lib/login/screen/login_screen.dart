@@ -1,6 +1,6 @@
-import 'package:brd_issue_tracker/dialogs/error_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../dialogs/error_dialog.dart';
 import '../providers/auth_provider.dart';
 
 class LoginScreen extends StatefulWidget {

@@ -1,11 +1,11 @@
-import 'package:brd_issue_tracker/dashboard/api/create_issue_api.dart';
-import 'package:brd_issue_tracker/dialogs/assign_to_dialog.dart';
-import 'package:brd_issue_tracker/shared/utils/util_widgets.dart';
-import 'package:brd_issue_tracker/shared/utils/static_data.dart';
+import 'assign_to_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
+import '../shared/utils/static_data.dart';
+import '../shared/utils/util_widgets.dart';
 import '../login/providers/auth_provider.dart';
+import '../dashboard/api/create_issue_api.dart';
+
 
 Future<bool?> showCreateDialog(BuildContext context) async {
   return showGeneralDialog<bool>(
