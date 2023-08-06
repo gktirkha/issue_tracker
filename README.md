@@ -1,3 +1,2 @@
-# brd_issue_tracker
-
-A new Flutter project.
+# issue tracker
+Issue Tracker Created Using Flutter
